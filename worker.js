@@ -147,6 +147,44 @@ function serve404(request, jsonPath) {
   );
 }
 
+// ── Brand Components ──────────────────────────────────────────
+
+const BRAND_FONTS = `<link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">`;
+
+const BRAND_LOGO_SVG = `<svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px">
+  <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+</svg>`;
+
+const BRAND_NAV = `<nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #e5e7eb;height:56px;display:flex;align-items:center;padding:0 32px;">
+  <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    ${BRAND_LOGO_SVG}
+    <span style="font-family:'Crimson Pro',Georgia,serif;font-weight:700;font-size:16px;letter-spacing:0.02em;line-height:1;"><span style="color:#94A3B8;">Veri</span><span style="color:#10B981;">Glow</span></span>
+  </a>
+  <span style="margin-left:8px;font-size:13px;color:#9CA3AF;font-family:'DM Sans',sans-serif;">Agent Map</span>
+  <span style="margin-left:auto;"><a href="https://github.com/ChizhongWang/open-agent-map" target="_blank" style="color:#6B7280;text-decoration:none;font-size:13px;font-family:'DM Sans',sans-serif;">GitHub</a></span>
+</nav>`;
+
+const BRAND_FOOTER = `<div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e5e7eb;font-size:0.8rem;color:#6B7280;text-align:center;font-family:'DM Sans',sans-serif;">
+  <a href="/" style="color:#10B981;text-decoration:none;">VeriGlow Agent Map</a> — crowdsourced API specs for AI agents
+</div>`;
+
+const BRAND_BASE_STYLE = `
+  :root { --bg: #ffffff; --card: #f9fafb; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #10B981; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', 'Noto Sans SC', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+`;
+
 // ── HTML Renderers ──────────────────────────────────────────
 
 function renderSpecPage(spec, jsonPath) {
@@ -201,11 +239,10 @@ function renderSpecPage(spec, jsonPath) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escHtml(title)} — Open Agent Map</title>
+<title>${escHtml(title)} — VeriGlow Agent Map</title>
+${BRAND_FONTS}
 <style>
-  :root { --bg: #ffffff; --card: #f9fafb; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #2563eb; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  ${BRAND_BASE_STYLE}
   .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
   .breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; word-break: break-all; }
   .breadcrumb a { color: var(--accent); text-decoration: none; }
@@ -217,29 +254,26 @@ function renderSpecPage(spec, jsonPath) {
   .summary { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; }
   .card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
-  .endpoint { font-family: 'SF Mono', Consolas, monospace; font-size: 0.9rem; background: #f0f4ff; padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.75rem; overflow-x: auto; }
-  .method { color: #22c55e; font-weight: 600; }
+  .endpoint { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 0.9rem; background: #f0fdf4; padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.75rem; overflow-x: auto; }
+  .method { color: #10B981; font-weight: 600; }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--muted); font-weight: 500; }
   td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
-  td:first-child { font-family: 'SF Mono', Consolas, monospace; font-size: 0.8rem; white-space: nowrap; }
-  code { background: #eef2ff; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; }
-  .badge { display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: #dbeafe; color: #1d4ed8; margin-left: 0.5rem; }
+  td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; white-space: nowrap; }
+  code { background: #f0fdf4; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+  .badge { display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px; background: rgba(16,185,129,0.08); color: #059669; margin-left: 0.5rem; }
   .required { color: #ef4444; font-size: 0.75rem; }
-  .fixed { color: #22c55e; font-size: 0.75rem; }
+  .fixed { color: #10B981; font-size: 0.75rem; }
   .caveat { color: #f59e0b; font-size: 0.85rem; padding: 0.3rem 0; }
   .api-block { padding: 1rem 0; border-bottom: 1px solid var(--border); }
   .api-block:last-child { border-bottom: none; }
   .api-block h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
   .detail { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
-  .json-link { display: inline-block; margin-top: 1.5rem; color: var(--accent); font-size: 0.85rem; text-decoration: none; }
+  .json-link { display: inline-block; margin-top: 1.5rem; color: var(--accent); font-size: 0.85rem; text-decoration: none; cursor: pointer; }
   .json-link:hover { text-decoration: underline; }
-  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); text-align: center; }
-  .footer a { color: var(--accent); text-decoration: none; }
   .report-link { color: var(--muted); font-size: 0.8rem; margin-top: 0.5rem; }
   .report-link a { color: #f59e0b; text-decoration: none; }
-  .json-link { cursor: pointer; }
-  .copied { color: #22c55e !important; }
+  .copied { color: #10B981 !important; }
 </style>
 <script>
 async function copyJson(e, path) {
@@ -258,9 +292,10 @@ async function copyJson(e, path) {
 </script>
 </head>
 <body>
+${BRAND_NAV}
 <div class="container">
   <div class="breadcrumb">
-    <a href="/">Open Agent Map</a> / ${escHtml(jsonPath.replace(".json", "").replace(/^\//, ""))}
+    ${renderBreadcrumbPath("/" + jsonPath.replace(".json", "").replace(/^\//, ""))}
   </div>
 
   <h1>${escHtml(title)}</h1>
@@ -311,9 +346,7 @@ async function copyJson(e, path) {
 
   <a class="json-link" href="#" onclick="copyJson(event, '${escHtml(jsonPath)}')">Copy raw JSON for agent</a>
 
-  <div class="footer">
-    <a href="https://github.com/ChizhongWang/open-agent-map">Open Agent Map</a> — crowdsourced API specs for AI agents
-  </div>
+  ${BRAND_FOOTER}
 </div>
 </body>
 </html>`;
@@ -356,26 +389,26 @@ function render404Page(path) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Map Not Found — Open Agent Map</title>
+<title>Map Not Found — VeriGlow Agent Map</title>
+${BRAND_FONTS}
 <style>
-  :root { --bg: #0a0a0a; --card: #141414; --border: #262626; --text: #e5e5e5; --muted: #737373; --accent: #3b82f6; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  ${BRAND_BASE_STYLE}
+  .wrap { min-height: calc(100vh - 56px); display: flex; align-items: center; justify-content: center; }
   .container { max-width: 500px; padding: 2rem; text-align: center; }
   h1 { font-size: 1.5rem; margin-bottom: 0.75rem; }
-  .path { font-family: 'SF Mono', Consolas, monospace; font-size: 0.85rem; color: var(--accent); background: #f0f4ff; padding: 0.5rem 1rem; border-radius: 6px; margin-bottom: 1.5rem; word-break: break-all; }
+  .path { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); background: #f0fdf4; padding: 0.5rem 1rem; border-radius: 6px; margin-bottom: 1.5rem; word-break: break-all; }
   p { color: var(--muted); margin-bottom: 1.5rem; }
   form { display: flex; flex-direction: column; gap: 0.75rem; }
-  input[type="email"] { padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text); font-size: 0.9rem; }
+  input[type="email"] { padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text); font-size: 0.9rem; font-family: 'DM Sans', sans-serif; }
   input[type="email"]:focus { outline: none; border-color: var(--accent); }
-  button { padding: 0.6rem; border: none; border-radius: 6px; background: var(--accent); color: white; font-size: 0.9rem; cursor: pointer; font-weight: 500; }
-  button:hover { background: #2563eb; }
-  .footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
-  .footer a { color: var(--accent); text-decoration: none; }
-  .success { display: none; color: #22c55e; margin-top: 1rem; }
+  button { padding: 0.6rem; border: none; border-radius: 6px; background: var(--accent); color: white; font-size: 0.9rem; cursor: pointer; font-weight: 500; font-family: 'DM Sans', sans-serif; }
+  button:hover { background: #059669; }
+  .success { display: none; color: #10B981; margin-top: 1rem; }
 </style>
 </head>
 <body>
+${BRAND_NAV}
+<div class="wrap">
 <div class="container">
   <h1>Map Not Found</h1>
   <div class="path">${escHtml(path)}</div>
@@ -388,16 +421,14 @@ function render404Page(path) {
   </form>
   <div class="success" id="successMsg">Got it! We'll email you when this map is ready.</div>
 
-  <div class="footer">
-    <a href="/">Open Agent Map</a> — crowdsourced API specs for AI agents
-  </div>
+  ${BRAND_FOOTER}
+</div>
 </div>
 <script>
 function submitRequest(e) {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const path = document.getElementById('requestPath').value;
-  // TODO: send to backend (e.g., GitHub Issue or email service)
   fetch('/api/request-map', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -523,11 +554,10 @@ function renderDirectoryPage(dirPath, children) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escHtml(displayPath)} — Open Agent Map</title>
+<title>${escHtml(displayPath)} — VeriGlow Agent Map</title>
+${BRAND_FONTS}
 <style>
-  :root { --bg: #ffffff; --card: #f9fafb; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #2563eb; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  ${BRAND_BASE_STYLE}
   .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
   .breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; word-break: break-all; }
   .breadcrumb a { color: var(--accent); text-decoration: none; }
@@ -538,16 +568,15 @@ function renderDirectoryPage(dirPath, children) {
   li:first-child { border-top: 1px solid var(--border); }
   li a { color: var(--accent); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
   li a:hover { text-decoration: underline; }
-  .item-path { font-family: 'SF Mono', Consolas, monospace; font-size: 0.75rem; color: var(--muted); }
-  .item-count { font-size: 0.8rem; color: var(--muted); background: #f3f4f6; padding: 0.1rem 0.5rem; border-radius: 3px; }
-  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); text-align: center; }
-  .footer a { color: var(--accent); text-decoration: none; }
+  .item-path { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .item-count { font-size: 0.8rem; color: var(--muted); background: rgba(16,185,129,0.08); padding: 0.1rem 0.5rem; border-radius: 3px; }
 </style>
 </head>
 <body>
+${BRAND_NAV}
 <div class="container">
   <div class="breadcrumb">
-    <a href="/">Open Agent Map</a> / ${renderBreadcrumbPath(dirPath)}
+    ${renderBreadcrumbPath(dirPath)}
   </div>
 
   <h1>${escHtml(displayPath)}</h1>
@@ -555,9 +584,7 @@ function renderDirectoryPage(dirPath, children) {
 
   <ul>${listHtml}</ul>
 
-  <div class="footer">
-    <a href="https://github.com/ChizhongWang/open-agent-map">Open Agent Map</a> — crowdsourced API specs for AI agents
-  </div>
+  ${BRAND_FOOTER}
 </div>
 </body>
 </html>`;
@@ -565,11 +592,16 @@ function renderDirectoryPage(dirPath, children) {
 
 function renderBreadcrumbPath(dirPath) {
   const parts = dirPath.split("/").filter(Boolean);
-  return parts.map((part, i) => {
+  const crumbs = [`<a href="/">Agent Map</a>`];
+  parts.forEach((part, i) => {
     const href = "/" + parts.slice(0, i + 1).join("/");
-    if (i === parts.length - 1) return escHtml(part);
-    return `<a href="${escHtml(href)}">${escHtml(part)}</a>`;
-  }).join(" / ");
+    if (i === parts.length - 1) {
+      crumbs.push(escHtml(part));
+    } else {
+      crumbs.push(`<a href="${escHtml(href)}">${escHtml(part)}</a>`);
+    }
+  });
+  return crumbs.join(" / ");
 }
 
 function escHtml(str) {
