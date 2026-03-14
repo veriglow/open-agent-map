@@ -411,7 +411,7 @@ function submitRequest(e) {
 </html>`;
 }
 
-function serveHomepage(request) {
+async function serveHomepage(request) {
   const accept = request.headers.get("Accept") || "";
   if (!accept.includes("text/html")) {
     return new Response(
@@ -430,63 +430,22 @@ function serveHomepage(request) {
     );
   }
 
+  // Fetch the real index.html from GitHub
+  try {
+    const resp = await fetch(GITHUB_RAW_ORIGIN + "/index.html", {
+      headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
+      cf: { cacheTtl: 300 },
+    });
+    if (resp.ok) {
+      return new Response(resp.body, {
+        headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" },
+      });
+    }
+  } catch {}
+
+  // Fallback if fetch fails
   return new Response(
-    `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open Agent Map</title>
-<style>
-  :root { --bg: #0a0a0a; --card: #141414; --border: #262626; --text: #e5e5e5; --muted: #737373; --accent: #3b82f6; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-  .container { max-width: 600px; padding: 2rem; }
-  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-  .tagline { color: var(--muted); margin-bottom: 2rem; font-size: 1.1rem; }
-  .usage { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem; }
-  .usage h2 { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem; }
-  .usage code { display: block; font-family: 'SF Mono', Consolas, monospace; font-size: 0.85rem; padding: 0.5rem; background: #f0f4ff; border-radius: 4px; margin-bottom: 0.5rem; overflow-x: auto; }
-  .example-link { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
-  .example-link:hover { text-decoration: underline; }
-  .examples { list-style: none; margin-top: 1rem; }
-  .examples li { margin-bottom: 0.5rem; }
-  .footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
-  .footer a { color: var(--accent); text-decoration: none; }
-</style>
-</head>
-<body>
-<div class="container">
-  <h1>Open Agent Map</h1>
-  <p class="tagline">Crowdsourced API specs for AI agents to navigate websites.</p>
-
-  <div class="usage">
-    <h2>Usage</h2>
-    <code>GET agentmap.veri-glow.com/{original-website-url}</code>
-    <p style="font-size:0.85rem;color:var(--muted);margin-top:0.5rem">
-      Browsers see a formatted page. Agents get JSON.<br>
-      If the map doesn't exist yet, request it and we'll notify you.
-    </p>
-  </div>
-
-  <div class="usage">
-    <h2>Examples</h2>
-    <ul class="examples">
-      <li><a class="example-link" href="/www.sse.com.cn/market/stockdata/statistic">Shanghai Stock Exchange — Stock Overview</a></li>
-      <li><a class="example-link" href="/www.sse.com.cn/disclosure/listedinfo/announcement">SSE — Announcement Search</a></li>
-      <li><a class="example-link" href="/www.sse.com.cn/assortment/stock/list/info/company">SSE — Company Detail APIs</a></li>
-      <li><a class="example-link" href="/www.sse.com.cn/market/othersdata/margin/sum">SSE — Margin Trading Summary</a></li>
-    </ul>
-  </div>
-
-  <div class="footer">
-    <a href="https://github.com/ChizhongWang/open-agent-map">GitHub</a> ·
-    <a href="https://github.com/ChizhongWang/open-agent-map/issues">Report Issue</a> ·
-    <a href="https://veri-glow.com">VeriGlow</a>
-  </div>
-</div>
-</body>
-</html>`,
+    `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Open Agent Map</title></head><body><h1>Open Agent Map</h1><p>Crowdsourced API specs for AI agents.</p><a href="https://github.com/ChizhongWang/open-agent-map">GitHub</a></body></html>`,
     { headers: { "Content-Type": "text/html; charset=utf-8" } }
   );
 }
