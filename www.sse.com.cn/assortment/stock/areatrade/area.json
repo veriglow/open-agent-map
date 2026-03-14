@@ -1,0 +1,42 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/assortment/stock/areatrade/area/",
+  "title": "地区分类",
+  "summary": "上交所地区分类。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/assortment/stock/areatrade/area/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_CP_GPJCTPZ_DQHYFL_DQFL_L",
+      "description": "数据查询标识"
+    },
+    "isPagination": {
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "value": "25"
+    },
+    "pageHelp.pageNo": {
+      "value": "1"
+    },
+    "pageHelp.beginPage": {
+      "value": "1"
+    },
+    "pageHelp.cacheSize": {
+      "value": "1"
+    },
+    "pageHelp.endPage": {
+      "value": "1"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

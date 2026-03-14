@@ -1,0 +1,28 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/market/price/report/",
+  "title": "市场报告",
+  "summary": "上交所市场报告。",
+  "method": "GET",
+  "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/price/report/"
+  },
+  "params": {
+    "select": {
+      "value": "code,name,open,high,low,last,prev_close,chg_rate,volume,amount"
+    },
+    "begin": {
+      "value": "0"
+    },
+    "end": {
+      "value": "25"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "行情服务器，非 commonQuery"
+  ]
+}

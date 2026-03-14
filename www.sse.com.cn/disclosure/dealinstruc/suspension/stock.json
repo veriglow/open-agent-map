@@ -1,0 +1,28 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/",
+  "title": "交易提示-停复牌",
+  "summary": "上交所交易提示-停复牌。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_ZQLX_C",
+      "description": "数据查询标识"
+    },
+    "SEC_CODE": {
+      "required": false,
+      "description": "证券代码"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

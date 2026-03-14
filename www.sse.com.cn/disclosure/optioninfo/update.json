@@ -1,0 +1,42 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/disclosure/optioninfo/update/",
+  "title": "股票期权信息",
+  "summary": "上交所股票期权信息。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/disclosure/optioninfo/update/"
+  },
+  "params": {
+    "stockType": {
+      "value": "9",
+      "description": "期权类型"
+    },
+    "isPagination": {
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "value": "25"
+    },
+    "pageHelp.pageNo": {
+      "value": "1"
+    },
+    "pageHelp.beginPage": {
+      "value": "1"
+    },
+    "pageHelp.cacheSize": {
+      "value": "1"
+    },
+    "pageHelp.endPage": {
+      "value": "1"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "公告搜索接口"
+  ]
+}

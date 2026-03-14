@@ -1,0 +1,27 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/market/view/",
+  "title": "市场总览",
+  "summary": "上交所市场总览。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/view/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_SJ_GPSJ_GPSJZM_TJSJ_L",
+      "description": "数据查询标识"
+    },
+    "PRODUCT_NAME": {
+      "value": "股票,主板,科创板"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

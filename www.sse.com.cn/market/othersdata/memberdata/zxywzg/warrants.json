@@ -1,0 +1,27 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/market/othersdata/memberdata/zxywzg/warrants/",
+  "title": "专项业务资格-权证",
+  "summary": "上交所专项业务资格-权证。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonSoaQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/othersdata/memberdata/zxywzg/warrants/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_SJ_HYTJSJ_ZXYWZG_L",
+      "description": "数据查询标识"
+    },
+    "PERMISSION_TYPE": {
+      "value": "warrant"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

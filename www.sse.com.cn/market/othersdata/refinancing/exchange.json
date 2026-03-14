@@ -1,0 +1,48 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/market/othersdata/refinancing/exchange/",
+  "title": "转融通-交易所",
+  "summary": "上交所转融通-交易所。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/othersdata/refinancing/exchange/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_SJ_QTSJ_ZRTZQCJJYGK_L",
+      "description": "数据查询标识"
+    },
+    "START_DATE": {
+      "required": false
+    },
+    "END_DATE": {
+      "required": false
+    },
+    "isPagination": {
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "value": "25"
+    },
+    "pageHelp.pageNo": {
+      "value": "1"
+    },
+    "pageHelp.beginPage": {
+      "value": "1"
+    },
+    "pageHelp.cacheSize": {
+      "value": "1"
+    },
+    "pageHelp.endPage": {
+      "value": "1"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

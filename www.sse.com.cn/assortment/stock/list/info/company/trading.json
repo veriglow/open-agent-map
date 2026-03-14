@@ -1,0 +1,31 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/assortment/stock/list/info/company/trading/",
+  "title": "个股成交概况",
+  "summary": "上交所个股成交概况。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/assortment/stock/list/info/company/trading/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_CP_GPJCTPZ_GPLB_CJGK_MRGK_C",
+      "description": "数据查询标识"
+    },
+    "SEC_CODE": {
+      "required": true,
+      "example": "600519"
+    },
+    "TX_DATE": {
+      "required": false
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}

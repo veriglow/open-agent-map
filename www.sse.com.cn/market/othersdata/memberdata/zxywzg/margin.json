@@ -1,0 +1,28 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/market/othersdata/memberdata/zxywzg/margin/",
+  "title": "专项业务资格-融资融券",
+  "summary": "上交所专项业务资格-融资融券。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonSoaQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/othersdata/memberdata/zxywzg/margin/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "COMMON_SSE_SJ_HYTJSJ_ZXYWZG_L",
+      "description": "数据查询标识"
+    },
+    "PERMISSION_TYPE": {
+      "value": "mf",
+      "description": "融资融券"
+    }
+  },
+  "confidence": 0.7,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "需要 Referer header",
+    "返回 JSONP 格式，需去掉回调函数包装"
+  ]
+}
