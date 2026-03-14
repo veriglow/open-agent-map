@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VeriGlow Agent Map</title>
-<meta name="description" content="Discover Agent-readable data functions, internal APIs, and reliability scores for any website.">
+<meta name="description" content="Web data maps for AI agents — find how to extract data from any indexed page.">
 <link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,8 +35,6 @@
   --am-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
   --am-shadow-lg:0 4px 24px rgba(0,0,0,0.08);
   --am-nav-bg:rgba(255,255,255,0.85);
-  --am-icon-cell:#CBD5E1;
-  --am-icon-cell-dk:#CBD5E1;
 }
 html[data-theme="dark"]{
   --am-bg-0:#06080C;
@@ -44,287 +42,145 @@ html[data-theme="dark"]{
   --am-bg-2:#12161E;
   --am-bg-3:#1A1F2B;
   --am-border:#1E2432;
-  --am-border-light:#1A1F2B;
-  --am-text-0:#E8EAF0;
-  --am-text-1:#B0B8C8;
-  --am-text-2:#6B7A94;
-  --am-text-3:#3E4B62;
+  --am-border-light:#12161E;
+  --am-text-0:#F1F5F9;
+  --am-text-1:#CBD5E1;
+  --am-text-2:#94A3B8;
+  --am-text-3:#64748B;
   --am-green:#34D399;
-  --am-green-hover:#10B981;
-  --am-green-dim:rgba(16,185,129,0.12);
+  --am-green-hover:#6EE7B7;
+  --am-green-dim:rgba(52,211,153,0.1);
   --am-blue:#60A5FA;
-  --am-blue-dim:rgba(59,130,246,0.12);
+  --am-blue-dim:rgba(96,165,250,0.1);
   --am-amber:#FBBF24;
-  --am-amber-dim:rgba(245,158,11,0.12);
+  --am-amber-dim:rgba(251,191,36,0.1);
   --am-code-bg:#0C0F15;
-  --am-shadow:0 1px 3px rgba(0,0,0,0.3);
+  --am-shadow:0 1px 3px rgba(0,0,0,0.3),0 1px 2px rgba(0,0,0,0.2);
   --am-shadow-lg:0 4px 24px rgba(0,0,0,0.4);
   --am-nav-bg:rgba(6,8,12,0.85);
-  --am-icon-cell:#334155;
-  --am-icon-cell-dk:#334155;
 }
 
-body{
-  background:var(--am-bg-0);
-  color:var(--am-text-0);
-  font-family:'DM Sans','Noto Sans SC',sans-serif;
-  -webkit-font-smoothing:antialiased;
-  line-height:1.6;
-  transition:background 0.3s,color 0.3s;
-}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--am-bg-0);color:var(--am-text-0);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
 
 /* ═══ Nav ═══ */
-.nav{
-  position:sticky;top:0;z-index:100;
-  background:var(--am-nav-bg);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--am-border);
-  height:56px;
-  display:flex;align-items:center;
-  padding:0 32px;
-  transition:background 0.3s,border-color 0.3s;
-}
-.nav-logo{
-  display:flex;align-items:center;gap:10px;
-  text-decoration:none;
-}
-.nav-logo svg{width:24px;height:24px;flex-shrink:0;}
-.nav-wordmark{
-  font-family:'Crimson Pro',Georgia,serif;font-weight:700;
-  font-size:16px;letter-spacing:0.02em;line-height:1;
-}
-.nav-wordmark .veri{color:#94A3B8;}
-.nav-wordmark .glow{color:#10B981;}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.theme-toggle{
-  width:36px;height:36px;border-radius:8px;
-  border:1px solid var(--am-border);
-  background:var(--am-bg-1);
-  color:var(--am-text-2);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all 0.2s;
-}
-.theme-toggle:hover{
-  border-color:var(--am-green);color:var(--am-green);
-  background:var(--am-green-dim);
-}
+nav{position:sticky;top:0;z-index:100;height:56px;background:var(--am-nav-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--am-border);display:flex;align-items:center;padding:0 24px;}
+.nav-inner{max-width:960px;width:100%;margin:0 auto;display:flex;align-items:center;gap:12px;}
+.nav-logo svg{width:28px;height:28px;flex-shrink:0;}
+.nav-title{font-family:'Crimson Pro',serif;font-weight:700;font-size:1.125rem;color:var(--am-text-0);text-decoration:none;}
+.nav-spacer{flex:1;}
+.nav-link{color:var(--am-text-2);text-decoration:none;font-size:0.8125rem;font-weight:500;transition:color .15s;}
+.nav-link:hover{color:var(--am-green);}
+.theme-toggle{background:none;border:none;cursor:pointer;color:var(--am-text-2);padding:6px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:color .15s,background .15s;}
+.theme-toggle:hover{color:var(--am-text-0);background:var(--am-bg-2);}
 .theme-toggle svg{width:18px;height:18px;}
-.icon-sun{display:block;}
 .icon-moon{display:none;}
 html[data-theme="dark"] .icon-sun{display:none;}
 html[data-theme="dark"] .icon-moon{display:block;}
 
 /* ═══ Hero ═══ */
-.hero{
-  text-align:center;
-  max-width:680px;
-  margin:0 auto;
-  padding:80px 24px 64px;
-}
-.hero-icon{
-  width:56px;height:56px;
-  margin:0 auto 28px;
-}
-.hero h1{
-  font-size:36px;font-weight:700;
-  margin-bottom:12px;letter-spacing:-0.5px;
-}
+.hero{text-align:center;padding:64px 24px 48px;}
+.hero-icon{width:64px;height:64px;margin-bottom:20px;}
+.hero h1{font-family:'Crimson Pro',serif;font-weight:700;font-size:2rem;margin-bottom:8px;}
 .hero h1 span{color:var(--am-green);}
-.hero-sub{
-  color:var(--am-text-2);
-  font-size:17px;line-height:1.7;
-  margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;
-}
-.search-box{
-  position:relative;width:100%;max-width:560px;margin:0 auto;
-}
-.search-box input{
-  width:100%;
-  padding:16px 100px 16px 48px;
-  background:var(--am-bg-1);
-  border:1px solid var(--am-border);
-  border-radius:14px;
-  color:var(--am-text-0);
-  font-size:15px;
-  font-family:'JetBrains Mono',monospace;
-  outline:none;
-  transition:border-color 0.2s,box-shadow 0.2s;
-  box-shadow:var(--am-shadow);
-}
-.search-box input:focus{
-  border-color:var(--am-green);
-  box-shadow:0 0 0 3px var(--am-green-dim);
-}
+.hero-sub{color:var(--am-text-2);font-size:0.9375rem;max-width:520px;margin:0 auto 8px;}
+.hero-sub-cn{color:var(--am-text-3);font-size:0.8125rem;font-family:'Noto Sans SC',sans-serif;margin-bottom:32px;}
+
+/* ═══ Search ═══ */
+.search-wrap{max-width:560px;margin:0 auto;position:relative;}
+.search-box{display:flex;align-items:center;background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:12px;padding:0 16px;height:48px;transition:border-color .15s,box-shadow .15s;}
+.search-box:focus-within{border-color:var(--am-green);box-shadow:0 0 0 3px var(--am-green-dim);}
+.search-box svg{width:18px;height:18px;color:var(--am-text-3);flex-shrink:0;}
+.search-box input{flex:1;border:none;background:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.9375rem;color:var(--am-text-0);padding:0 12px;height:100%;}
 .search-box input::placeholder{color:var(--am-text-3);}
-.search-icon{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  color:var(--am-text-3);width:20px;height:20px;
-}
-.search-btn{
-  position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  background:var(--am-green);color:#fff;
-  border:none;border-radius:10px;
-  padding:10px 24px;font-size:14px;font-weight:600;
-  cursor:pointer;transition:background 0.15s;
-  font-family:'DM Sans',sans-serif;
-}
-.search-btn:hover{background:var(--am-green-hover);}
-.search-hint{
-  color:var(--am-text-3);font-size:13px;margin-top:14px;
-}
-.search-hint code{
-  background:var(--am-bg-2);
-  padding:2px 8px;border-radius:5px;
-  font-family:'JetBrains Mono',monospace;font-size:12px;
-  color:var(--am-text-2);
-}
+.search-go{display:none;background:var(--am-green);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s;}
+.search-go:hover{background:var(--am-green-hover);}
+.search-go.visible{display:block;}
 
-/* ═══ How It Works ═══ */
-.how{
-  max-width:880px;margin:0 auto;
-  padding:0 32px 72px;
-}
-.section-label{
-  font-size:11px;font-weight:600;letter-spacing:3px;
-  text-transform:uppercase;color:var(--am-text-3);
-  text-align:center;margin-bottom:12px;
-}
-.section-title{
-  font-size:24px;font-weight:700;text-align:center;
-  margin-bottom:48px;
-}
-.how-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-}
-.how-card{
-  background:var(--am-bg-1);
-  border:1px solid var(--am-border);
-  border-radius:16px;
-  padding:32px 24px;
-  text-align:center;
-  transition:border-color 0.2s,box-shadow 0.2s;
-}
-.how-card:hover{
-  border-color:var(--am-green);
-  box-shadow:0 0 0 3px var(--am-green-dim);
-}
-.how-num{
-  width:40px;height:40px;
-  border-radius:10px;
-  background:var(--am-green-dim);
-  color:var(--am-green);
-  font-size:16px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;
-}
-.how-card h3{
-  font-size:16px;font-weight:600;margin-bottom:8px;
-}
-.how-card p{
-  font-size:14px;color:var(--am-text-2);line-height:1.6;
-}
+/* Dropdown */
+.search-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--am-bg-0);border:1px solid var(--am-border);border-radius:12px;box-shadow:var(--am-shadow-lg);overflow:hidden;display:none;z-index:50;}
+.search-dropdown.open{display:block;animation:dropIn .15s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.search-dropdown .sr{display:block;padding:10px 16px;text-decoration:none;border-bottom:1px solid var(--am-border-light);transition:background .1s;cursor:pointer;}
+.search-dropdown .sr:last-child{border-bottom:none;}
+.search-dropdown .sr:hover{background:var(--am-green-dim);}
+.sr-title{font-size:0.875rem;font-weight:600;color:var(--am-text-0);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sr-summary{font-size:0.75rem;color:var(--am-text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sr-path{font-family:'JetBrains Mono',monospace;font-size:0.6875rem;color:var(--am-text-3);margin-top:2px;}
+.search-empty{padding:16px;text-align:center;color:var(--am-text-3);font-size:0.8125rem;}
 
-/* ═══ Available Maps ═══ */
-.maps{
-  max-width:880px;margin:0 auto;
-  padding:0 32px 80px;
-}
-.map-card{
-  background:var(--am-bg-1);
-  border:1px solid var(--am-border);
-  border-radius:16px;
-  overflow:hidden;
-  transition:border-color 0.2s,box-shadow 0.2s;
-  text-decoration:none;color:inherit;display:block;
-}
-.map-card:hover{
-  border-color:var(--am-green);
-  box-shadow:var(--am-shadow-lg);
-}
-.map-card-header{
-  padding:20px 24px 16px;
-}
-.map-card-header h3{
-  font-size:18px;font-weight:600;margin-bottom:4px;
-}
-.map-card-header .cn{
-  font-family:'Noto Sans SC';font-size:13px;
-  color:var(--am-text-2);margin-bottom:14px;
-}
-.map-tags{display:flex;flex-wrap:wrap;gap:6px;}
-.map-tag{
-  font-size:11px;font-weight:500;
-  padding:4px 10px;border-radius:6px;
-  background:var(--am-bg-2);color:var(--am-text-1);
-  border:1px solid var(--am-border);
-}
-.map-tag.green{background:var(--am-green-dim);color:var(--am-green);border-color:transparent;}
-.map-tag.amber{background:var(--am-amber-dim);color:var(--am-amber);border-color:transparent;}
-.map-tag.blue{background:var(--am-blue-dim);color:var(--am-blue);border-color:transparent;}
-.map-card-url{
-  padding:12px 24px;
-  border-top:1px solid var(--am-border);
-  font-family:'JetBrains Mono',monospace;
-  font-size:13px;color:var(--am-text-2);
-  display:flex;align-items:center;gap:8px;
-}
-.map-card-url .domain{color:var(--am-green);font-weight:500;}
-.map-card-url .arrow{
-  margin-left:auto;color:var(--am-text-3);
-  transition:transform 0.2s,color 0.2s;
-}
-.map-card:hover .arrow{transform:translateX(4px);color:var(--am-green);}
+/* ═══ Sites Section ═══ */
+.sites{max-width:720px;margin:0 auto;padding:0 24px 64px;}
+.sites-heading{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--am-text-3);margin-bottom:16px;}
+.site-card{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:14px;padding:28px;transition:box-shadow .2s;}
+.site-card:hover{box-shadow:var(--am-shadow-lg);}
+.site-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;}
+.site-card-title{font-weight:700;font-size:1.125rem;color:var(--am-text-0);line-height:1.3;}
+.site-card-title small{display:block;font-weight:400;font-size:0.8125rem;color:var(--am-text-2);margin-top:2px;}
+.site-card-badge{background:var(--am-green-dim);color:var(--am-green);font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.site-card-meta{font-size:0.8125rem;color:var(--am-text-2);margin-bottom:20px;}
+.site-card-meta span{font-weight:600;color:var(--am-text-0);}
+
+/* Tree */
+.site-tree{font-family:'JetBrains Mono',monospace;font-size:0.8125rem;line-height:1.8;color:var(--am-text-1);background:var(--am-bg-0);border:1px solid var(--am-border-light);border-radius:10px;padding:16px 20px;margin-bottom:20px;}
+.site-tree .branch{display:flex;gap:8px;}
+.branch-prefix{color:var(--am-text-3);user-select:none;flex-shrink:0;}
+.branch-dir{color:var(--am-green);font-weight:600;}
+.branch-count{color:var(--am-text-2);font-weight:400;}
+.branch-desc{color:var(--am-text-2);font-family:'Noto Sans SC','DM Sans',sans-serif;font-size:0.75rem;}
+.site-card-action{display:inline-flex;align-items:center;gap:6px;background:var(--am-green);color:#fff;text-decoration:none;font-size:0.8125rem;font-weight:600;padding:8px 18px;border-radius:8px;transition:background .15s;}
+.site-card-action:hover{background:var(--am-green-hover);}
 
 /* ═══ Footer ═══ */
-.foot{
-  text-align:center;padding:48px 32px 32px;
-  border-top:1px solid var(--am-border);
-}
-.foot-text{
-  font-size:11px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;color:var(--am-text-3);
-}
-.foot-text span{color:var(--am-green);}
+footer{margin-top:auto;border-top:1px solid var(--am-border);padding:24px;text-align:center;font-size:0.75rem;color:var(--am-text-3);}
+footer a{color:var(--am-text-2);text-decoration:none;transition:color .15s;}
+footer a:hover{color:var(--am-green);}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px;}
+.footer-brand{font-family:'Crimson Pro',serif;font-weight:700;font-size:0.8125rem;letter-spacing:0.04em;color:var(--am-text-2);}
 
 /* ═══ Responsive ═══ */
 @media(max-width:768px){
-  .nav{padding:0 20px;height:52px;}
-  .hero{padding:56px 20px 48px;}
-  .hero h1{font-size:28px;}
-  .hero-sub{font-size:15px;}
-  .how{padding:0 20px 56px;}
-  .how-grid{grid-template-columns:1fr;gap:16px;}
-  .maps{padding:0 20px 56px;}
-  .search-box input{padding:14px 90px 14px 44px;font-size:13px;}
-  .search-btn{padding:8px 16px;font-size:13px;}
+  .hero{padding:48px 20px 36px;}
+  .hero h1{font-size:1.625rem;}
+  .sites{padding:0 20px 48px;}
+  .site-card{padding:20px;}
+  .site-tree{font-size:0.75rem;padding:12px 14px;}
 }
 @media(max-width:480px){
-  .nav-wordmark{font-size:14px;}
-  .hero h1{font-size:24px;}
-  .hero-icon{width:44px;height:44px;}
+  nav{padding:0 16px;}
+  .hero{padding:36px 16px 28px;}
+  .hero h1{font-size:1.375rem;}
+  .hero-sub{font-size:0.8125rem;}
+  .search-box{height:44px;padding:0 12px;}
+  .sites{padding:0 16px 40px;}
+  .site-card{padding:16px;}
+  .site-card-head{flex-direction:column;gap:8px;}
+  .site-tree{font-size:0.6875rem;padding:10px 12px;}
+  .branch-desc{display:none;}
 }
 </style>
 </head>
 <body>
 
 <!-- ═══ Nav ═══ -->
-<nav class="nav">
-  <a href="/" class="nav-logo">
-    <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
-    <span class="nav-wordmark"><span class="veri">Veri</span><span class="glow">Glow</span></span>
-  </a>
-  <div class="nav-right">
-    <a href="https://support.veri-glow.com/pay" style="font-size:13px;font-weight:600;color:var(--am-green);text-decoration:none;padding:8px 16px;border:1px solid var(--am-green);border-radius:8px;transition:all 0.2s;">Tip Us</a>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="/" class="nav-title">Agent Map</a>
+    <span class="nav-spacer"></span>
+    <a href="https://github.com/veriglow/agent-map" class="nav-link" target="_blank" rel="noopener">GitHub</a>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -332,7 +188,7 @@ html[data-theme="dark"] .icon-moon{display:block;}
   </div>
 </nav>
 
-<!-- ═══ Hero ═══ -->
+<!-- ═══ Hero + Search ═══ -->
 <section class="hero">
   <svg class="hero-icon" viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
     <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
@@ -345,1148 +201,59 @@ html[data-theme="dark"] .icon-moon{display:block;}
     <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
     <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
   </svg>
-  <h1><span>VeriGlow</span> Agent Map</h1>
-  <p class="hero-sub">Paste any URL to discover its Agent-readable data functions, internal APIs, and reliability scores.</p>
-  <div class="search-box">
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <input id="url-input" type="text" placeholder="https://www.example.com/..." autofocus>
-    <button class="search-btn" onclick="go()">Go</button>
-  </div>
-  <p class="search-hint">Paste a URL, or prepend <code>veri-glow.com/</code> to any URL in your browser</p>
-</section>
+  <h1>VeriGlow <span>Agent Map</span></h1>
+  <p class="hero-sub">Web data maps for AI agents — find how to extract data from any indexed page</p>
+  <p class="hero-sub-cn">为AI代理提供网页数据提取地图</p>
 
-<!-- ═══ How It Works ═══ -->
-<section class="how">
-  <div class="section-label">How It Works</div>
-  <h2 class="section-title">Three steps to Agent-ready data</h2>
-  <div class="how-grid">
-    <div class="how-card">
-      <div class="how-num">1</div>
-      <h3>Paste a URL</h3>
-      <p>Enter the URL of any website that has data you want an AI Agent to access.</p>
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input id="search-input" type="text" placeholder="Search by keyword or paste a URL..." autocomplete="off" spellcheck="false">
+      <button class="search-go" id="search-go">Go to map &rarr;</button>
     </div>
-    <div class="how-card">
-      <div class="how-num">2</div>
-      <h3>Get the Map</h3>
-      <p>We analyze the page structure, APIs, and data sources, then generate a detailed Agent Map.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">3</div>
-      <h3>Use the Data</h3>
-      <p>Your Agent can call documented APIs directly, or follow browser automation recipes we provide.</p>
-    </div>
+    <div class="search-dropdown" id="search-dropdown"></div>
   </div>
 </section>
 
-<!-- ═══ Available Maps ═══ -->
-<section class="maps">
-  <div class="section-label">Available Maps</div>
-  <h2 class="section-title">Explore indexed data sources</h2>
-  <a class="map-card" href="/map/sse.com.cn">
-    <div class="map-card-header">
-      <h3>Shanghai Stock Exchange &mdash; Domain Overview</h3>
-      <div class="cn">上海证券交易所 &middot; www.sse.com.cn &middot; 全域 API 与页面结构总览</div>
-      <div class="map-tags">
-        <span class="map-tag green">5 API hosts</span>
-        <span class="map-tag green">No auth on market data</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag blue">10+ data pages</span>
+<!-- ═══ Indexed Sites ═══ -->
+<section class="sites">
+  <div class="sites-heading">Indexed Sites</div>
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
+        Shanghai Stock Exchange (上海证券交易所)
+        <small>www.sse.com.cn</small>
       </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/map/sse.com.cn</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/overview/day/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Trading Overview (Daily)</h3>
-      <div class="cn">上海证券交易所 &middot; 债券成交概况（日度）</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 17 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/overview/day/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/fred.stlouisfed.org/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>FRED &mdash; Federal Reserve Economic Data</h3>
-      <div class="cn">Federal Reserve Bank of St. Louis &middot; 800K+ Economic Time Series</div>
-      <div class="map-tags">
-        <span class="map-tag green">Self-documented</span>
-        <span class="map-tag green">Free API key</span>
-        <span class="map-tag green">No IP restrictions</span>
-        <span class="map-tag blue">800K+ series</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/fred.stlouisfed.org/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/coinpaprika.com/coin/btc-bitcoin/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Cryptocurrency Market Data (Live)</h3>
-      <div class="cn">CoinPaprika &middot; Bitcoin Ticker</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag">Static &mdash; REST API</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">JSON object</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/coinpaprika.com/coin/btc-bitcoin/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/open-meteo.com/en/docs/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Weather Forecast API</h3>
-      <div class="cn">Open-Meteo &middot; Free Weather API</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag">Static &mdash; REST API</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Time-series JSON</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/open-meteo.com/en/docs/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/news.ycombinator.com/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Hacker News &mdash; Top Stories</h3>
-      <div class="cn">Firebase API &middot; Y Combinator</div>
-      <div class="map-tags">
-        <span class="map-tag green">2 data functions</span>
-        <span class="map-tag">Static &mdash; REST API</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Two-step fetch</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/news.ycombinator.com/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/view/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Market Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 市场总貌 &middot; 市场总貌</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 15 &times; 5</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/view/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/price/trends/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Market Trends</h3>
-      <div class="cn">上海证券交易所 &middot; 行情信息 &middot; 行情走势</div>
-      <div class="map-tags">
-        <span class="map-tag green">2 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 2 &times; 0</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/price/trends/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/price/report/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Market Quotation Report</h3>
-      <div class="cn">上海证券交易所 &middot; 行情信息 &middot; 行情报表</div>
-      <div class="map-tags">
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 13</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/price/report/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/sseindex/overview/focus/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Key Index & Sample Performance</h3>
-      <div class="cn">上海证券交易所 &middot; 上证指数 &middot; 重点指数及样本表现</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 13 &times; 10</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/sseindex/overview/focus/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/sseindex/indexlist/basic/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Index Basic Information</h3>
-      <div class="cn">上海证券交易所 &middot; 上证指数 &middot; 基本信息</div>
-      <div class="map-tags">
-        <span class="map-tag green">4 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 5 &times; 0</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/sseindex/indexlist/basic/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/sseindex/quotation/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Index Quotation</h3>
-      <div class="cn">上海证券交易所 &middot; 上证指数 &middot; 指数行情</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 9</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/sseindex/quotation/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/statistic/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Statistics Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 总貌</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/statistic/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/overview/weekly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Stock Weekly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 每周概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 13 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/overview/weekly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/overview/monthly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Stock Monthly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 月度概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 13 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/overview/monthly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/pshare/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Preferred Share Trading Statistics</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 优先股成交统计信息</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 8</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/pshare/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/firstday/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>IPO First-Day Performance</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 首日表现</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 8 &times; 10</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/firstday/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/raise/ipo/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>IPO (Initial Public Offering)</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 首发</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 3 &times; 9</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/raise/ipo/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/raise/additional/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Secondary Offering (SEO)</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 增发</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/raise/additional/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/raise/allotment/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Rights Issue</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 配股</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/raise/allotment/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/structure/overview/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Statistics Overview Share Capital Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 总貌</div>
-      <div class="map-tags">
-        <span class="map-tag green">3 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 5 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/structure/overview/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/structure/rank/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Share Capital Ranking</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 股本排行</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 11 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/structure/rank/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/dividends/dividend/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Cash Dividends</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 分红</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/dividends/dividend/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/dividends/bonus/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bonus Shares</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 送股</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 8</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/dividends/bonus/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/price/sh/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Shanghai Market P/E Ratio</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 上海市场</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 13</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/price/sh/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/marketvalue/main/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Main Board Market Cap Ranking</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 主板</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 10 &times; 5</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/marketvalue/main/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/marketvalue/star/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>STAR Market (Sci-Tech) Market Cap Ranking</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 科创板</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 10 &times; 5</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/marketvalue/star/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/activity/main/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Main Board Trading Activity</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 主板</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 11</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/activity/main/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/stockdata/activity/star/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>STAR Market (Sci-Tech) Trading Activity</h3>
-      <div class="cn">上海证券交易所 &middot; 股票数据 &middot; 科创板</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 5 &times; 11</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/stockdata/activity/star/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/overview/day/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Fund Daily Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 每日概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 3 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/overview/day/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/overview/weekly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Fund Weekly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 每周概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 8 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/overview/weekly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/overview/monthly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Fund Monthly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 月度概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 8 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/overview/monthly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/overview/yearly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Fund Annual Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 年度概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 8 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/overview/yearly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/volumn/reits/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Public REITs Scale</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 公募REITs规模</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/volumn/reits/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/volumn/lofvolumn/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Listed Open-End Fund (LOF) Scale</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 上市开放式基金（LOF）规模</div>
-      <div class="map-tags">
-        <span class="map-tag green">2 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/volumn/lofvolumn/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/funddata/volumn/fjlofvolumn/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Graded LOF Fund Scale</h3>
-      <div class="cn">上海证券交易所 &middot; 基金数据 &middot; 分级LOF基金规模</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/funddata/volumn/fjlofvolumn/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/overview/weekly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Weekly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 每周概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 17 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/overview/weekly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/overview/monthly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Monthly Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 月度概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 17 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/overview/monthly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/overview/yearly/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Annual Trading Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 年度概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/overview/yearly/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/statistic/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Statistics</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 统计数据</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 9 &times; 4</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/statistic/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/dxkzzcj/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Targeted Convertible Bond Trading</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 定向可转债成交统计</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/dxkzzcj/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/exchangeable/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Exchangeable Bond Conversion Statistics</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 可交换债换股统计</div>
-      <div class="map-tags">
-        <span class="map-tag green">2 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/exchangeable/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/profit/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Yield Statistics</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 债券收益统计</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 8</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/profit/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/netfull/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Bond Clean & Dirty Price</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 净价与全价</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 5</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/netfull/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/bonddata/livelybond/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Active Bond Varieties</h3>
-      <div class="cn">上海证券交易所 &middot; 债券数据 &middot; 债券活跃品种</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 10</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/bonddata/livelybond/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/margin/sum/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Margin Trading Summary</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 融资融券汇总</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 16 &times; 8</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/margin/sum/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/margin/detail/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Margin Trading Detail</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 融资融券明细</div>
-      <div class="map-tags">
-        <span class="map-tag green">2 data functions</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/margin/detail/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/refinancing/lend/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Securities Lending Overview</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 转融通证券出借交易概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/refinancing/lend/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/refinancing/mate/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Info Exchange Intention Matching</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 信息交流工具意向匹配概况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 6</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/refinancing/mate/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/refinancing/exchange/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Info Exchange Inquiry & Quote</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 信息交流工具询报价情况</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 1 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/refinancing/exchange/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/zlpskcjxx/main/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Main Board Strategic Placement Lending</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 主板战略配售可出借信息</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/zlpskcjxx/main/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/zlpskcjxx/star/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>STAR Board Strategic Placement Lending</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 科创板战略配售可出借信息</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/zlpskcjxx/star/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/asset/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Asset Management Plan Share Transfer</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 资管计划份额转让</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 7</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/asset/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/memberlist/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Member List</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 会员列表</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 5</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/memberlist/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/warrants/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Warrants Business Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 权证</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/warrants/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/outrightrepo/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Outright Repo Business Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 买断式回购</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/outrightrepo/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/szjjt/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>SSE Fund Connect Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 上证基金通</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/szjjt/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/margin/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Margin Trading Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 融资融券</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/margin/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/hkexsc/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Stock Connect (Shanghai-HK) Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 港股通</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/hkexsc/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/options/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Options Business Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 期权</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/options/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
-
-  <a class="map-card" href="/www.sse.com.cn/market/othersdata/memberdata/zxywzg/list/" style="margin-top:16px;">
-    <div class="map-card-header">
-      <h3>Re-financing Business Qualification</h3>
-      <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 转融通</div>
-      <div class="map-tags">
-        <span class="map-tag green">1 data function</span>
-        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
-        <span class="map-tag">No auth</span>
-        <span class="map-tag blue">Table: 20 &times; 2</span>
-      </div>
-    </div>
-    <div class="map-card-url">
-      <span class="domain">veri-glow.com</span><span>/www.sse.com.cn/market/othersdata/memberdata/zxywzg/list/</span>
-      <span class="arrow">&rarr;</span>
-    </div>
-  </a>
-
+      <div class="site-card-badge">API + HTML</div>
+    </div>
+    <div class="site-card-meta"><span id="sse-count">--</span> pages mapped &middot; API + HTML scrape</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">market/</span> <span class="branch-count">61 pages</span> <span class="branch-desc">— 股票、债券、基金、指数行情数据</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">disclosure/</span> <span class="branch-count">11 pages</span> <span class="branch-desc">— 公告、定期报告、信息披露</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">assortment/</span> <span class="branch-count">&nbsp;6 pages</span> <span class="branch-desc">— 股票分类、上市公司列表</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">regulation/</span> <span class="branch-count">&nbsp;5 pages</span> <span class="branch-desc">— 监管动态、处分措施</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">listing/</span> <span class="branch-count">&nbsp;3 pages</span> <span class="branch-desc">— IPO审核、业务通知</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">lawandrules/</span> <span class="branch-count">&nbsp;1 page&nbsp;</span> <span class="branch-desc">— 业务指南</span></div>
+    </div>
+    <a href="/www.sse.com.cn" class="site-card-action">Browse all pages &rarr;</a>
+  </div>
 </section>
 
 <!-- ═══ Footer ═══ -->
-<footer class="foot">
-  <div class="foot-text"><span>VERIGLOW</span> AGENT MAP &mdash; veri-glow.com</div>
+<footer>
+  <div class="footer-inner">
+    <span class="footer-brand">VERIGLOW AGENT MAP</span>
+    <span>&middot;</span>
+    <a href="https://veri-glow.com" target="_blank" rel="noopener">veri-glow.com</a>
+    <span>&middot;</span>
+    <a href="https://github.com/veriglow/agent-map" target="_blank" rel="noopener">GitHub</a>
+    <span>&middot;</span>
+    <a href="https://support.veri-glow.com/pay" target="_blank" rel="noopener">Tip Us</a>
+  </div>
 </footer>
 
 <script>
-/* Theme toggle */
+/* ═══ Theme ═══ */
 function getPreferred(){
   const stored=localStorage.getItem('am-theme');
   if(stored)return stored;
@@ -1505,17 +272,112 @@ function toggleTheme(){
   if(t==='dark')applyTheme('dark');
 })();
 
-/* Search */
-function go(){
-  let url=document.getElementById('url-input').value.trim();
-  if(!url)return;
-  url=url.replace(/^https?:\/\//,'');
-  window.location.href='/'+url;
+/* ═══ Search ═══ */
+let manifest = [];
+const searchInput = document.getElementById('search-input');
+const searchGo = document.getElementById('search-go');
+const dropdown = document.getElementById('search-dropdown');
+let selectedIdx = -1;
+
+fetch('/_manifest.json')
+  .then(r => r.json())
+  .then(data => {
+    manifest = data;
+    updateSiteStats(data);
+  })
+  .catch(() => {});
+
+function updateSiteStats(data) {
+  const ssePages = data.filter(p => p.path && p.path.startsWith('/www.sse.com.cn'));
+  const el = document.getElementById('sse-count');
+  if (el) el.textContent = ssePages.length || '--';
 }
-document.getElementById('url-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter')go();
+
+function isUrlLike(v) {
+  return /^https?:\/\//.test(v) || (/\./.test(v) && !/\s/.test(v));
+}
+
+function hideDropdown() {
+  dropdown.classList.remove('open');
+  dropdown.innerHTML = '';
+  selectedIdx = -1;
+}
+
+function showUrlMode(url) {
+  hideDropdown();
+  searchGo.classList.add('visible');
+  searchGo.onclick = function() {
+    let target = url.replace(/^https?:\/\//, '');
+    window.location.href = '/' + target;
+  };
+}
+
+function showResults(results) {
+  searchGo.classList.remove('visible');
+  if (!results.length) {
+    dropdown.innerHTML = '<div class="search-empty">No results found</div>';
+    dropdown.classList.add('open');
+    return;
+  }
+  dropdown.innerHTML = results.map((r, i) => {
+    const summary = r.summary ? r.summary.slice(0, 80) : '';
+    return '<a class="sr" href="' + r.path + '" data-idx="' + i + '">' +
+      '<div class="sr-title">' + escHtml(r.title) + '</div>' +
+      (summary ? '<div class="sr-summary">' + escHtml(summary) + '</div>' : '') +
+      '<div class="sr-path">' + escHtml(r.path) + '</div>' +
+      '</a>';
+  }).join('');
+  dropdown.classList.add('open');
+  selectedIdx = -1;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+searchInput.addEventListener('input', function() {
+  const trimmed = this.value.trim();
+  if (!trimmed) { hideDropdown(); searchGo.classList.remove('visible'); return; }
+  if (isUrlLike(trimmed)) {
+    showUrlMode(trimmed);
+  } else {
+    searchGo.classList.remove('visible');
+    const q = trimmed.toLowerCase();
+    const results = manifest.filter(p =>
+      (p.title && p.title.toLowerCase().includes(q)) ||
+      (p.summary && p.summary.toLowerCase().includes(q)) ||
+      (p.path && p.path.toLowerCase().includes(q))
+    ).slice(0, 8);
+    showResults(results);
+  }
+});
+
+searchInput.addEventListener('keydown', function(e) {
+  const items = dropdown.querySelectorAll('.sr');
+  if (e.key === 'Enter') {
+    if (selectedIdx >= 0 && items[selectedIdx]) {
+      window.location.href = items[selectedIdx].getAttribute('href');
+    } else if (isUrlLike(this.value.trim())) {
+      let target = this.value.trim().replace(/^https?:\/\//, '');
+      window.location.href = '/' + target;
+    }
+    return;
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (!items.length) return;
+    items.forEach(el => el.style.background = '');
+    if (e.key === 'ArrowDown') selectedIdx = (selectedIdx + 1) % items.length;
+    else selectedIdx = (selectedIdx - 1 + items.length) % items.length;
+    items[selectedIdx].style.background = 'var(--am-green-dim)';
+    items[selectedIdx].scrollIntoView({ block: 'nearest' });
+  }
+  if (e.key === 'Escape') { hideDropdown(); searchGo.classList.remove('visible'); }
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-wrap')) { hideDropdown(); searchGo.classList.remove('visible'); }
 });
 </script>
-
 </body>
 </html>

@@ -446,17 +446,46 @@ function submitRequest(e) {
 async function serveHomepage(request) {
   const accept = request.headers.get("Accept") || "";
   if (!accept.includes("text/html")) {
+    // Build service discovery document from manifest
+    let sites = [];
+    let totalPages = 0;
+    try {
+      const mResp = await fetch(GITHUB_RAW_ORIGIN + "/_manifest.json", {
+        headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
+        cf: { cacheTtl: 600 },
+      });
+      if (mResp.ok) {
+        const manifest = await mResp.json();
+        totalPages = manifest.length;
+        // Aggregate by domain
+        const domainMap = {};
+        for (const p of manifest) {
+          const domain = p.path.split("/").filter(Boolean)[0];
+          if (!domainMap[domain]) domainMap[domain] = { domain, pages: 0 };
+          domainMap[domain].pages++;
+        }
+        sites = Object.values(domainMap);
+      }
+    } catch {}
     return new Response(
       JSON.stringify({
-        service: "Open Agent Map",
-        description: "Crowdsourced API specs for AI agents",
-        usage: "GET /www.sse.com.cn/market/stockdata/statistic",
+        service: "VeriGlow Agent Map",
+        description: "Web data extraction maps for AI agents — API specs, CSS selectors, pagination patterns",
+        usage: {
+          list_pages: "GET /{domain}  →  all mapped pages for a site",
+          get_spec: "GET /{domain}/{path}  →  extraction spec for a page",
+          search: "GET /_manifest.json  →  full index of all mapped pages",
+          example: "GET /www.sse.com.cn/market/stockdata/statistic",
+        },
+        sites,
+        total_pages: totalPages,
         github: "https://github.com/ChizhongWang/open-agent-map",
-      }),
+      }, null, 2),
       {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=300",
         },
       }
     );
@@ -526,27 +555,76 @@ async function serveDirectoryListing(request, dirPath) {
 }
 
 function renderDirectoryPage(dirPath, children) {
-  const domain = dirPath.split("/").filter(Boolean)[0] || dirPath;
   const displayPath = dirPath.replace(/^\//, "");
 
   // Group by immediate subdirectory
   const prefix = dirPath + "/";
   const groups = {};
+  const groupOrder = [];
   for (const child of children) {
     const rest = child.path.slice(prefix.length);
     const segment = rest.split("/")[0];
-    if (!groups[segment]) groups[segment] = [];
+    if (!groups[segment]) { groups[segment] = []; groupOrder.push(segment); }
     groups[segment].push(child);
   }
 
-  let listHtml = "";
-  for (const [segment, items] of Object.entries(groups)) {
+  // Count types
+  const apiCount = children.filter(c => !c.summary || !c.summary.includes("scrape")).length;
+  const scrapeCount = children.length - apiCount;
+
+  let sectionsHtml = "";
+  for (const segment of groupOrder) {
+    const items = groups[segment];
     if (items.length === 1 && !items[0].path.slice(prefix.length).includes("/")) {
-      // Leaf node — direct link
-      listHtml += `<li><a href="${escHtml(items[0].path)}">${escHtml(items[0].title || segment)}</a><span class="item-path">${escHtml(items[0].path)}</span></li>`;
+      // Single leaf — render as a standalone card-row
+      const item = items[0];
+      sectionsHtml += `
+      <div class="section leaf-item">
+        <a class="leaf-link" href="${escHtml(item.path)}">
+          <span class="leaf-title">${escHtml(item.title || segment)}</span>
+          <span class="leaf-summary">${escHtml(item.summary || "")}</span>
+        </a>
+      </div>`;
     } else {
-      // Subdirectory — link to subdirectory + show count
-      listHtml += `<li><a href="${escHtml(prefix + segment)}">${escHtml(segment)}/</a><span class="item-count">${items.length} pages</span></li>`;
+      // Subdirectory — expanded section with child pages
+      const subPrefix = prefix + segment + "/";
+      // Sub-group one more level for display
+      const subGroups = {};
+      const subOrder = [];
+      for (const item of items) {
+        const subRest = item.path.slice(subPrefix.length);
+        const subSeg = subRest.split("/")[0];
+        if (!subGroups[subSeg]) { subGroups[subSeg] = []; subOrder.push(subSeg); }
+        subGroups[subSeg].push(item);
+      }
+
+      let childrenHtml = "";
+      let shown = 0;
+      const MAX_SHOW = 8;
+      for (const subSeg of subOrder) {
+        const subItems = subGroups[subSeg];
+        if (shown >= MAX_SHOW) break;
+        if (subItems.length === 1 && !subItems[0].path.slice(subPrefix.length).includes("/")) {
+          const item = subItems[0];
+          childrenHtml += `<a class="child" href="${escHtml(item.path)}"><span class="child-title">${escHtml(item.title)}</span><span class="child-desc">${escHtml(truncate(item.summary || "", 60))}</span></a>`;
+          shown++;
+        } else {
+          childrenHtml += `<a class="child" href="${escHtml(subPrefix + subSeg)}"><span class="child-title">${escHtml(subSeg)}/</span><span class="child-desc">${subItems.length} pages</span></a>`;
+          shown++;
+        }
+      }
+      const remaining = items.length - shown;
+
+      sectionsHtml += `
+      <div class="section">
+        <div class="section-header">
+          <a class="section-link" href="${escHtml(prefix + segment)}">
+            <span class="section-name">${escHtml(segment)}/</span>
+            <span class="section-count">${items.length}</span>
+          </a>
+        </div>
+        <div class="children">${childrenHtml}${remaining > 0 ? `<a class="child more" href="${escHtml(prefix + segment)}">+${remaining} more</a>` : ""}</div>
+      </div>`;
     }
   }
 
@@ -559,19 +637,52 @@ function renderDirectoryPage(dirPath, children) {
 ${BRAND_FONTS}
 <style>
   ${BRAND_BASE_STYLE}
-  .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
   .breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; word-break: break-all; }
   .breadcrumb a { color: var(--accent); text-decoration: none; }
   h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-  .stats { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
-  ul { list-style: none; }
-  li { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 0.75rem; }
-  li:first-child { border-top: 1px solid var(--border); }
-  li a { color: var(--accent); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
-  li a:hover { text-decoration: underline; }
-  .item-path { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); }
-  .item-count { font-size: 0.8rem; color: var(--muted); background: rgba(16,185,129,0.08); padding: 0.1rem 0.5rem; border-radius: 3px; }
+  .stats { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .stats-detail { color: var(--muted); font-size: 0.8rem; margin-bottom: 2rem; }
+  .stats-detail span { margin-right: 1rem; }
+
+  .section { margin-bottom: 1.5rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .section-header { background: var(--card); padding: 0.8rem 1.1rem; border-bottom: 1px solid var(--border); }
+  .section-link { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .section-name { font-weight: 600; font-size: 1rem; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  .section-link:hover .section-name { color: var(--accent); }
+  .section-count { font-size: 0.75rem; color: var(--muted); background: rgba(16,185,129,0.08); padding: 0.1rem 0.45rem; border-radius: 3px; }
+
+  .children { display: grid; grid-template-columns: 1fr; }
+  .child { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; padding: 0.6rem 1.1rem; border-bottom: 1px solid var(--border); text-decoration: none; transition: background 0.15s; }
+  .child:last-child { border-bottom: none; }
+  .child:hover { background: #f0fdf4; }
+  .child-title { font-size: 0.88rem; color: var(--accent); font-weight: 500; white-space: nowrap; }
+  .child-desc { font-size: 0.78rem; color: var(--muted); text-align: right; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .child.more { justify-content: center; color: var(--muted); font-size: 0.8rem; }
+  .child.more:hover { color: var(--accent); }
+
+  .leaf-item { border: 1px solid var(--border); border-radius: 10px; }
+  .leaf-link { display: block; padding: 0.8rem 1.1rem; text-decoration: none; transition: background 0.15s; }
+  .leaf-link:hover { background: #f0fdf4; }
+  .leaf-title { font-weight: 600; font-size: 0.95rem; color: var(--accent); display: block; margin-bottom: 0.2rem; }
+  .leaf-summary { font-size: 0.8rem; color: var(--muted); }
+  .json-link { display: inline-block; margin-top: 1.5rem; color: var(--accent); font-size: 0.85rem; text-decoration: none; cursor: pointer; }
+  .json-link:hover { text-decoration: underline; }
+  .copied { color: #10B981 !important; }
 </style>
+<script>
+function copyEmbeddedJson(e) {
+  e.preventDefault();
+  try {
+    const text = document.getElementById('agent-json').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      e.target.textContent = 'Copied!';
+      e.target.classList.add('copied');
+      setTimeout(() => { e.target.textContent = 'Copy raw JSON for agent'; e.target.classList.remove('copied'); }, 2000);
+    });
+  } catch(err) { alert('Copy failed'); }
+}
+</script>
 </head>
 <body>
 ${BRAND_NAV}
@@ -583,12 +694,19 @@ ${BRAND_NAV}
   <h1>${escHtml(displayPath)}</h1>
   <p class="stats">${children.length} pages mapped</p>
 
-  <ul>${listHtml}</ul>
+  ${sectionsHtml}
+
+  <a class="json-link" href="#" onclick="copyEmbeddedJson(event)">Copy raw JSON for agent</a>
+  <script type="application/json" id="agent-json">${JSON.stringify({ directory: dirPath, count: children.length, pages: children }, null, 2)}</script>
 
   ${BRAND_FOOTER}
 </div>
 </body>
 </html>`;
+}
+
+function truncate(str, max) {
+  return str.length > max ? str.slice(0, max) + "..." : str;
 }
 
 function renderBreadcrumbPath(dirPath) {
