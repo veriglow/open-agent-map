@@ -1,0 +1,175 @@
+{
+  "id": "sse-announcement",
+  "domain": "www.sse.com.cn",
+  "path": "/disclosure/listedinfo/announcement/",
+  "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/",
+  "title": "上市公司公告搜索",
+  "title_en": "Listed Company Announcement Search",
+  "summary": "按证券代码、关键字、日期范围、公告类型搜索上交所上市公司公告。返回公告列表及 PDF 下载链接。",
+  "data_freshness": "实时，公告发布后即可查询",
+  "data_scope": "上交所全部上市公司（主板+科创板），历史公告可追溯",
+
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+  },
+  "params": {
+    "jsonCallBack": {
+      "type": "string",
+      "required": true,
+      "value": "cb",
+      "description": "JSONP 回调函数名，固定用 cb 即可"
+    },
+    "isPagination": {
+      "type": "string",
+      "required": true,
+      "value": "true",
+      "description": "是否分页，固定 true"
+    },
+    "pageHelp.pageSize": {
+      "type": "integer",
+      "required": false,
+      "default": 25,
+      "description": "每页条数，最大 25"
+    },
+    "pageHelp.pageNo": {
+      "type": "integer",
+      "required": false,
+      "default": 1,
+      "description": "页码，从 1 开始"
+    },
+    "pageHelp.cacheSize": {
+      "type": "integer",
+      "required": false,
+      "value": 1,
+      "description": "缓存大小，固定 1"
+    },
+    "SECURITY_CODE": {
+      "type": "string",
+      "required": false,
+      "description": "证券代码（6位），如 600519。留空则查全部公司",
+      "example": "600519"
+    },
+    "TITLE": {
+      "type": "string",
+      "required": false,
+      "description": "公告标题关键字，支持模糊搜索",
+      "example": "年报"
+    },
+    "BULLETIN_TYPE": {
+      "type": "string",
+      "required": false,
+      "description": "公告类型代码。留空查全部。可从 announce_type.json 获取完整列表",
+      "value_map": {
+        "0101": "年报",
+        "0102": "半年报",
+        "0103": "一季报",
+        "0104": "三季报",
+        "0201": "首发招股书/上市公告",
+        "0301": "配股/增发公告",
+        "0501": "日常经营重大事项",
+        "0502": "股东大会公告",
+        "0601": "股权变动公告",
+        "0701": "回购股份",
+        "0801": "风险警示"
+      }
+    },
+    "START_DATE": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "required": false,
+      "description": "查询起始日期，留空不限",
+      "example": "2026-01-01"
+    },
+    "END_DATE": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "required": false,
+      "description": "查询截止日期，留空不限",
+      "example": "2026-03-14"
+    },
+    "stockType": {
+      "type": "string",
+      "required": false,
+      "description": "市场类型。留空查全部",
+      "value_map": {
+        "": "全部",
+        "1": "主板",
+        "2": "科创板"
+      }
+    }
+  },
+  "returns": {
+    "location": "pageHelp.data",
+    "note": "JSONP 响应，需剥离 cb(...) 包装。data 是二维数组，每个子数组含一条公告",
+    "pagination": {
+      "total": "pageHelp.total — 总条数",
+      "pageCount": "pageHelp.pageCount — 总页数",
+      "pageNo": "pageHelp.pageNo — 当前页"
+    },
+    "items": {
+      "SECURITY_CODE": { "type": "string", "description": "证券代码" },
+      "SECURITY_NAME": { "type": "string", "description": "证券简称" },
+      "TITLE": { "type": "string", "description": "公告标题" },
+      "SSEDATE": { "type": "string", "description": "发布日期 YYYY-MM-DD" },
+      "BULLETIN_TYPE_DESC": { "type": "string", "description": "公告类型描述" },
+      "BULLETIN_YEAR": { "type": "string", "description": "公告所属年度" },
+      "URL": { "type": "string", "description": "PDF 路径（相对），完整 URL = https://static.sse.com.cn + URL" },
+      "ORG_BULLETIN_ID": { "type": "string", "description": "公告唯一 ID" },
+      "IS_HOLDER_DISCLOSE": { "type": "string", "description": "是否股东披露" }
+    }
+  },
+
+  "example_call": "curl 'https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do?jsonCallBack=cb&isPagination=true&pageHelp.pageSize=5&SECURITY_CODE=600519&START_DATE=2026-01-01&END_DATE=2026-03-14&TITLE=&BULLETIN_TYPE=&stockType=' -H 'Referer: https://www.sse.com.cn/'",
+  "example_response": [
+    {
+      "SECURITY_CODE": "600519",
+      "SECURITY_NAME": "贵州茅台",
+      "TITLE": "贵州茅台关于高级管理人员被实施留置的公告",
+      "SSEDATE": "2026-03-14",
+      "BULLETIN_TYPE_DESC": "其他重大事项",
+      "URL": "/disclosure/listedinfo/announcement/c/new/2026-03-14/600519_20260314_OY00.pdf"
+    },
+    {
+      "SECURITY_CODE": "600519",
+      "SECURITY_NAME": "贵州茅台",
+      "TITLE": "贵州茅台关于回购股份实施进展的公告",
+      "SSEDATE": "2026-03-04",
+      "BULLETIN_TYPE_DESC": "回购股份",
+      "URL": "/disclosure/listedinfo/announcement/c/new/2026-03-04/600519_20260304_HMVE.pdf"
+    }
+  ],
+
+  "related_endpoints": [
+    {
+      "name": "公告类型列表",
+      "url": "https://www.sse.com.cn/xhtml/disclosure/listedinfo/announcement/json/announce_type.json",
+      "method": "GET",
+      "description": "获取完整的公告类型分类树（定期报告、临时公告等），用于填充 BULLETIN_TYPE 参数"
+    },
+    {
+      "name": "公告条数统计",
+      "endpoint": "https://query.sse.com.cn/commonQuery.do",
+      "params_fixed": { "sqlId": "COMMON_PL_SSGSXX_ZXGG_NUM_L", "type": "inParams", "MAX_DATE": "1" },
+      "params_variable": ["SECURITY_CODE", "TITLE", "BULLETIN_TYPE", "START_DATE", "END_DATE"],
+      "description": "查询符合条件的公告总数，用于分页前预知数据量"
+    }
+  ],
+
+  "failure_modes": [
+    { "condition": "海外 IP", "behavior": "HTTP 403 或连接超时", "mitigation": "使用中国境内代理" },
+    { "condition": "证券代码为深交所股票", "behavior": "返回 total=0, data=[]", "detection": "pageHelp.total === 0" },
+    { "condition": "缺少 Referer 头", "behavior": "可能返回 403", "mitigation": "添加 Referer: https://www.sse.com.cn/" }
+  ],
+  "caveats": [
+    "JSONP 响应格式：cb({...})，需剥离回调函数包装后解析 JSON",
+    "PDF URL 是相对路径，下载时拼接 https://static.sse.com.cn 前缀",
+    "pageHelp.data 是二维数组（每条公告被包在一个子数组里），取 data[i][0] 得到公告对象",
+    "只覆盖上交所上市公司，深交所股票（如 002xxx、300xxx）查不到"
+  ],
+
+  "neighbors": ["sse-company-info"],
+  "confidence": 0.95,
+  "verified_date": "2026-03-14"
+}

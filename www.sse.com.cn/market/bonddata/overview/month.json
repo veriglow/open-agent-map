@@ -1,0 +1,74 @@
+{
+  "id": "sse-bond-monthly",
+  "domain": "www.sse.com.cn",
+  "path": "/market/bonddata/overview/monthly/",
+  "url": "https://www.sse.com.cn/market/bonddata/overview/monthly/",
+  "title": "债券成交概况（月度）",
+  "title_en": "Bond Trading Overview — Monthly",
+  "summary": "上交所债券市场每月成交概况，含17个品种的成交笔数、成交金额、加权平均价格。TRADEDATE 参数格式 YYYY-MM。",
+  "data_freshness": "每月末更新",
+
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/bonddata/overview/monthly/"
+  },
+  "params": {
+    "sqlId": {
+      "type": "string",
+      "required": true,
+      "value": "COMMON_BOND_SCSJ_SCTJ_TJYB_JYQK_L",
+      "description": "固定值，不可更改"
+    },
+    "TRADEDATE": {
+      "type": "string",
+      "format": "YYYY-MM",
+      "required": true,
+      "description": "查询月份",
+      "example": "2025-03"
+    },
+    "isPagination": { "type": "string", "required": false, "value": "true" },
+    "pageHelp.pageSize": { "type": "integer", "required": false, "value": 25 }
+  },
+  "returns": {
+    "location": "response.pageHelp.data",
+    "description": "JSON 数组，17行，每行一个债券品种月度汇总",
+    "note": "月度接口无 TYPE_CODE 字段！品种识别依赖 NUM（行序号）",
+    "row_order_map": {
+      "1": "记账式国债", "2": "地方政府债", "3": "金融债",
+      "4": "公开发行公司债券（含企业债券）", "5": "非公开发行公司债券（含企业债券）",
+      "6": "可转债", "7": "可交换债", "8": "分离债",
+      "9": "企业资产支持证券", "10": "信贷资产支持证券",
+      "11": "三方回购", "12": "通用质押式回购", "13": "报价回购",
+      "14": "协议回购", "15": "债券借贷", "16": "其他债券", "17": "合计"
+    },
+    "items": {
+      "TYPE": { "type": "string", "description": "债券品种名称（GBK 编码，建议按 NUM 行序识别）" },
+      "NUM": { "type": "string", "description": "行序号 1-17，用于品种识别（见 row_order_map）" },
+      "VOLUME": { "type": "integer", "description": "成交笔数（笔）" },
+      "AMOUNT": { "type": "number", "description": "成交金额（万元），÷10000=亿元" },
+      "AVG_PRICE": { "type": "number", "description": "加权平均成交价（元）" },
+      "TRADE_DATE": { "type": "string", "description": "月末日期 YYYY-MM-DD" }
+    }
+  },
+
+  "example_call": "curl \"https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_BOND_SCSJ_SCTJ_TJYB_JYQK_L&TRADEDATE=2025-03&isPagination=true&pageHelp.pageSize=25&pageHelp.pageNo=1&pageHelp.beginPage=1&pageHelp.cacheSize=1&pageHelp.endPage=1&pagecache=false\" -H \"Referer: https://www.sse.com.cn/market/bonddata/overview/monthly/\"",
+  "example_response": [
+    {"NUM": "1", "VOLUME": "424964", "AMOUNT": "31820521.10", "AVG_PRICE": "108.224", "TRADE_DATE": "2025-03-31"},
+    {"NUM": "17", "VOLUME": "140151935", "AMOUNT": "4834572059.12", "AVG_PRICE": "98.372", "TRADE_DATE": "2025-03-31"}
+  ],
+
+  "failure_modes": [
+    { "condition": "TRADEDATE 格式错误", "behavior": "返回空数组", "mitigation": "必须用 YYYY-MM（如 2025-03）" },
+    { "condition": "当月数据未公布", "behavior": "返回空数组" }
+  ],
+  "caveats": [
+    "无 TYPE_CODE 字段，用 NUM 行序号识别品种",
+    "成交金额单位万元"
+  ],
+
+  "neighbors": ["sse-bond-daily", "sse-bond-weekly", "sse-bond-yearly"],
+  "confidence": 0.97,
+  "verified_date": "2025-03",
+  "last_verified": "2026-03-10"
+}

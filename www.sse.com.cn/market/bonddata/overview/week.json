@@ -1,0 +1,86 @@
+{
+  "id": "sse-bond-weekly",
+  "domain": "www.sse.com.cn",
+  "path": "/market/bonddata/overview/weekly/",
+  "url": "https://www.sse.com.cn/market/bonddata/overview/weekly/",
+  "title": "债券成交概况（周度）",
+  "title_en": "Bond Trading Overview — Weekly",
+  "summary": "上交所债券市场每周成交概况，含17个品种的成交笔数、成交金额、加权平均价格。",
+  "data_freshness": "每周末更新",
+
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/bonddata/overview/weekly/"
+  },
+  "params": {
+    "sqlId": {
+      "type": "string",
+      "required": true,
+      "value": "COMMON_SSE_SJ_ZQSJ_CJGK_WEEKLY",
+      "description": "固定值，不可更改"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询周的周一日期（8位无连字符）",
+      "example": "20250303"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询周的周日日期（8位无连字符）",
+      "example": "20250307"
+    },
+    "isPagination": { "type": "string", "required": false, "value": "true" },
+    "pageHelp.pageSize": { "type": "integer", "required": false, "value": 25 }
+  },
+  "returns": {
+    "location": "response.pageHelp.data",
+    "description": "JSON 数组，17行（含合计行），每行一个债券品种",
+    "note": "与日度接口不同：数据在 pageHelp.data 而非 result；日期格式 YYYYMMDD",
+    "items": {
+      "TYPE": { "type": "string", "description": "债券品种名称（GBK 编码，建议按 TYPE_CODE 识别）" },
+      "TYPE_CODE": {
+        "type": "string",
+        "description": "品种代码",
+        "value_map": {
+          "10": "记账式国债", "20": "地方政府债", "30": "金融债",
+          "40": "公开发行公司债券（含企业债券）", "50": "非公开发行公司债券（含企业债券）",
+          "80": "可转债", "90": "可交换债", "100": "分离债",
+          "110": "企业资产支持证券", "120": "信贷资产支持证券",
+          "130": "三方回购", "140": "通用质押式回购", "150": "报价回购",
+          "160": "协议回购", "165": "债券借贷", "170": "其他债券", "9999": "合计"
+        }
+      },
+      "VOLUME": { "type": "integer", "description": "成交笔数（笔）" },
+      "AMOUNT": { "type": "number", "description": "成交金额（万元），÷10000=亿元" },
+      "AVG_PRICE": { "type": "number", "description": "加权平均成交价（元）" },
+      "START_DATE": { "type": "string", "description": "周起始日期 YYYYMMDD" },
+      "END_DATE": { "type": "string", "description": "周截止日期 YYYYMMDD" }
+    }
+  },
+
+  "example_call": "curl \"https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_SSE_SJ_ZQSJ_CJGK_WEEKLY&isPagination=true&pageHelp.pageSize=25&pageHelp.pageNo=1&pageHelp.beginPage=1&pageHelp.cacheSize=1&pageHelp.endPage=1&pagecache=false&start_date=20250303&end_date=20250309\" -H \"Referer: https://www.sse.com.cn/market/bonddata/overview/weekly/\"",
+  "example_response": [
+    {"TYPE_CODE": "10", "VOLUME": "110364", "AMOUNT": "8477520.99", "AVG_PRICE": "109.927", "START_DATE": "20250303", "END_DATE": "20250307"},
+    {"TYPE_CODE": "9999", "VOLUME": "34596217", "AMOUNT": "1152584894.66", "AVG_PRICE": "99.162", "START_DATE": "20250303", "END_DATE": "20250307"}
+  ],
+
+  "failure_modes": [
+    { "condition": "非交易周", "behavior": "返回17行全零数据" },
+    { "condition": "海外 IP", "behavior": "HTTP 403", "mitigation": "使用中国境内代理" },
+    { "condition": "日期格式用了 YYYY-MM-DD", "behavior": "返回空数组", "mitigation": "必须用 YYYYMMDD" }
+  ],
+  "caveats": [
+    "日期格式 YYYYMMDD，与日度 YYYY-MM-DD 不同",
+    "成交金额单位万元"
+  ],
+
+  "neighbors": ["sse-bond-daily", "sse-bond-monthly", "sse-bond-yearly"],
+  "confidence": 0.97,
+  "verified_date": "2025-03-10",
+  "last_verified": "2026-03-10"
+}

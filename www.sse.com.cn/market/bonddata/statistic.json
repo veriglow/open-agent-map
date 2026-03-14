@@ -1,0 +1,28 @@
+{
+  "id": "sse-bond-statistic",
+  "domain": "www.sse.com.cn",
+  "path": "/market/bonddata/statistic/",
+  "url": "https://www.sse.com.cn/market/bonddata/statistic/",
+  "title": "债券统计数据",
+  "title_en": "Bond Statistics",
+  "summary": "上交所债券市场托管统计数据，含9个债券品种的托管只数、托管市值（亿元）、托管面值（亿元）。通过 commonQuery.do 接口加载，sqlId 待确认。",
+
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/bonddata/statistic/"
+  },
+  "params": {
+    "sqlId": {
+      "type": "string",
+      "required": true,
+      "value": null,
+      "description": "待确认"
+    }
+  },
+  "returns": null,
+
+  "neighbors": ["sse-bond-daily"],
+  "confidence": 0.70,
+  "last_verified": "2026-03-10"
+}

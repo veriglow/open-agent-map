@@ -1,0 +1,83 @@
+{
+  "id": "sse-bond-daily",
+  "domain": "www.sse.com.cn",
+  "path": "/market/bonddata/overview/day/",
+  "url": "https://www.sse.com.cn/market/bonddata/overview/day/",
+  "title": "债券成交概况（日度）",
+  "title_en": "Bond Trading Overview — Daily",
+  "summary": "上交所每日债券市场成交概况。含17个债券品种的每日成交笔数、成交面额、成交金额。",
+  "data_freshness": "T+1，约 16:30 CST",
+  "data_scope": "2013年至今",
+
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/market/bonddata/overview/day/"
+  },
+  "params": {
+    "sqlId": {
+      "type": "string",
+      "required": true,
+      "value": "COMMON_SSEBOND_SCSJ_SCTJ_CJSJ_ZQLXCJTJ_CX_L",
+      "description": "固定值，不可更改"
+    },
+    "START_DATE": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "required": true,
+      "description": "查询起始日期",
+      "example": "2025-03-10"
+    },
+    "END_DATE": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "required": true,
+      "description": "查询截止日期（单日查询时与 START_DATE 相同）",
+      "example": "2025-03-10"
+    }
+  },
+  "returns": {
+    "location": "response.result",
+    "description": "JSON 数组，17行（含合计行），每行一个债券品种",
+    "items": {
+      "TYPE": { "type": "string", "description": "债券品种名称" },
+      "TYPE_CODE": {
+        "type": "string",
+        "description": "品种代码",
+        "value_map": {
+          "10": "记账式国债", "20": "地方政府债", "30": "金融债",
+          "40": "公开发行公司债券（含企业债券）", "50": "非公开发行公司债券（含企业债券）",
+          "80": "可转债", "90": "可交换债", "100": "分离债",
+          "110": "企业资产支持证券", "120": "信贷资产支持证券",
+          "130": "三方回购", "140": "通用质押式回购", "150": "报价回购",
+          "160": "协议回购", "165": "债券借贷", "170": "其他债券", "9999": "合计"
+        }
+      },
+      "VOLUME": { "type": "integer", "description": "成交笔数（笔）" },
+      "AMOUNT": { "type": "number", "description": "成交金额（万元），÷10000=亿元" },
+      "AVG_PRICE": { "type": "number", "description": "加权平均成交价（元）" },
+      "TRADE_DATE": { "type": "string", "description": "成交日期 YYYY-MM-DD" }
+    }
+  },
+
+  "example_call": "curl \"https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_SSEBOND_SCSJ_SCTJ_CJSJ_ZQLXCJTJ_CX_L&START_DATE=2025-03-10&END_DATE=2025-03-10\" -H \"Referer: https://www.sse.com.cn/market/bonddata/overview/day/\"",
+  "example_response": [
+    {"TYPE": "记账式国债", "TYPE_CODE": "10", "VOLUME": "20651", "AMOUNT": "1582315.62", "AVG_PRICE": "108.192", "TRADE_DATE": "2025-03-10"},
+    {"TYPE": "合计", "TYPE_CODE": "9999", "VOLUME": "6694960", "AMOUNT": "236109648.86", "AVG_PRICE": "100.031", "TRADE_DATE": "2025-03-10"}
+  ],
+
+  "failure_modes": [
+    { "condition": "非交易日", "behavior": "返回17行全零数据", "detection": "合计行 VOLUME=0" },
+    { "condition": "海外 IP", "behavior": "HTTP 403", "mitigation": "使用中国境内代理" },
+    { "condition": "sqlId 失效", "recovery": "GET /xhtml/home/2021public/querySearch/search_bondData_2021.js → 搜索 overviewDayParams.sqlId" }
+  ],
+  "caveats": [
+    "接口标注 POST 但 GET 即可",
+    "成交金额单位万元，非亿元"
+  ],
+
+  "neighbors": ["sse-bond-weekly", "sse-bond-monthly", "sse-bond-yearly"],
+  "confidence": 0.97,
+  "verified_date": "2025-03-10",
+  "last_verified": "2026-03-10"
+}
