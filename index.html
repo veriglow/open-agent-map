@@ -110,9 +110,10 @@ html[data-theme="dark"] .icon-moon{display:block;}
 .search-empty{padding:16px;text-align:center;color:var(--am-text-3);font-size:0.8125rem;}
 
 /* ═══ Sites Section ═══ */
-.sites{max-width:720px;margin:0 auto;padding:0 24px 64px;}
+.sites{max-width:960px;margin:0 auto;padding:0 24px 64px;}
 .sites-heading{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--am-text-3);margin-bottom:16px;}
-.site-card{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:14px;padding:28px;transition:box-shadow .2s;}
+.sites-grid{display:flex;flex-wrap:wrap;gap:16px;}
+.site-card{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:14px;padding:28px;transition:box-shadow .2s;flex:1 1 340px;min-width:0;}
 .site-card:hover{box-shadow:var(--am-shadow-lg);}
 .site-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;}
 .site-card-title{font-weight:700;font-size:1.125rem;color:var(--am-text-0);line-height:1.3;display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
@@ -144,6 +145,7 @@ footer a:hover{color:var(--am-green);}
   .hero{padding:48px 20px 36px;}
   .hero h1{font-size:1.625rem;}
   .sites{padding:0 20px 48px;}
+  .sites-grid{flex-direction:column;}
   .site-card{padding:20px;}
   .site-tree{font-size:0.75rem;padding:12px 14px;}
 }
@@ -219,6 +221,7 @@ footer a:hover{color:var(--am-green);}
 <!-- ═══ Indexed Sites ═══ -->
 <section class="sites">
   <div class="sites-heading">Indexed Sites</div>
+  <div class="sites-grid">
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
@@ -259,6 +262,7 @@ footer a:hover{color:var(--am-green);}
       <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">taxonomy/term/37</span> <span class="branch-count">&nbsp;1页&nbsp;</span> <span class="branch-desc">— 工作机会（40+职位）</span></div>
     </div>
     <a href="/cuhk.edu.cn" class="site-card-action">Browse all pages &rarr;</a>
+  </div>
   </div>
 </section>
 
