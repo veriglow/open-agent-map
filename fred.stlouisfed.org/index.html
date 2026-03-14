@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>veri-glow.com/fred.stlouisfed.org — FRED (Self-documented)</title>
+<link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --am-bg-0:#FFFFFF;--am-bg-1:#F9FAFB;--am-bg-2:#F3F4F6;--am-bg-3:#E5E7EB;
+  --am-border:#E5E7EB;--am-border-light:#F3F4F6;
+  --am-text-0:#111827;--am-text-1:#374151;--am-text-2:#6B7280;--am-text-3:#9CA3AF;
+  --am-green:#10B981;--am-green-hover:#059669;--am-green-dim:rgba(16,185,129,0.08);
+  --am-mint:#34D399;
+  --am-blue:#3B82F6;--am-blue-dim:rgba(59,130,246,0.08);
+  --am-amber:#F59E0B;--am-amber-dim:rgba(245,158,11,0.08);
+  --am-purple:#8B5CF6;--am-purple-dim:rgba(139,92,246,0.08);
+  --am-code-bg:#F8FAFC;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --am-shadow-lg:0 4px 24px rgba(0,0,0,0.08);
+  --am-nav-bg:rgba(255,255,255,0.85);
+}
+html[data-theme="dark"]{
+  --am-bg-0:#06080C;--am-bg-1:#0C0F15;--am-bg-2:#12161E;--am-bg-3:#1A1F2B;
+  --am-border:#1E2432;--am-border-light:#1A1F2B;
+  --am-text-0:#E8EAF0;--am-text-1:#B0B8C8;--am-text-2:#6B7A94;--am-text-3:#3E4B62;
+  --am-green:#34D399;--am-green-hover:#10B981;--am-green-dim:rgba(16,185,129,0.12);
+  --am-mint:#34D399;
+  --am-blue:#60A5FA;--am-blue-dim:rgba(59,130,246,0.12);
+  --am-amber:#FBBF24;--am-amber-dim:rgba(245,158,11,0.12);
+  --am-purple:#A78BFA;--am-purple-dim:rgba(139,92,246,0.12);
+  --am-code-bg:#0C0F15;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.3);--am-shadow-lg:0 4px 24px rgba(0,0,0,0.4);
+  --am-nav-bg:rgba(6,8,12,0.85);
+}
+
+body{background:var(--am-bg-0);color:var(--am-text-0);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;transition:background 0.3s,color 0.3s;}
+
+/* === URL Bar === */
+.url-bar{position:sticky;top:0;z-index:100;background:var(--am-nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--am-border);padding:0 32px;height:52px;display:flex;align-items:center;gap:12px;transition:background 0.3s,border-color 0.3s;}
+.logo-link{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.logo-link svg{width:20px;height:20px;}
+.logo-wordmark{font-family:'Crimson Pro',Georgia,serif;font-weight:700;font-size:14px;letter-spacing:0.05em;line-height:1;}
+.logo-wordmark .veri{color:#94A3B8;}.logo-wordmark .glow{color:#34D399;}
+.sep{width:1px;height:20px;background:var(--am-border);flex-shrink:0;}
+.url-crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--am-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+.url-crumb .hl{color:var(--am-green);}
+.url-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--am-border);background:var(--am-bg-1);color:var(--am-text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--am-green);color:var(--am-green);background:var(--am-green-dim);}
+.theme-toggle svg{width:16px;height:16px;}
+.icon-sun{display:block;}.icon-moon{display:none;}
+html[data-theme="dark"] .icon-sun{display:none;}html[data-theme="dark"] .icon-moon{display:block;}
+
+/* === Layout === */
+.page{max-width:900px;margin:0 auto;padding:48px 32px 80px;}
+
+/* === Hero === */
+.hero{margin-bottom:40px;}
+.hero-meta{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.site-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:var(--am-bg-2);border:1px solid var(--am-border);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--am-text-2);}
+.site-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--am-green);}
+.lang-badge{padding:3px 8px;border-radius:5px;background:var(--am-blue-dim);border:1px solid transparent;font-size:11px;color:var(--am-blue);font-weight:500;}
+.verdict-badge{padding:3px 8px;border-radius:5px;background:var(--am-green-dim);border:1px solid transparent;font-size:11px;color:var(--am-green);font-weight:600;}
+.hero h1{font-size:28px;font-weight:700;letter-spacing:-0.3px;margin-bottom:6px;}
+.hero h1 .domain{color:var(--am-green);}
+.hero-sub{font-size:15px;color:var(--am-text-2);margin-bottom:20px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-size:11px;font-weight:500;padding:4px 10px;border-radius:6px;}
+.tag.green{background:var(--am-green-dim);color:var(--am-green);border:1px solid transparent;}
+.tag.blue{background:var(--am-blue-dim);color:var(--am-blue);border:1px solid transparent;}
+.tag.purple{background:var(--am-purple-dim);color:var(--am-purple);border:1px solid transparent;}
+
+/* === Sections === */
+.section{margin-bottom:40px;}
+.section-title{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--am-text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--am-border);}
+
+/* === Verdict Card === */
+.verdict-card{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:12px;padding:24px 28px;margin-bottom:32px;}
+.verdict-card h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--am-green);}
+.verdict-card p{font-size:14px;color:var(--am-text-1);line-height:1.7;}
+
+/* === Series Table === */
+.series-table{width:100%;border-collapse:collapse;font-size:13px;}
+.series-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--am-text-3);padding:0 12px 10px 0;border-bottom:1px solid var(--am-border);}
+.series-table td{padding:10px 12px 10px 0;border-bottom:1px solid var(--am-border-light);vertical-align:top;}
+.series-table tr:last-child td{border-bottom:none;}
+.series-id{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--am-green);}
+.series-desc{font-size:13px;color:var(--am-text-1);}
+
+/* === Code Block === */
+.code-block{background:var(--am-code-bg);border:1px solid var(--am-border);border-radius:10px;padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;overflow-x:auto;}
+.code-block .cm{color:var(--am-text-3);}
+.code-block .kw{color:var(--am-blue);}
+.code-block .st{color:var(--am-green);}
+
+/* === Footer === */
+.foot{text-align:center;padding:40px 32px 32px;border-top:1px solid var(--am-border);}
+.foot-text{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--am-text-3);}
+.foot-text span{color:var(--am-green);}
+
+@media(max-width:640px){
+  .url-bar{padding:0 16px;}
+  .page{padding:32px 16px 60px;}
+  .hero h1{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<!-- URL Bar -->
+<div class="url-bar">
+  <a href="/" class="logo-link">
+    <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <span class="logo-wordmark"><span class="veri">Veri</span><span class="glow">Glow</span></span>
+  </a>
+  <div class="sep"></div>
+  <div class="url-crumb"><span class="hl">veri-glow.com</span>/fred.stlouisfed.org</div>
+  <div class="url-right">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</div>
+
+<main class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-meta">
+      <div class="site-badge"><div class="dot"></div>fred.stlouisfed.org</div>
+      <div class="lang-badge">en</div>
+      <div class="verdict-badge">Self-documented</div>
+    </div>
+    <h1>FRED <span class="domain">Signpost</span></h1>
+    <p class="hero-sub">Federal Reserve Bank of St. Louis &mdash; 800,000+ US &amp; international economic time series. No deep map needed: official docs are complete, API is clear, every series is self-annotated.</p>
+    <div class="tag-row">
+      <span class="tag green">No auth for CSV</span>
+      <span class="tag green">Self-documented API</span>
+      <span class="tag blue">800K+ series</span>
+      <span class="tag purple">Signpost only</span>
+    </div>
+  </div>
+
+  <!-- Verdict -->
+  <div class="verdict-card">
+    <h3>Why no deep map?</h3>
+    <p>FRED's official documentation is comprehensive. Every API endpoint is well-documented, every series carries its own title, units, frequency, and seasonal adjustment notes. There are no hidden interfaces to reverse-engineer. A signpost pointing you to the right URL is all you need.</p>
+  </div>
+
+  <!-- Quick Start -->
+  <div class="section">
+    <div class="section-title">Quick Start &mdash; CSV (No Auth)</div>
+    <div class="code-block"><span class="cm"># Fetch 10-Year Treasury Yield as CSV &mdash; no API key needed</span>
+curl '<span class="st">https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&amp;cosd=2025-01-01&amp;coed=2026-03-14</span>'
+
+<span class="cm"># Pattern</span>
+<span class="cm"># https://fred.stlouisfed.org/graph/fredgraph.csv?id={SERIES_ID}&amp;cosd={START}&amp;coed={END}</span>
+<span class="cm"># cosd = start date (YYYY-MM-DD), coed = end date (YYYY-MM-DD)</span></div>
+  </div>
+
+  <!-- Key Series -->
+  <div class="section">
+    <div class="section-title">Key Series</div>
+    <table class="series-table">
+      <thead>
+        <tr>
+          <th>Series ID</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="series-id">GDP</span></td><td class="series-desc">Gross Domestic Product (quarterly)</td></tr>
+        <tr><td><span class="series-id">CPIAUCSL</span></td><td class="series-desc">CPI &mdash; Consumer Price Index (monthly, SA)</td></tr>
+        <tr><td><span class="series-id">FEDFUNDS</span></td><td class="series-desc">Federal Funds Rate (monthly)</td></tr>
+        <tr><td><span class="series-id">DGS10</span></td><td class="series-desc">10-Year Treasury Yield (daily)</td></tr>
+        <tr><td><span class="series-id">DGS2</span></td><td class="series-desc">2-Year Treasury Yield (daily)</td></tr>
+        <tr><td><span class="series-id">T10Y2Y</span></td><td class="series-desc">10Y-2Y Treasury Spread (daily)</td></tr>
+        <tr><td><span class="series-id">UNRATE</span></td><td class="series-desc">Unemployment Rate (monthly)</td></tr>
+        <tr><td><span class="series-id">M2SL</span></td><td class="series-desc">M2 Money Supply (monthly)</td></tr>
+        <tr><td><span class="series-id">DEXUSEU</span></td><td class="series-desc">USD/EUR Exchange Rate (daily)</td></tr>
+        <tr><td><span class="series-id">VIXCLS</span></td><td class="series-desc">VIX Volatility Index (daily)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-text"><span>VERIGLOW</span> AGENT MAP &mdash; veri-glow.com/fred.stlouisfed.org</div>
+</footer>
+
+<script>
+function getPreferred(){const s=localStorage.getItem('am-theme');if(s)return s;return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('am-theme',t);}
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme')||'light';applyTheme(c==='dark'?'light':'dark');}
+(function(){const t=getPreferred();if(t==='dark')applyTheme('dark');})();
+</script>
+
+</body>
+</html>

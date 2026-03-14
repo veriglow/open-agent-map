@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>veri-glow.com/www.sse.com.cn/market/othersdata/margin/detail/</title>
+<link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+/* Theme Tokens */
+:root{
+  --am-bg-0:#FFFFFF;
+  --am-bg-1:#F9FAFB;
+  --am-bg-2:#F3F4F6;
+  --am-bg-3:#E5E7EB;
+  --am-border:#E5E7EB;
+  --am-border-light:#F3F4F6;
+  --am-text-0:#111827;
+  --am-text-1:#374151;
+  --am-text-2:#6B7280;
+  --am-text-3:#9CA3AF;
+  --am-green:#10B981;
+  --am-green-hover:#059669;
+  --am-green-dim:rgba(16,185,129,0.08);
+  --am-mint:#34D399;
+  --am-blue:#3B82F6;
+  --am-blue-dim:rgba(59,130,246,0.08);
+  --am-amber:#F59E0B;
+  --am-amber-dim:rgba(245,158,11,0.08);
+  --am-code-bg:#F8FAFC;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --am-nav-bg:rgba(255,255,255,0.85);
+  --am-icon-cell:#CBD5E1;
+}
+html[data-theme="dark"]{
+  --am-bg-0:#06080C;
+  --am-bg-1:#0C0F15;
+  --am-bg-2:#12161E;
+  --am-bg-3:#1A1F2B;
+  --am-border:#1E2432;
+  --am-border-light:#1A1F2B;
+  --am-text-0:#E8EAF0;
+  --am-text-1:#B0B8C8;
+  --am-text-2:#6B7A94;
+  --am-text-3:#3E4B62;
+  --am-green:#34D399;
+  --am-green-hover:#10B981;
+  --am-green-dim:rgba(16,185,129,0.12);
+  --am-mint:#34D399;
+  --am-blue:#60A5FA;
+  --am-blue-dim:rgba(59,130,246,0.12);
+  --am-amber:#FBBF24;
+  --am-amber-dim:rgba(245,158,11,0.12);
+  --am-code-bg:#0C0F15;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.3);
+  --am-nav-bg:rgba(6,8,12,0.85);
+  --am-icon-cell:#334155;
+}
+
+body{
+  background:var(--am-bg-0);
+  color:var(--am-text-0);
+  font-family:'DM Sans','Noto Sans SC',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  transition:background 0.3s,color 0.3s;
+}
+
+/* URL Bar / Nav */
+.url-bar{
+  position:sticky;top:0;z-index:100;
+  background:var(--am-nav-bg);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--am-border);
+  padding:0 32px;
+  height:52px;
+  display:flex;align-items:center;gap:12px;
+  transition:background 0.3s,border-color 0.3s;
+}
+.url-bar .logo-link{
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;flex-shrink:0;
+}
+.url-bar .logo-link svg{width:20px;height:20px;}
+.url-bar .logo-wordmark{
+  font-family:'Crimson Pro',Georgia,serif;font-weight:700;
+  font-size:14px;letter-spacing:0.05em;line-height:1;
+}
+.url-bar .logo-wordmark .veri{color:#94A3B8;}
+.url-bar .logo-wordmark .glow{color:#34D399;}
+
+.url-bar .sep{
+  width:1px;height:20px;background:var(--am-border);flex-shrink:0;
+}
+.url-bar .url{
+  font-family:'JetBrains Mono';font-size:13px;font-weight:400;
+  color:var(--am-text-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  min-width:0;
+}
+.url-bar .url .domain{color:var(--am-green);font-weight:500;}
+.url-bar .url .path{color:var(--am-text-1);}
+
+.url-bar .bar-right{
+  margin-left:auto;display:flex;align-items:center;gap:4px;flex-shrink:0;
+}
+.url-bar .bar-right a{
+  font-size:12px;color:var(--am-text-3);text-decoration:none;
+  padding:6px 12px;border-radius:6px;transition:all 0.15s;
+  font-weight:500;
+}
+.url-bar .bar-right a:hover{color:var(--am-text-1);background:var(--am-bg-2);}
+.url-bar .bar-right a.active{color:var(--am-green);background:var(--am-green-dim);}
+
+.theme-toggle{
+  width:32px;height:32px;border-radius:7px;
+  border:1px solid var(--am-border);
+  background:var(--am-bg-1);
+  color:var(--am-text-2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;margin-left:8px;flex-shrink:0;
+}
+.theme-toggle:hover{
+  border-color:var(--am-green);color:var(--am-green);
+  background:var(--am-green-dim);
+}
+.theme-toggle svg{width:16px;height:16px;}
+.icon-sun{display:block;}
+.icon-moon{display:none;}
+html[data-theme="dark"] .icon-sun{display:none;}
+html[data-theme="dark"] .icon-moon{display:block;}
+
+/* Page */
+.page{max-width:880px;margin:0 auto;padding:48px 32px 120px;}
+
+/* Hero */
+.hero{padding:32px 0 40px;border-bottom:1px solid var(--am-border);}
+.hero .source-label{
+  font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--am-text-3);margin-bottom:12px;
+}
+.hero h1{font-size:24px;font-weight:700;line-height:1.3;margin-bottom:4px;}
+.hero .cn{
+  font-family:'Noto Sans SC';font-size:14px;font-weight:400;
+  color:var(--am-text-2);margin-bottom:16px;
+}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.tag{
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:6px;
+  background:var(--am-bg-2);color:var(--am-text-1);
+  border:1px solid var(--am-border);
+}
+.tag.green{background:var(--am-green-dim);color:var(--am-green);border-color:transparent;}
+.tag.amber{background:var(--am-amber-dim);color:var(--am-amber);border-color:transparent;}
+.tag.blue{background:var(--am-blue-dim);color:var(--am-blue);border-color:transparent;}
+.hero-desc{font-size:14px;color:var(--am-text-1);line-height:1.8;max-width:680px;}
+.hero-desc a{color:var(--am-green);text-decoration:none;}
+.hero-desc a:hover{text-decoration:underline;}
+
+/* Section */
+.sec{padding:40px 0;border-bottom:1px solid var(--am-border);}
+.sec:last-child{border-bottom:none;}
+.sec h2{font-size:16px;font-weight:600;letter-spacing:0.3px;margin-bottom:6px;}
+.sec .desc{font-size:13px;color:var(--am-text-2);margin-bottom:24px;max-width:640px;line-height:1.7;}
+
+/* Card */
+.card{
+  background:var(--am-bg-1);border:1px solid var(--am-border);
+  border-radius:12px;overflow:hidden;margin-bottom:16px;
+  box-shadow:var(--am-shadow);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.card-header{
+  padding:14px 20px;border-bottom:1px solid var(--am-border);
+  display:flex;align-items:center;gap:10px;
+}
+.card-body{padding:20px;}
+
+/* Method badge */
+.method{
+  font-family:'JetBrains Mono';font-size:11px;font-weight:600;
+  padding:3px 8px;border-radius:4px;letter-spacing:0.5px;
+}
+.method.get{background:var(--am-green-dim);color:var(--am-green);}
+.method.post{background:var(--am-blue-dim);color:var(--am-blue);}
+.method.js{background:var(--am-amber-dim);color:var(--am-amber);}
+.endpoint{font-family:'JetBrains Mono';font-size:13px;color:var(--am-text-0);}
+.card-tag{
+  margin-left:auto;font-size:10px;font-weight:600;
+  color:var(--am-text-3);letter-spacing:1px;text-transform:uppercase;
+}
+
+/* Params table */
+.params{width:100%;border-collapse:collapse;}
+.params th{
+  text-align:left;font-size:10px;font-weight:600;
+  color:var(--am-text-3);letter-spacing:1.5px;text-transform:uppercase;
+  padding:8px 12px;border-bottom:1px solid var(--am-border);
+}
+.params td{
+  font-size:13px;padding:10px 12px;
+  border-bottom:1px solid var(--am-border-light);
+  color:var(--am-text-1);vertical-align:top;
+}
+.params td:first-child{
+  font-family:'JetBrains Mono';font-weight:500;color:var(--am-text-0);
+  white-space:nowrap;
+}
+.type{font-family:'JetBrains Mono';font-size:11px;color:var(--am-blue);}
+.req{font-size:10px;font-weight:600;color:var(--am-amber);}
+.opt{font-size:10px;font-weight:500;color:var(--am-text-3);}
+
+/* Code */
+.code{
+  background:var(--am-code-bg);border:1px solid var(--am-border);
+  border-radius:8px;overflow:hidden;margin:16px 0;
+}
+.code-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;background:var(--am-bg-2);border-bottom:1px solid var(--am-border);
+}
+.code-lang{font-family:'JetBrains Mono';font-size:10px;font-weight:600;color:var(--am-text-3);letter-spacing:1px;text-transform:uppercase;}
+.code-copy{
+  font-size:10px;color:var(--am-text-3);cursor:pointer;
+  background:none;border:1px solid var(--am-border);padding:2px 8px;border-radius:4px;
+  font-family:'DM Sans';transition:all 0.15s;
+}
+.code-copy:hover{color:var(--am-text-1);border-color:var(--am-text-3);}
+pre{
+  padding:14px 16px;margin:0;
+  font-family:'JetBrains Mono';font-size:12.5px;line-height:1.7;
+  color:var(--am-text-1);overflow-x:auto;tab-size:2;
+}
+pre .c{color:var(--am-text-3);font-style:italic;}
+pre .s{color:#059669;}
+pre .k{color:#7C3AED;}
+pre .n{color:#DC2626;}
+pre .f{color:#2563EB;}
+pre .v{color:#D97706;}
+html[data-theme="dark"] pre .s{color:#C3E88D;}
+html[data-theme="dark"] pre .k{color:#C792EA;}
+html[data-theme="dark"] pre .n{color:#F78C6C;}
+html[data-theme="dark"] pre .f{color:#82AAFF;}
+html[data-theme="dark"] pre .v{color:#FFCB6B;}
+
+/* Data preview table */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;margin:16px 0;}
+.data-table th{
+  text-align:left;padding:8px 10px;
+  background:var(--am-bg-2);color:var(--am-text-2);
+  font-weight:500;font-size:11px;
+  border-bottom:1px solid var(--am-border);
+}
+.data-table td{
+  padding:7px 10px;color:var(--am-text-1);
+  border-bottom:1px solid var(--am-border-light);
+  font-family:'JetBrains Mono';font-size:11.5px;
+}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tbody tr:nth-child(even){background:var(--am-bg-1);}
+
+/* KV list */
+.kv{display:grid;grid-template-columns:160px 1fr;gap:0;font-size:13px;}
+.kv dt{
+  padding:10px 12px;color:var(--am-text-2);font-weight:500;
+  border-bottom:1px solid var(--am-border-light);
+}
+.kv dd{
+  padding:10px 12px;color:var(--am-text-1);
+  border-bottom:1px solid var(--am-border-light);
+}
+.kv code{
+  font-family:'JetBrains Mono';font-size:12px;
+  background:var(--am-bg-2);padding:2px 6px;border-radius:3px;
+  color:var(--am-green);
+}
+
+/* Agent reports */
+.reports{display:flex;flex-direction:column;gap:12px;}
+.report{
+  background:var(--am-bg-1);border:1px solid var(--am-border);
+  border-radius:10px;padding:16px;
+  box-shadow:var(--am-shadow);
+}
+.report-head{
+  display:flex;align-items:center;gap:8px;margin-bottom:8px;
+}
+.report-dot{width:8px;height:8px;border-radius:50%;}
+.report-name{font-size:12px;font-weight:600;color:var(--am-text-0);}
+.report-time{font-size:11px;color:var(--am-text-3);margin-left:auto;}
+.report-body{font-size:13px;color:var(--am-text-1);line-height:1.7;}
+.report-metrics{
+  display:flex;gap:16px;margin-top:10px;
+  font-family:'JetBrains Mono';font-size:11px;color:var(--am-text-3);
+}
+.report-metrics .ok{color:var(--am-green);}
+.report-metrics .warn{color:var(--am-amber);}
+
+/* Sub-section labels */
+.sub-label{
+  font-size:10px;font-weight:600;color:var(--am-text-3);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin:20px 0 8px;
+}
+
+/* Footer */
+.foot{
+  text-align:center;padding:48px 0 32px;
+  border-top:1px solid var(--am-border);
+}
+.foot-text{
+  font-size:11px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:var(--am-text-3);
+}
+.foot-text span{color:var(--am-green);}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--am-bg-3);border-radius:3px;}
+
+/* Responsive */
+@media(max-width:640px){
+  .page{padding:24px 16px 80px;}
+  .kv{grid-template-columns:120px 1fr;}
+  .url-bar{padding:0 16px;height:48px;gap:8px;}
+  .url-bar .bar-right a{display:none;}
+  .url-bar .logo-wordmark{display:none;}
+  .hero h1{font-size:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- URL BAR -->
+<div class="url-bar">
+  <a href="/" class="logo-link">
+    <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <span class="logo-wordmark"><span class="veri">Veri</span><span class="glow">Glow</span></span>
+  </a>
+  <div class="sep"></div>
+  <div class="url">
+    <span class="domain">veri-glow.com</span><span class="path">/www.sse.com.cn/market/othersdata/margin/detail/</span>
+  </div>
+  <div class="bar-right">
+    <a href="#data" class="active">Data</a>
+    <a href="#internals">Internals</a>
+    <a href="#reports">Reports</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="source-label">Agent Map</div>
+  <h1>Margin Trading Detail</h1>
+  <div class="cn">上海证券交易所 &middot; 其他数据 &middot; 融资融券明细</div>
+
+  <div class="hero-meta">
+    <span class="tag green">2 data functions</span>
+    <span class="tag amber">Dynamic &mdash; JS rendered</span>
+    <span class="tag">No auth</span>
+    <span class="tag">Table: 1 rows &times; 7 cols</span>
+  </div>
+
+  <div class="hero-desc">
+    This page displays 融资融券明细 data from the Shanghai Stock Exchange.
+    Data is loaded dynamically via JSONP from <code>query.sse.com.cn/commonSoaQuery.do</code> (sqlId: RZRQ_HZ_INFO).
+    Returns a table with columns: 信用交易日期, 融资余额(元), 融资买入额(元), 融券余量, 融券余量金额(元).
+    <br><br>
+    <a href="https://www.sse.com.cn/market/othersdata/margin/detail/" target="_blank">View original page &rarr;</a>
+  </div>
+</div>
+
+<!-- 01 AVAILABLE DATA -->
+<div class="sec" id="data">
+  <h2>Available Data</h2>
+  <p class="desc">Agent 可以从这个页面获取什么数据，以及怎样获取。</p>
+
+
+  <div class="card">
+    <div class="card-header">
+      <span class="method get">GET</span>
+      <span class="endpoint">query.sse.com.cn/commonSoaQuery.do</span>
+      <span class="card-tag">Function 1 of 2</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:13px;color:var(--am-text-1);margin-bottom:16px;line-height:1.7;">
+        JSONP 数据接口，sqlId = <code>RZRQ_HZ_INFO</code>。返回 JSON 数组。
+      </p>
+
+
+      <div class="sub-label">Parameters</div>
+      <table class="params">
+        <thead><tr><th>Name</th><th>Type</th><th></th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>sqlId</td>
+            <td><span class="type">string</span></td>
+            <td><span class="req">REQUIRED</span></td>
+            <td>SQL query identifier: <code>RZRQ_HZ_INFO</code></td>
+          </tr>
+          <tr>
+            <td>jsonCallBack</td>
+            <td><span class="type">string</span></td>
+            <td><span class="opt">optional</span></td>
+            <td>JSONP callback name. Omit for raw JSON.</td>
+          </tr>
+          <tr>
+            <td>beginDate</td>
+            <td><span class="type">string</span></td>
+            <td><span class="opt">optional</span></td>
+            <td>Filter parameter (default: <code></code>)</td>
+          </tr>
+          <tr>
+            <td>endDate</td>
+            <td><span class="type">string</span></td>
+            <td><span class="opt">optional</span></td>
+            <td>Filter parameter (default: <code></code>)</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="code">
+        <div class="code-head">
+          <span class="code-lang">Example Request</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre><span class="f">curl</span> <span class="s">"https://query.sse.com.cn/commonSoaQuery.do?sqlId=RZRQ_HZ_INFO&amp;isPagination=false"</span></pre>
+      </div>
+
+      <div class="sub-label">Returns</div>
+      <p style="font-size:13px;color:var(--am-text-2);margin-bottom:12px;">
+        JSON with table data. Columns:
+      </p>
+
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Example</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:'DM Sans';">信用交易日期</td><td><span class="type">number</span></td><td>20260303</td><td>信用交易日期</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资余额(元)</td><td><span class="type">number</span></td><td>1,333,864,385,539</td><td>融资余额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资买入额(元)</td><td><span class="type">number</span></td><td>139,347,525,745</td><td>融资买入额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券余量</td><td><span class="type">number</span></td><td>2,267,726,335</td><td>融券余量</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券余量金额(元)</td><td><span class="type">number</span></td><td>11,914,660,771</td><td>融券余量金额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券卖出量</td><td><span class="type">number</span></td><td>116,934,158</td><td>融券卖出量</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资融券余额(元)</td><td><span class="type">number</span></td><td>1,345,779,046,310</td><td>融资融券余额(元)</td></tr>
+        </tbody>
+      </table>
+
+
+
+
+
+      <div class="sub-label">Caveats</div>
+      <ul style="font-size:13px;color:var(--am-text-2);line-height:1.8;padding-left:20px;">
+        <li>Non-trading days may return empty or zero-filled data</li>
+        <li>Data availability: T+1</li>
+        <li>Overseas IP may get 403 &mdash; use a CN-based proxy</li>
+      </ul>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header">
+      <span class="method get">GET</span>
+      <span class="endpoint">query.sse.com.cn/commonSoaQuery.do</span>
+      <span class="card-tag">Function 2 of 2</span>
+    </div>
+    <div class="card-body">
+      <p style="font-size:13px;color:var(--am-text-1);margin-bottom:16px;line-height:1.7;">
+        JSONP 数据接口，sqlId = <code>unknown</code>。返回 JSON 数组。
+      </p>
+
+
+      <div class="sub-label">Parameters</div>
+      <table class="params">
+        <thead><tr><th>Name</th><th>Type</th><th></th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>sqlId</td>
+            <td><span class="type">string</span></td>
+            <td><span class="req">REQUIRED</span></td>
+            <td>SQL query identifier: <code>unknown</code></td>
+          </tr>
+          <tr>
+            <td>jsonCallBack</td>
+            <td><span class="type">string</span></td>
+            <td><span class="opt">optional</span></td>
+            <td>JSONP callback name. Omit for raw JSON.</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="code">
+        <div class="code-head">
+          <span class="code-lang">Example Request</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre><span class="f">curl</span> <span class="s">"https://query.sse.com.cn/commonSoaQuery.do?sqlId=unknown&amp;isPagination=false"</span></pre>
+      </div>
+
+      <div class="sub-label">Returns</div>
+      <p style="font-size:13px;color:var(--am-text-2);margin-bottom:12px;">
+        JSON with table data. Columns:
+      </p>
+
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Example</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:'DM Sans';">信用交易日期</td><td><span class="type">number</span></td><td>20260303</td><td>信用交易日期</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资余额(元)</td><td><span class="type">number</span></td><td>1,333,864,385,539</td><td>融资余额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资买入额(元)</td><td><span class="type">number</span></td><td>139,347,525,745</td><td>融资买入额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券余量</td><td><span class="type">number</span></td><td>2,267,726,335</td><td>融券余量</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券余量金额(元)</td><td><span class="type">number</span></td><td>11,914,660,771</td><td>融券余量金额(元)</td></tr>
+          <tr><td style="font-family:'DM Sans';">融券卖出量</td><td><span class="type">number</span></td><td>116,934,158</td><td>融券卖出量</td></tr>
+          <tr><td style="font-family:'DM Sans';">融资融券余额(元)</td><td><span class="type">number</span></td><td>1,345,779,046,310</td><td>融资融券余额(元)</td></tr>
+        </tbody>
+      </table>
+
+
+
+
+
+      <div class="sub-label">Caveats</div>
+      <ul style="font-size:13px;color:var(--am-text-2);line-height:1.8;padding-left:20px;">
+        <li>Non-trading days may return empty or zero-filled data</li>
+        <li>Data availability: T+1</li>
+        <li>Overseas IP may get 403 &mdash; use a CN-based proxy</li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- 02 PAGE INTERNALS -->
+<div class="sec" id="internals">
+  <h2>Page Internals</h2>
+  <p class="desc">如果你需要通过浏览器自动化操作此页面，以下是页面的内部结构。</p>
+
+  <div class="card">
+    <div class="card-body" style="padding:0;">
+      <dl class="kv">
+        <dt>JS Controller</dt>
+        <dd><code>window.sum</code></dd>
+
+        <dt>Data Method</dt>
+        <dd><code>sum.getSumList()</code></dd>
+
+        <dt>Param Method</dt>
+        <dd><code>sum.setSumParams()</code></dd>
+
+        <dt>Input</dt>
+        <dd><code>#inputCode</code> &mdash; 6位代码 / 简称</dd>
+
+        <dt>Input</dt>
+        <dd><code>input.form-control.sse_input[name="undefined"][type="text"]</code> &mdash; 开始时间  至  结束时间</dd>
+
+        <dt>Auth</dt>
+        <dd style="color:var(--am-green);">None &mdash; public data, no login required</dd>
+
+      </dl>
+    </div>
+  </div>
+
+  <div class="sub-label">Browser Automation Recipe</div>
+  <p style="font-size:13px;color:var(--am-text-2);margin-bottom:12px;">
+    如果直调 API 受阻，以下 action steps 可复现数据获取：
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span class="code-lang">action_steps</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre><span class="c">// Trigger data load</span>
+sum.<span class="f">getSumList</span>()
+
+<span class="c">// Extract table data</span>
+<span class="k">const</span> <span class="v">table</span> = document.<span class="f">querySelector</span>(<span class="s">'.table-responsive table'</span>)
+<span class="k">const</span> <span class="v">rows</span> = [...<span class="v">table</span>.<span class="f">querySelectorAll</span>(<span class="s">'tbody tr'</span>)].<span class="f">map</span>(tr =>
+  [...tr.<span class="f">querySelectorAll</span>(<span class="s">'td'</span>)].<span class="f">map</span>(td => td.textContent.<span class="f">trim</span>())
+)</pre>
+  </div>
+</div>
+
+<!-- 03 AGENT REPORTS -->
+<div class="sec" id="reports">
+  <h2>Agent Reports</h2>
+  <p class="desc">使用过此数据源的 Agent 自动提交的调用记录与注意事项。</p>
+
+  <div class="reports">
+    <div class="report">
+      <div class="report-head">
+        <div class="report-dot" style="background:var(--am-green);box-shadow:0 0 6px var(--am-green);"></div>
+        <span class="report-name">VeriGlow Agent</span>
+        <span class="report-time">auto-scan</span>
+      </div>
+      <div class="report-body">
+        analyze_page 自动扫描成功。发现 2 个 API 调用，2 个数据表。
+      </div>
+      <div class="report-metrics">
+        <span class="ok">2 APIs</span>
+        <span class="ok">2 tables</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="foot-text"><span>VERIGLOW</span> AGENT MAP &mdash; veri-glow.com</div>
+</footer>
+
+<script>
+/* Theme toggle */
+function getPreferred(){
+  const stored=localStorage.getItem('am-theme');
+  if(stored)return stored;
+  return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('am-theme',t);
+}
+function toggleTheme(){
+  const current=document.documentElement.getAttribute('data-theme')||'light';
+  applyTheme(current==='dark'?'light':'dark');
+}
+(function(){
+  const t=getPreferred();
+  if(t==='dark')applyTheme('dark');
+})();
+
+/* Copy code */
+function copyCode(btn){
+  const pre=btn.closest('.code').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy',1500);
+  });
+}
+
+/* Intersection Observer for nav active state */
+(function(){
+  const sections=document.querySelectorAll('.sec[id]');
+  const links=document.querySelectorAll('.bar-right a[href^="#"]');
+  if(!sections.length||!links.length)return;
+
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const link=document.querySelector('.bar-right a[href="#'+e.target.id+'"]');
+        if(link)link.classList.add('active');
+      }
+    });
+  },{rootMargin:'-80px 0px -60% 0px',threshold:0});
+
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+
+</body>
+</html>

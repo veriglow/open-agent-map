@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeriGlow Agent Map</title>
+<meta name="description" content="Discover Agent-readable data functions, internal APIs, and reliability scores for any website.">
+<link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+/* ═══ Theme Tokens ═══ */
+:root{
+  --am-bg-0:#FFFFFF;
+  --am-bg-1:#F9FAFB;
+  --am-bg-2:#F3F4F6;
+  --am-bg-3:#E5E7EB;
+  --am-border:#E5E7EB;
+  --am-border-light:#F3F4F6;
+  --am-text-0:#111827;
+  --am-text-1:#374151;
+  --am-text-2:#6B7280;
+  --am-text-3:#9CA3AF;
+  --am-green:#10B981;
+  --am-green-hover:#059669;
+  --am-green-dim:rgba(16,185,129,0.08);
+  --am-blue:#3B82F6;
+  --am-blue-dim:rgba(59,130,246,0.08);
+  --am-amber:#F59E0B;
+  --am-amber-dim:rgba(245,158,11,0.08);
+  --am-code-bg:#F8FAFC;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --am-shadow-lg:0 4px 24px rgba(0,0,0,0.08);
+  --am-nav-bg:rgba(255,255,255,0.85);
+  --am-icon-cell:#CBD5E1;
+  --am-icon-cell-dk:#CBD5E1;
+}
+html[data-theme="dark"]{
+  --am-bg-0:#06080C;
+  --am-bg-1:#0C0F15;
+  --am-bg-2:#12161E;
+  --am-bg-3:#1A1F2B;
+  --am-border:#1E2432;
+  --am-border-light:#1A1F2B;
+  --am-text-0:#E8EAF0;
+  --am-text-1:#B0B8C8;
+  --am-text-2:#6B7A94;
+  --am-text-3:#3E4B62;
+  --am-green:#34D399;
+  --am-green-hover:#10B981;
+  --am-green-dim:rgba(16,185,129,0.12);
+  --am-blue:#60A5FA;
+  --am-blue-dim:rgba(59,130,246,0.12);
+  --am-amber:#FBBF24;
+  --am-amber-dim:rgba(245,158,11,0.12);
+  --am-code-bg:#0C0F15;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.3);
+  --am-shadow-lg:0 4px 24px rgba(0,0,0,0.4);
+  --am-nav-bg:rgba(6,8,12,0.85);
+  --am-icon-cell:#334155;
+  --am-icon-cell-dk:#334155;
+}
+
+body{
+  background:var(--am-bg-0);
+  color:var(--am-text-0);
+  font-family:'DM Sans','Noto Sans SC',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  transition:background 0.3s,color 0.3s;
+}
+
+/* ═══ Nav ═══ */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--am-nav-bg);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--am-border);
+  height:56px;
+  display:flex;align-items:center;
+  padding:0 32px;
+  transition:background 0.3s,border-color 0.3s;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.nav-logo svg{width:24px;height:24px;flex-shrink:0;}
+.nav-wordmark{
+  font-family:'Crimson Pro',Georgia,serif;font-weight:700;
+  font-size:16px;letter-spacing:0.02em;line-height:1;
+}
+.nav-wordmark .veri{color:#94A3B8;}
+.nav-wordmark .glow{color:#10B981;}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.theme-toggle{
+  width:36px;height:36px;border-radius:8px;
+  border:1px solid var(--am-border);
+  background:var(--am-bg-1);
+  color:var(--am-text-2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.theme-toggle:hover{
+  border-color:var(--am-green);color:var(--am-green);
+  background:var(--am-green-dim);
+}
+.theme-toggle svg{width:18px;height:18px;}
+.icon-sun{display:block;}
+.icon-moon{display:none;}
+html[data-theme="dark"] .icon-sun{display:none;}
+html[data-theme="dark"] .icon-moon{display:block;}
+
+/* ═══ Hero ═══ */
+.hero{
+  text-align:center;
+  max-width:680px;
+  margin:0 auto;
+  padding:80px 24px 64px;
+}
+.hero-icon{
+  width:56px;height:56px;
+  margin:0 auto 28px;
+}
+.hero h1{
+  font-size:36px;font-weight:700;
+  margin-bottom:12px;letter-spacing:-0.5px;
+}
+.hero h1 span{color:var(--am-green);}
+.hero-sub{
+  color:var(--am-text-2);
+  font-size:17px;line-height:1.7;
+  margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;
+}
+.search-box{
+  position:relative;width:100%;max-width:560px;margin:0 auto;
+}
+.search-box input{
+  width:100%;
+  padding:16px 100px 16px 48px;
+  background:var(--am-bg-1);
+  border:1px solid var(--am-border);
+  border-radius:14px;
+  color:var(--am-text-0);
+  font-size:15px;
+  font-family:'JetBrains Mono',monospace;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  box-shadow:var(--am-shadow);
+}
+.search-box input:focus{
+  border-color:var(--am-green);
+  box-shadow:0 0 0 3px var(--am-green-dim);
+}
+.search-box input::placeholder{color:var(--am-text-3);}
+.search-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  color:var(--am-text-3);width:20px;height:20px;
+}
+.search-btn{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  background:var(--am-green);color:#fff;
+  border:none;border-radius:10px;
+  padding:10px 24px;font-size:14px;font-weight:600;
+  cursor:pointer;transition:background 0.15s;
+  font-family:'DM Sans',sans-serif;
+}
+.search-btn:hover{background:var(--am-green-hover);}
+.search-hint{
+  color:var(--am-text-3);font-size:13px;margin-top:14px;
+}
+.search-hint code{
+  background:var(--am-bg-2);
+  padding:2px 8px;border-radius:5px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--am-text-2);
+}
+
+/* ═══ How It Works ═══ */
+.how{
+  max-width:880px;margin:0 auto;
+  padding:0 32px 72px;
+}
+.section-label{
+  font-size:11px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--am-text-3);
+  text-align:center;margin-bottom:12px;
+}
+.section-title{
+  font-size:24px;font-weight:700;text-align:center;
+  margin-bottom:48px;
+}
+.how-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.how-card{
+  background:var(--am-bg-1);
+  border:1px solid var(--am-border);
+  border-radius:16px;
+  padding:32px 24px;
+  text-align:center;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.how-card:hover{
+  border-color:var(--am-green);
+  box-shadow:0 0 0 3px var(--am-green-dim);
+}
+.how-num{
+  width:40px;height:40px;
+  border-radius:10px;
+  background:var(--am-green-dim);
+  color:var(--am-green);
+  font-size:16px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+}
+.how-card h3{
+  font-size:16px;font-weight:600;margin-bottom:8px;
+}
+.how-card p{
+  font-size:14px;color:var(--am-text-2);line-height:1.6;
+}
+
+/* ═══ Available Maps ═══ */
+.maps{
+  max-width:880px;margin:0 auto;
+  padding:0 32px 80px;
+}
+.map-card{
+  background:var(--am-bg-1);
+  border:1px solid var(--am-border);
+  border-radius:16px;
+  overflow:hidden;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  text-decoration:none;color:inherit;display:block;
+}
+.map-card:hover{
+  border-color:var(--am-green);
+  box-shadow:var(--am-shadow-lg);
+}
+.map-card-header{
+  padding:20px 24px 16px;
+}
+.map-card-header h3{
+  font-size:18px;font-weight:600;margin-bottom:4px;
+}
+.map-card-header .cn{
+  font-family:'Noto Sans SC';font-size:13px;
+  color:var(--am-text-2);margin-bottom:14px;
+}
+.map-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.map-tag{
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:6px;
+  background:var(--am-bg-2);color:var(--am-text-1);
+  border:1px solid var(--am-border);
+}
+.map-tag.green{background:var(--am-green-dim);color:var(--am-green);border-color:transparent;}
+.map-tag.amber{background:var(--am-amber-dim);color:var(--am-amber);border-color:transparent;}
+.map-tag.blue{background:var(--am-blue-dim);color:var(--am-blue);border-color:transparent;}
+.map-card-url{
+  padding:12px 24px;
+  border-top:1px solid var(--am-border);
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;color:var(--am-text-2);
+  display:flex;align-items:center;gap:8px;
+}
+.map-card-url .domain{color:var(--am-green);font-weight:500;}
+.map-card-url .arrow{
+  margin-left:auto;color:var(--am-text-3);
+  transition:transform 0.2s,color 0.2s;
+}
+.map-card:hover .arrow{transform:translateX(4px);color:var(--am-green);}
+
+/* ═══ Footer ═══ */
+.foot{
+  text-align:center;padding:48px 32px 32px;
+  border-top:1px solid var(--am-border);
+}
+.foot-text{
+  font-size:11px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:var(--am-text-3);
+}
+.foot-text span{color:var(--am-green);}
+
+/* ═══ Responsive ═══ */
+@media(max-width:768px){
+  .nav{padding:0 20px;height:52px;}
+  .hero{padding:56px 20px 48px;}
+  .hero h1{font-size:28px;}
+  .hero-sub{font-size:15px;}
+  .how{padding:0 20px 56px;}
+  .how-grid{grid-template-columns:1fr;gap:16px;}
+  .maps{padding:0 20px 56px;}
+  .search-box input{padding:14px 90px 14px 44px;font-size:13px;}
+  .search-btn{padding:8px 16px;font-size:13px;}
+}
+@media(max-width:480px){
+  .nav-wordmark{font-size:14px;}
+  .hero h1{font-size:24px;}
+  .hero-icon{width:44px;height:44px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Nav ═══ -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <span class="nav-wordmark"><span class="veri">Veri</span><span class="glow">Glow</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="/pay" style="font-size:13px;font-weight:600;color:var(--am-green);text-decoration:none;padding:8px 16px;border:1px solid var(--am-green);border-radius:8px;transition:all 0.2s;">Tip Us</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+  <svg class="hero-icon" viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+  </svg>
+  <h1><span>VeriGlow</span> Agent Map</h1>
+  <p class="hero-sub">Paste any URL to discover its Agent-readable data functions, internal APIs, and reliability scores.</p>
+  <div class="search-box">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input id="url-input" type="text" placeholder="https://www.example.com/..." autofocus>
+    <button class="search-btn" onclick="go()">Go</button>
+  </div>
+  <p class="search-hint">Paste a URL, or prepend <code>veri-glow.com/</code> to any URL in your browser</p>
+</section>
+
+<!-- ═══ How It Works ═══ -->
+<section class="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Three steps to Agent-ready data</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">1</div>
+      <h3>Paste a URL</h3>
+      <p>Enter the URL of any website that has data you want an AI Agent to access.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">2</div>
+      <h3>Get the Map</h3>
+      <p>We analyze the page structure, APIs, and data sources, then generate a detailed Agent Map.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">3</div>
+      <h3>Use the Data</h3>
+      <p>Your Agent can call documented APIs directly, or follow browser automation recipes we provide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Available Maps ═══ -->
+<section class="maps">
+  <div class="section-label">Available Maps</div>
+  <h2 class="section-title">Explore indexed data sources</h2>
+  <a class="map-card" href="/map/sse.com.cn">
+    <div class="map-card-header">
+      <h3>Shanghai Stock Exchange &mdash; Domain Overview</h3>
+      <div class="cn">上海证券交易所 &middot; www.sse.com.cn &middot; 全域 API 与页面结构总览</div>
+      <div class="map-tags">
+        <span class="map-tag green">5 API hosts</span>
+        <span class="map-tag green">No auth on market data</span>
+        <span class="map-tag amber">Dynamic &mdash; JS rendered</span>
+        <span class="map-tag blue">10+ data pages</span>
+      </div>
+    </div>
+    <div class="map-card-url">
+      <span class="domain">veri-glow.com</span><span>/map/sse.com.cn</span>
+      <span class="arrow">&rarr;</span>
+    </div>
+  </a>
+
+{% for map in maps %}
+
+  <a class="map-card" href="/{{ map.domain }}{{ map.path }}" style="margin-top:16px;">
+    <div class="map-card-header">
+      <h3>{{ map.title }}</h3>
+      <div class="cn">{{ map.subtitle }}</div>
+      <div class="map-tags">
+{%- for tag in map.tags %}
+        <span class="map-tag{{ ' ' + tag.color if tag.color else '' }}">{{ tag.text }}</span>
+{%- endfor %}
+      </div>
+    </div>
+    <div class="map-card-url">
+      <span class="domain">veri-glow.com</span><span>/{{ map.domain }}{{ map.path }}</span>
+      <span class="arrow">&rarr;</span>
+    </div>
+  </a>
+{% endfor %}
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer class="foot">
+  <div class="foot-text"><span>VERIGLOW</span> AGENT MAP &mdash; veri-glow.com</div>
+</footer>
+
+<script>
+/* Theme toggle */
+function getPreferred(){
+  const stored=localStorage.getItem('am-theme');
+  if(stored)return stored;
+  return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('am-theme',t);
+}
+function toggleTheme(){
+  const current=document.documentElement.getAttribute('data-theme')||'light';
+  applyTheme(current==='dark'?'light':'dark');
+}
+(function(){
+  const t=getPreferred();
+  if(t==='dark')applyTheme('dark');
+})();
+
+/* Search */
+function go(){
+  let url=document.getElementById('url-input').value.trim();
+  if(!url)return;
+  url=url.replace(/^https?:\/\//,'');
+  window.location.href='/'+url;
+}
+document.getElementById('url-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter')go();
+});
+</script>
+
+</body>
+</html>

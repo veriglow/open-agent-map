@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>veri-glow.com/map/sse.com.cn — Shanghai Stock Exchange</title>
+<link rel="icon" href="https://brand.veri-glow.com/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --am-bg-0:#FFFFFF;--am-bg-1:#F9FAFB;--am-bg-2:#F3F4F6;--am-bg-3:#E5E7EB;
+  --am-border:#E5E7EB;--am-border-light:#F3F4F6;
+  --am-text-0:#111827;--am-text-1:#374151;--am-text-2:#6B7280;--am-text-3:#9CA3AF;
+  --am-green:#10B981;--am-green-hover:#059669;--am-green-dim:rgba(16,185,129,0.08);
+  --am-mint:#34D399;
+  --am-blue:#3B82F6;--am-blue-dim:rgba(59,130,246,0.08);
+  --am-amber:#F59E0B;--am-amber-dim:rgba(245,158,11,0.08);
+  --am-red:#EF4444;--am-red-dim:rgba(239,68,68,0.08);
+  --am-purple:#8B5CF6;--am-purple-dim:rgba(139,92,246,0.08);
+  --am-code-bg:#F8FAFC;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --am-shadow-lg:0 4px 24px rgba(0,0,0,0.08);
+  --am-nav-bg:rgba(255,255,255,0.85);
+  --am-icon-cell:#CBD5E1;
+}
+html[data-theme="dark"]{
+  --am-bg-0:#06080C;--am-bg-1:#0C0F15;--am-bg-2:#12161E;--am-bg-3:#1A1F2B;
+  --am-border:#1E2432;--am-border-light:#1A1F2B;
+  --am-text-0:#E8EAF0;--am-text-1:#B0B8C8;--am-text-2:#6B7A94;--am-text-3:#3E4B62;
+  --am-green:#34D399;--am-green-hover:#10B981;--am-green-dim:rgba(16,185,129,0.12);
+  --am-mint:#34D399;
+  --am-blue:#60A5FA;--am-blue-dim:rgba(59,130,246,0.12);
+  --am-amber:#FBBF24;--am-amber-dim:rgba(245,158,11,0.12);
+  --am-red:#F87171;--am-red-dim:rgba(239,68,68,0.12);
+  --am-purple:#A78BFA;--am-purple-dim:rgba(139,92,246,0.12);
+  --am-code-bg:#0C0F15;
+  --am-shadow:0 1px 3px rgba(0,0,0,0.3);--am-shadow-lg:0 4px 24px rgba(0,0,0,0.4);
+  --am-nav-bg:rgba(6,8,12,0.85);--am-icon-cell:#334155;
+}
+
+body{background:var(--am-bg-0);color:var(--am-text-0);font-family:'DM Sans','Noto Sans SC',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;transition:background 0.3s,color 0.3s;}
+
+/* ═══ URL Bar ═══ */
+.url-bar{position:sticky;top:0;z-index:100;background:var(--am-nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--am-border);padding:0 32px;height:52px;display:flex;align-items:center;gap:12px;transition:background 0.3s,border-color 0.3s;}
+.logo-link{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.logo-link svg{width:20px;height:20px;}
+.logo-wordmark{font-family:'Crimson Pro',Georgia,serif;font-weight:700;font-size:14px;letter-spacing:0.05em;line-height:1;}
+.logo-wordmark .veri{color:#94A3B8;}.logo-wordmark .glow{color:#34D399;}
+.sep{width:1px;height:20px;background:var(--am-border);flex-shrink:0;}
+.url-crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--am-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+.url-crumb .hl{color:var(--am-green);}
+.url-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--am-border);background:var(--am-bg-1);color:var(--am-text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--am-green);color:var(--am-green);background:var(--am-green-dim);}
+.theme-toggle svg{width:16px;height:16px;}
+.icon-sun{display:block;}.icon-moon{display:none;}
+html[data-theme="dark"] .icon-sun{display:none;}html[data-theme="dark"] .icon-moon{display:block;}
+
+/* ═══ Layout ═══ */
+.page{max-width:900px;margin:0 auto;padding:48px 32px 80px;}
+
+/* ═══ Hero ═══ */
+.hero{margin-bottom:40px;}
+.hero-meta{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.site-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:var(--am-bg-2);border:1px solid var(--am-border);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--am-text-2);}
+.site-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--am-green);}
+.lang-badge{padding:3px 8px;border-radius:5px;background:var(--am-amber-dim);border:1px solid transparent;font-size:11px;color:var(--am-amber);font-weight:500;}
+.hero h1{font-size:28px;font-weight:700;letter-spacing:-0.3px;margin-bottom:6px;}
+.hero h1 .domain{color:var(--am-green);}
+.hero-sub{font-size:15px;color:var(--am-text-2);margin-bottom:20px;font-family:'Noto Sans SC','DM Sans',sans-serif;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-size:11px;font-weight:500;padding:4px 10px;border-radius:6px;}
+.tag.default{background:var(--am-bg-2);color:var(--am-text-1);border:1px solid var(--am-border);}
+.tag.green{background:var(--am-green-dim);color:var(--am-green);border:1px solid transparent;}
+.tag.amber{background:var(--am-amber-dim);color:var(--am-amber);border:1px solid transparent;}
+.tag.blue{background:var(--am-blue-dim);color:var(--am-blue);border:1px solid transparent;}
+.tag.purple{background:var(--am-purple-dim);color:var(--am-purple);border:1px solid transparent;}
+
+/* ═══ Sections ═══ */
+.section{margin-bottom:40px;}
+.section-title{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--am-text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--am-border);}
+
+/* ═══ API Host Grid ═══ */
+.host-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+@media(max-width:600px){.host-grid{grid-template-columns:1fr;}}
+.host-card{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:12px;padding:16px 18px;transition:border-color 0.2s;}
+.host-card:hover{border-color:var(--am-green);}
+.host-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--am-text-0);margin-bottom:4px;}
+.host-name .protocol{color:var(--am-text-3);font-weight:400;}
+.host-desc{font-size:12px;color:var(--am-text-2);line-height:1.5;}
+.host-port{display:inline-block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px;background:var(--am-bg-3);color:var(--am-text-2);}
+
+/* ═══ Endpoint Table ═══ */
+.ep-table{width:100%;border-collapse:collapse;font-size:13px;}
+.ep-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--am-text-3);padding:0 12px 10px 0;border-bottom:1px solid var(--am-border);}
+.ep-table td{padding:10px 12px 10px 0;border-bottom:1px solid var(--am-border-light);vertical-align:top;}
+.ep-table tr:last-child td{border-bottom:none;}
+.ep-method{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-right:6px;}
+.ep-method.GET{background:var(--am-green-dim);color:var(--am-green);}
+.ep-method.POST{background:var(--am-blue-dim);color:var(--am-blue);}
+.ep-method.JS{background:var(--am-amber-dim);color:var(--am-amber);}
+.ep-url{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--am-text-1);word-break:break-all;}
+.ep-url .host{color:var(--am-green);}
+.ep-note{font-size:11px;color:var(--am-text-2);margin-top:3px;}
+.ep-auth{font-size:10px;font-weight:500;padding:1px 6px;border-radius:4px;}
+.ep-auth.none{background:var(--am-green-dim);color:var(--am-green);}
+.ep-auth.cn{background:var(--am-amber-dim);color:var(--am-amber);}
+
+/* ═══ Element Tags ═══ */
+.elem-list{display:flex;flex-direction:column;gap:8px;}
+.elem-row{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:10px;padding:12px 16px;display:flex;align-items:flex-start;gap:14px;}
+.elem-selector{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--am-blue);background:var(--am-blue-dim);padding:4px 10px;border-radius:6px;white-space:nowrap;}
+.elem-selector.js{color:var(--am-amber);background:var(--am-amber-dim);}
+.elem-selector.id{color:var(--am-purple);background:var(--am-purple-dim);}
+.elem-info{flex:1;}
+.elem-name{font-size:13px;font-weight:600;color:var(--am-text-0);margin-bottom:2px;}
+.elem-desc{font-size:12px;color:var(--am-text-2);line-height:1.5;}
+.elem-page{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--am-text-3);margin-top:3px;}
+
+/* ═══ Data Pages ═══ */
+.page-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.page-row{background:var(--am-bg-1);border:1px solid var(--am-border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;transition:border-color 0.2s,box-shadow 0.2s;}
+.page-row:hover{border-color:var(--am-green);box-shadow:var(--am-shadow-lg);}
+.page-path{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--am-text-2);flex-shrink:0;min-width:200px;}
+.page-path .seg{color:var(--am-green);}
+.page-info{flex:1;}
+.page-title-en{font-size:13px;font-weight:600;color:var(--am-text-0);}
+.page-title-cn{font-size:11px;color:var(--am-text-2);font-family:'Noto Sans SC',sans-serif;}
+.page-tags{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;}
+.page-tag{font-size:10px;padding:2px 7px;border-radius:4px;}
+.page-tag.dyn{background:var(--am-amber-dim);color:var(--am-amber);}
+.page-tag.api{background:var(--am-green-dim);color:var(--am-green);}
+.page-tag.tbl{background:var(--am-blue-dim);color:var(--am-blue);}
+.page-arrow{color:var(--am-text-3);font-size:16px;flex-shrink:0;transition:transform 0.2s,color 0.2s;}
+.page-row:hover .page-arrow{transform:translateX(4px);color:var(--am-green);}
+.page-row.has-map{border-left:3px solid var(--am-green);}
+.map-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;background:var(--am-green-dim);color:var(--am-green);font-weight:600;margin-top:4px;}
+
+/* ═══ Code Block ═══ */
+.code-block{background:var(--am-code-bg);border:1px solid var(--am-border);border-radius:10px;padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;overflow-x:auto;}
+.code-block .cm{color:var(--am-text-3);}
+.code-block .kw{color:var(--am-blue);}
+.code-block .st{color:var(--am-green);}
+.code-block .nm{color:var(--am-amber);}
+.code-block .pn{color:var(--am-text-2);}
+
+/* ═══ Info Callout ═══ */
+.callout{background:var(--am-amber-dim);border:1px solid var(--am-amber);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--am-amber);display:flex;gap:10px;align-items:flex-start;margin-bottom:16px;}
+.callout svg{flex-shrink:0;margin-top:1px;}
+
+/* ═══ Footer ═══ */
+.foot{text-align:center;padding:40px 32px 32px;border-top:1px solid var(--am-border);}
+.foot-text{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--am-text-3);}
+.foot-text span{color:var(--am-green);}
+
+@media(max-width:640px){
+  .url-bar{padding:0 16px;}
+  .page{padding:32px 16px 60px;}
+  .hero h1{font-size:22px;}
+  .host-grid{grid-template-columns:1fr;}
+  .ep-table th:nth-child(3),.ep-table td:nth-child(3){display:none;}
+  .page-path{min-width:0;display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- URL Bar -->
+<div class="url-bar">
+  <a href="/" class="logo-link">
+    <svg viewBox="-6 -6 112 104" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 42.0,0.13 L 77.3,65.6 L 38.1,65.6 L 30.6,79.7 L 100,79.7 L 57.6,0 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 0,79.6 L 7.8,94.1 L 42.5,28.3 L 61.9,65.6 L 77.3,65.6 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.5,28.3 L 50.2,43.1 L 30.6,79.7 L 100,79.7 L 92.7,94.5 L 7.8,94.1 Z" fill="none" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 49.77,14.54 L 42.5,28.3 L 34.73,13.89 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 42.0,0.13 L 57.6,0 L 65.27,14.41 L 49.77,14.54 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.7,94.5 L 78.28,94.43 L 92.50,65.60 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 100,79.7 L 92.50,65.60 L 77.3,65.6 L 84.80,79.70 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 0,79.6 L 7.64,65.14 L 15.43,79.63 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 7.8,94.1 L 15.43,79.63 L 30.6,79.7 L 22.97,94.17 Z" fill="#10B981" stroke="#10B981" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <span class="logo-wordmark"><span class="veri">Veri</span><span class="glow">Glow</span></span>
+  </a>
+  <div class="sep"></div>
+  <div class="url-crumb"><span class="hl">veri-glow.com</span>/map/sse.com.cn</div>
+  <div class="url-right">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</div>
+
+<main class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-meta">
+      <div class="site-badge"><div class="dot"></div>www.sse.com.cn</div>
+      <div class="lang-badge">zh-CN</div>
+    </div>
+    <h1>Shanghai Stock Exchange <span class="domain">Domain Map</span></h1>
+    <p class="hero-sub">上海证券交易所 — 数据接口、页面结构与 Agent 可读性全景图</p>
+    <div class="tag-row">
+      <span class="tag green">5 API hosts</span>
+      <span class="tag green">No auth on market data</span>
+      <span class="tag amber">Dynamic — JS rendered</span>
+      <span class="tag blue">10+ data pages</span>
+      <span class="tag default">CN IP preferred</span>
+    </div>
+  </div>
+
+  <!-- API Hosts -->
+  <div class="section">
+    <div class="section-title">API Hosts</div>
+    <div class="host-grid">
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>query.sse.com.cn</div>
+        <div class="host-desc">主要数据查询服务。股票、债券、基金等历史/日度数据均从此域获取，返回 JSON/JSONP。</div>
+      </div>
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>yunhq.sse.com.cn</div>
+        <div class="host-desc">实时行情推送服务。提供 WebSocket 及 HTTP 轮询接口。</div>
+        <span class="host-port">:32041 HTTP</span>
+        <span class="host-port">:32042 HTTPS</span>
+      </div>
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>bond.sse.com.cn</div>
+        <div class="host-desc">债券业务专属平台，债券发行、交易及信息披露入口。</div>
+      </div>
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>biz.sse.com.cn</div>
+        <div class="host-desc">业务办理服务，含上市申请、信披提交等后台 API。</div>
+      </div>
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>static.sse.com.cn</div>
+        <div class="host-desc">静态资源 CDN。JS 数据文件（如债券固定数据）也通过此域分发。</div>
+      </div>
+      <div class="host-card">
+        <div class="host-name"><span class="protocol">https://</span>www.sse.com.cn/js/</div>
+        <div class="host-desc">内嵌在主站的 JS 数据接口。部分数据直接通过 .js 文件形式暴露，无 API key 要求。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key API Endpoints -->
+  <div class="section">
+    <div class="section-title">Key API Endpoints</div>
+    <div class="callout">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      境外 IP 访问部分接口可能返回 403，建议使用中国大陆节点请求。所有市场数据接口无需鉴权。
+    </div>
+    <table class="ep-table">
+      <thead>
+        <tr>
+          <th style="width:70px">Method</th>
+          <th>Endpoint / URL</th>
+          <th style="width:70px">Auth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ep-method JS">JS</span></td>
+          <td>
+            <div class="ep-url"><span class="host">www.sse.com.cn</span>/js/common/sseBond498Fixed.js?searchDate=<em>YYYY-MM-DD</em></div>
+            <div class="ep-note">债券日度成交概况。返回 17 个品种 &times; 4 列数据（JSON/JSONP），参数 <code>jsonCallBack</code> 可选。</div>
+          </td>
+          <td><span class="ep-auth none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="ep-method GET">GET</span></td>
+          <td>
+            <div class="ep-url"><span class="host">query.sse.com.cn</span>/commonQuery.do?isPagination=false&amp;sqlId=<em>SQLID</em>&amp;…</div>
+            <div class="ep-note">通用数据查询接口。不同 <code>sqlId</code> 对应不同数据集（如 <code>COMMON_SSE_SJ_GPLB</code> 为股票列表）。返回分页 JSON。</div>
+          </td>
+          <td><span class="ep-auth none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="ep-method GET">GET</span></td>
+          <td>
+            <div class="ep-url"><span class="host">yunhq.sse.com.cn:32042</span>/v1/sh1/snap/<em>STOCK_CODE</em>?callback=<em>cb</em>&amp;fields=last,high,low,open,prev_close,volume,amount</div>
+            <div class="ep-note">单只股票实时快照。fields 参数指定返回字段，支持 JSONP 回调。</div>
+          </td>
+          <td><span class="ep-auth cn">CN IP</span></td>
+        </tr>
+        <tr>
+          <td><span class="ep-method GET">GET</span></td>
+          <td>
+            <div class="ep-url"><span class="host">yunhq.sse.com.cn:32042</span>/v1/sh1/list/exchange?callback=<em>cb</em>&amp;begin=0&amp;end=49&amp;fields=code,name,last,chg_rate</div>
+            <div class="ep-note">全市场股票列表（分页）。begin/end 控制分页，fields 自定义字段。</div>
+          </td>
+          <td><span class="ep-auth cn">CN IP</span></td>
+        </tr>
+        <tr>
+          <td><span class="ep-method GET">GET</span></td>
+          <td>
+            <div class="ep-url"><span class="host">yunhq.sse.com.cn:32042</span>/v1/sh1/index/000001?callback=<em>cb</em>&amp;fields=last,open,high,low,prev_close,volume,amount,chg_rate</div>
+            <div class="ep-note">上证指数（000001）实时数据。其他指数替换 code 即可（000300=沪深300）。</div>
+          </td>
+          <td><span class="ep-auth cn">CN IP</span></td>
+        </tr>
+        <tr>
+          <td><span class="ep-method JS">JS</span></td>
+          <td>
+            <div class="ep-url"><span class="host">static.sse.com.cn</span>/js/common/systemDate_global.js</div>
+            <div class="ep-note">全局交易日期变量。注入 <code>window.currentDate</code>、<code>window.tradingDates</code> 等日期相关全局量。</div>
+          </td>
+          <td><span class="ep-auth none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Element Tags -->
+  <div class="section">
+    <div class="section-title">Element Tags &amp; Selectors</div>
+    <div class="elem-list">
+      <div class="elem-row">
+        <div class="elem-selector">.js_date input</div>
+        <div class="elem-info">
+          <div class="elem-name">Date Picker Input</div>
+          <div class="elem-desc">所有数据页面的日期选择输入框。设置 <code>.value = 'YYYY-MM-DD'</code> 后触发关联方法刷新数据。</div>
+          <div class="elem-page">出现页面：/market/bonddata/ · /market/stockdata/ · /market/funddata/</div>
+        </div>
+      </div>
+      <div class="elem-row">
+        <div class="elem-selector">.table-responsive table</div>
+        <div class="elem-info">
+          <div class="elem-name">Data Table</div>
+          <div class="elem-desc">统一的 thead/tbody 数据表格容器。数据通过 JS 注入，DOM 稳定后可直接 <code>querySelectorAll('tr')</code> 提取行数据。</div>
+          <div class="elem-page">出现页面：所有 /market/ 数据页面</div>
+        </div>
+      </div>
+      <div class="elem-row">
+        <div class="elem-selector js">window.overviewDay</div>
+        <div class="elem-info">
+          <div class="elem-name">Bond Overview Controller</div>
+          <div class="elem-desc">债券成交概况页面的数据控制器对象。调用 <code>overviewDay.setOverviewDayParams()</code> 可触发 AJAX 刷新当前日期数据。</div>
+          <div class="elem-page">仅限：/market/bonddata/overview/day/</div>
+        </div>
+      </div>
+      <div class="elem-row">
+        <div class="elem-selector js">window.tableFun / tableData</div>
+        <div class="elem-info">
+          <div class="elem-name">Table Controller &amp; Data Cache</div>
+          <div class="elem-desc">多数 market 数据页使用的通用表格控制器（<code>tableFun</code>）及数据缓存对象（<code>tableData</code>）。可在控制台中直接读取已加载的数据。</div>
+          <div class="elem-page">出现页面：/market/stockdata/ · /market/funddata/ · /market/othersdata/</div>
+        </div>
+      </div>
+      <div class="elem-row">
+        <div class="elem-selector id">#breadcrumb-ul</div>
+        <div class="elem-info">
+          <div class="elem-name">Breadcrumb Navigation</div>
+          <div class="elem-desc">页面面包屑导航列表，可用于确认当前页面路径层级。</div>
+          <div class="elem-page">出现页面：所有内容页面</div>
+        </div>
+      </div>
+      <div class="elem-row">
+        <div class="elem-selector">.nav-title-container a</div>
+        <div class="elem-info">
+          <div class="elem-name">Main Navigation Links</div>
+          <div class="elem-desc">顶部主导航链接列表，用于遍历主站所有一级功能入口。</div>
+          <div class="elem-page">出现页面：全站所有页面</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Python Quick-Start -->
+  <div class="section">
+    <div class="section-title">Python Quick-Start</div>
+    <div class="code-block"><span class="cm"># 获取最新债券日度成交概况</span>
+<span class="kw">import</span> requests, datetime
+
+today = datetime.date.today().strftime(<span class="st">"%Y-%m-%d"</span>)
+url = <span class="st">f"https://www.sse.com.cn/js/common/sseBond498Fixed.js?searchDate=<span class="nm">{today}</span>"</span>
+resp = requests.get(url, timeout=<span class="nm">10</span>)
+
+<span class="cm"># 响应是 JS 赋值语句，提取 JSON 部分</span>
+<span class="kw">import</span> re, json
+m = re.search(<span class="st">r'\[.*\]'</span>, resp.text, re.S)
+data = json.loads(m.group())<span class="pn"> if m else []</span>
+<span class="kw">for</span> row <span class="kw">in</span> data:
+    print(row)  <span class="cm"># {'债券品种': '国债', '成交笔数': ..., ...}</span></div>
+  </div>
+
+  <!-- Data Pages -->
+  <div class="section">
+    <div class="section-title">Market Data Pages</div>
+    <div class="page-grid">
+
+      <a class="page-row has-map" href="/www.sse.com.cn/market/bonddata/overview/day/">
+        <div class="page-path">/market/<span class="seg">bonddata</span>/overview/day/</div>
+        <div class="page-info">
+          <div class="page-title-en">Bond Trading Overview — Daily</div>
+          <div class="page-title-cn">债券成交概况（日度）</div>
+          <div class="page-tags">
+            <span class="page-tag api">Direct API</span>
+            <span class="page-tag dyn">JS Rendered</span>
+            <span class="page-tag tbl">17 rows × 4 cols</span>
+          </div>
+          <div class="map-badge">&#10003; VeriGlow Map available</div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </a>
+
+      <div class="page-row">
+        <div class="page-path">/market/<span class="seg">stockdata</span>/overview/day/</div>
+        <div class="page-info">
+          <div class="page-title-en">Stock Trading Overview — Daily</div>
+          <div class="page-title-cn">股票成交概况（日度）</div>
+          <div class="page-tags">
+            <span class="page-tag dyn">JS Rendered</span>
+            <span class="page-tag tbl">Data Table</span>
+          </div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-path">/market/<span class="seg">funddata</span>/overview/day/</div>
+        <div class="page-info">
+          <div class="page-title-en">Fund Trading Overview — Daily</div>
+          <div class="page-title-cn">基金成交概况（日度）</div>
+          <div class="page-tags">
+            <span class="page-tag dyn">JS Rendered</span>
+            <span class="page-tag tbl">Data Table</span>
+          </div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-path">/market/<span class="seg">sseindex</span>/number/daily/</div>
+        <div class="page-info">
+          <div class="page-title-en">SSE Index — Daily Performance</div>
+          <div class="page-title-cn">上证指数日度行情</div>
+          <div class="page-tags">
+            <span class="page-tag api">yunhq API</span>
+            <span class="page-tag dyn">Real-time</span>
+          </div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-path">/market/<span class="seg">othersdata</span>/overview/day/</div>
+        <div class="page-info">
+          <div class="page-title-en">Other Products — Daily Overview</div>
+          <div class="page-title-cn">其他产品成交概况（日度）</div>
+          <div class="page-tags">
+            <span class="page-tag dyn">JS Rendered</span>
+            <span class="page-tag tbl">Data Table</span>
+          </div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </div>
+
+      <div class="page-row">
+        <div class="page-path">/market/<span class="seg">price</span>/</div>
+        <div class="page-info">
+          <div class="page-title-en">Price Limit Statistics</div>
+          <div class="page-title-cn">涨跌停股票统计</div>
+          <div class="page-tags">
+            <span class="page-tag dyn">JS Rendered</span>
+            <span class="page-tag api">query.sse API</span>
+          </div>
+        </div>
+        <div class="page-arrow">&rarr;</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Service Info -->
+  <div class="section">
+    <div class="section-title">Site Metadata</div>
+    <table class="ep-table">
+      <tbody>
+        <tr><td style="width:140px;color:var(--am-text-3);font-size:12px;">Operator</td><td style="font-size:13px;">上海证券交易所 / Shanghai Stock Exchange</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Version tag</td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;">ssesite_V3.7.2_20260203</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Analytics</td><td style="font-family:'JetBrains Mono',monospace;font-size:12px;">GrowingIO — gdp('init', 'ba17301551dcbaf9', …)</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Service hotline</td><td style="font-size:13px;">400-8888-400</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Data update</td><td style="font-size:13px;">T+1，约收市后 1 小时（15:30 CST）</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Non-trading days</td><td style="font-size:13px;">All-zero rows returned — check systemDate_global.js for holiday calendar</td></tr>
+        <tr><td style="color:var(--am-text-3);font-size:12px;">Anti-scraping</td><td style="font-size:13px;color:var(--am-green);">None detected on public market data endpoints</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-text"><span>VERIGLOW</span> AGENT MAP &mdash; veri-glow.com/map/sse.com.cn</div>
+</footer>
+
+<script>
+function getPreferred(){const s=localStorage.getItem('am-theme');if(s)return s;return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('am-theme',t);}
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme')||'light';applyTheme(c==='dark'?'light':'dark');}
+(function(){const t=getPreferred();if(t==='dark')applyTheme('dark');})();
+</script>
+
+</body>
+</html>
