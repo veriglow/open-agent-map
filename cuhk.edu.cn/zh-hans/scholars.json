@@ -1,0 +1,32 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/scholars",
+  "title": "科研学者",
+  "summary": "香港中文大学（深圳）科研学者名录，含姓名、职称、院士头衔等信息，约 7 页，链接指向各学院教师详情页。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "a[href*='/teacher/']",
+    "name_and_rank": "a text content (格式: 姓名 / 教授)",
+    "credentials": "item 前的文本节点（如：中国工程院院士）",
+    "link": "a@href",
+    "link_note": "链接指向各学院子域名，如 sse.cuhk.edu.cn/teacher/186"
+  },
+  "pagination": {
+    "pattern": "https://cuhk.edu.cn/zh-hans/scholars?page={n}",
+    "first_page": 0,
+    "total_pages": 7,
+    "note": "page=0 为第一页"
+  },
+  "stats": {
+    "note": "页面顶部有统计数据：国家级高层次人才、科研团队数、国际奖项获得者数等"
+  },
+  "confidence": 0.85,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "教师详情链接指向各学院独立子域名（sse/hss/sds/sme 等）",
+    "学者条目的 HTML 结构较松散，credentials 在链接元素外部",
+    "无搜索或筛选功能"
+  ],
+  "last_verified": "2026-03-14"
+}

@@ -1,0 +1,37 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/article-search",
+  "title": "新闻搜索",
+  "summary": "香港中文大学（深圳）新闻文章搜索，支持按关键词、分类、日期范围、标签筛选，约 130 页，Drupal 服务端渲染。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "a[href^='/zh-hans/article/']",
+    "date": "a span:first-child",
+    "title": "a span:last-child",
+    "link": "a@href",
+    "link_prefix": "https://cuhk.edu.cn"
+  },
+  "filters": {
+    "keywords": { "param": "keywords", "type": "text", "description": "关键词搜索" },
+    "category": { "param": "category", "type": "select", "default": "All", "options": ["All", "新闻速递", "大学新闻", "科研进展", "国际交流", "学术动态", "媒体聚焦", "公告", "其他"] },
+    "date_start": { "param": "created_value", "type": "date", "description": "起始日期" },
+    "date_end": { "param": "created_end_value", "type": "date", "description": "截止日期" },
+    "tags": { "param": "tags", "type": "select", "default": "All" }
+  },
+  "pagination": {
+    "pattern": "https://cuhk.edu.cn/zh-hans/article-search?keywords=&category=All&created_value=&created_end_value=&tags=All&page={n}",
+    "first_page": 0,
+    "total_pages": 130,
+    "note": "page=0 为第一页，page=129 为末页"
+  },
+  "article_url_pattern": "/zh-hans/article/{id}",
+  "confidence": 0.88,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "分页使用 ?page=N 参数（0-indexed）",
+    "文章详情页需单独访问 /zh-hans/article/{id}",
+    "筛选参数通过 URL query string 传递"
+  ],
+  "last_verified": "2026-03-14"
+}

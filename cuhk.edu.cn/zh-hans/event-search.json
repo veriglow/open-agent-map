@@ -1,0 +1,36 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/event-search",
+  "title": "活动搜索",
+  "summary": "香港中文大学（深圳）校园活动预告与搜索，支持按活动类型、状态（未开始/进行中/已结束）、日期范围筛选。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "活动列表条目",
+    "date": "活动日期与星期",
+    "title": "活动标题（链接文本）",
+    "link": "a@href",
+    "time": "开始时间 - 结束时间",
+    "location": "活动地点（如：行政楼西翼冼为坚国际会议中心）"
+  },
+  "filters": {
+    "keywords": { "param": "keywords", "type": "text" },
+    "activity_type": { "param": "活动类型", "type": "select", "default": "All" },
+    "status": { "param": "活动状态", "type": "select", "options": ["未开始", "进行中", "已结束"] },
+    "date_start": { "param": "date_start", "type": "date" },
+    "date_end": { "param": "date_end", "type": "date" },
+    "category": { "param": "category", "type": "select", "options": ["任意", "活动预告"] }
+  },
+  "pagination": {
+    "pattern": "https://cuhk.edu.cn/zh-hans/event-search?page={n}",
+    "first_page": 0,
+    "note": "page=0 为第一页，?page=N 参数 0-indexed"
+  },
+  "confidence": 0.82,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "筛选参数的确切 query string 名称需进一步验证",
+    "活动详情页需单独访问"
+  ],
+  "last_verified": "2026-03-14"
+}

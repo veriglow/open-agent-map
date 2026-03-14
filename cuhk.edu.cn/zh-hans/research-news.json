@@ -1,0 +1,28 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/research-news",
+  "title": "科研新闻",
+  "summary": "香港中文大学（深圳）科研成果新闻列表，按时间倒序排列，约 48 页。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "a[href^='/zh-hans/article/']",
+    "date": "日期（YYYY-MM-DD 格式）",
+    "title": "新闻标题（链接文本）",
+    "link": "a@href",
+    "link_prefix": "https://cuhk.edu.cn"
+  },
+  "pagination": {
+    "pattern": "https://cuhk.edu.cn/zh-hans/research-news?page={n}",
+    "first_page": 0,
+    "total_pages": 48,
+    "note": "page=0 为第一页"
+  },
+  "confidence": 0.88,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "与 article-search 共享文章详情页 /zh-hans/article/{id}",
+    "侧边栏有分类筛选"
+  ],
+  "last_verified": "2026-03-14"
+}

@@ -1,0 +1,28 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/media/focus",
+  "title": "媒体聚焦",
+  "summary": "香港中文大学（深圳）媒体报道汇总，含媒体来源、日期、文章标题与外部链接，约 48 页。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "媒体报道条目",
+    "source": "媒体来源名称（如：光明日报、人民网）",
+    "date": "发布日期（YYYY-MM-DD 格式）",
+    "title": "文章标题（链接文本）",
+    "link": "a@href（外部链接，指向原始媒体页面）"
+  },
+  "pagination": {
+    "pattern": "https://cuhk.edu.cn/zh-hans/media/focus?page={n}",
+    "first_page": 0,
+    "total_pages": 48,
+    "note": "page=0 为第一页"
+  },
+  "confidence": 0.85,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "链接指向外部媒体网站，非站内页面",
+    "每条包含三个字段：来源 / 日期 / 标题链接"
+  ],
+  "last_verified": "2026-03-14"
+}

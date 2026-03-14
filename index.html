@@ -239,6 +239,27 @@ footer a:hover{color:var(--am-green);}
     </div>
     <a href="/www.sse.com.cn" class="site-card-action">Browse all pages &rarr;</a>
   </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=cuhk.edu.cn&sz=32" alt="" width="20" height="20">
+        CUHK Shenzhen (香港中文大学（深圳）)
+        <small>cuhk.edu.cn</small>
+      </div>
+      <div class="site-card-badge">Deep Map</div>
+    </div>
+    <div class="site-card-meta"><span id="cuhk-count">--</span> pages mapped &middot; Drupal 静态HTML解析</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">article-search</span> <span class="branch-count">~130页</span> <span class="branch-desc">— 新闻搜索（关键词/分类/日期筛选）</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">research-news</span> <span class="branch-count">~48页</span> <span class="branch-desc">— 科研成果新闻</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">media/focus</span> <span class="branch-count">~48页</span> <span class="branch-desc">— 媒体报道汇总</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">scholars</span> <span class="branch-count">&nbsp;7页&nbsp;</span> <span class="branch-desc">— 科研学者名录</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">event-search</span> <span class="branch-count">多页&nbsp;</span> <span class="branch-desc">— 活动预告与搜索</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">taxonomy/term/37</span> <span class="branch-count">&nbsp;1页&nbsp;</span> <span class="branch-desc">— 工作机会（40+职位）</span></div>
+    </div>
+    <a href="/cuhk.edu.cn" class="site-card-action">Browse all pages &rarr;</a>
+  </div>
 </section>
 
 <!-- ═══ Footer ═══ -->
@@ -288,9 +309,12 @@ fetch('/_manifest.json')
   .catch(() => {});
 
 function updateSiteStats(data) {
-  const ssePages = data.filter(p => p.path && p.path.startsWith('/www.sse.com.cn'));
-  const el = document.getElementById('sse-count');
-  if (el) el.textContent = ssePages.length || '--';
+  const sites = { 'sse': '/www.sse.com.cn', 'cuhk': '/cuhk.edu.cn' };
+  for (const [id, prefix] of Object.entries(sites)) {
+    const count = data.filter(p => p.path && p.path.startsWith(prefix)).length;
+    const el = document.getElementById(id + '-count');
+    if (el && count) el.textContent = count;
+  }
 }
 
 function isUrlLike(v) {

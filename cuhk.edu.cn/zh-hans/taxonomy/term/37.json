@@ -1,0 +1,26 @@
+{
+  "domain": "cuhk.edu.cn",
+  "url": "https://cuhk.edu.cn/zh-hans/taxonomy/term/37",
+  "title": "工作机会",
+  "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类、附属机构职位，约 40+ 职位，单页无分页。",
+  "type": "scrape",
+  "method": "HTML",
+  "selectors": {
+    "item": "a[href^='/zh-hans/recruitment/']",
+    "title": "a text content（格式: 职位名称 - 部门 (Ref. XXXX/XXX/XX)）",
+    "link": "a@href",
+    "link_prefix": "https://cuhk.edu.cn"
+  },
+  "categories": ["管理类职位", "非管理类职位", "学术类职位", "研究类职位", "附属机构职位"],
+  "pagination": {
+    "note": "无分页，全部职位在一页内显示"
+  },
+  "job_detail_pattern": "/zh-hans/recruitment/{id}",
+  "confidence": 0.85,
+  "caveats": [
+    "Drupal 服务端渲染，无 JSON API",
+    "职位按类别分组，但无 HTML 标记区分类别（需靠文本标题判断）",
+    "职位详情页需单独访问 /zh-hans/recruitment/{id}"
+  ],
+  "last_verified": "2026-03-14"
+}

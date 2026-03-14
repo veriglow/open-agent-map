@@ -1,5 +1,35 @@
 [
   {
+    "path": "/cuhk.edu.cn/zh-hans/article-search",
+    "title": "新闻搜索",
+    "summary": "香港中文大学（深圳）新闻文章搜索，支持按关键词、分类、日期范围、标签筛选，约130页。"
+  },
+  {
+    "path": "/cuhk.edu.cn/zh-hans/event-search",
+    "title": "活动搜索",
+    "summary": "香港中文大学（深圳）校园活动预告与搜索，支持按类型、状态、日期范围筛选。"
+  },
+  {
+    "path": "/cuhk.edu.cn/zh-hans/media/focus",
+    "title": "媒体聚焦",
+    "summary": "香港中文大学（深圳）媒体报道汇总，含媒体来源、日期、文章标题与外部链接，约48页。"
+  },
+  {
+    "path": "/cuhk.edu.cn/zh-hans/research-news",
+    "title": "科研新闻",
+    "summary": "香港中文大学（深圳）科研成果新闻列表，按时间倒序排列，约48页。"
+  },
+  {
+    "path": "/cuhk.edu.cn/zh-hans/scholars",
+    "title": "科研学者",
+    "summary": "香港中文大学（深圳）科研学者名录，含姓名、职称、院士头衔，约7页。"
+  },
+  {
+    "path": "/cuhk.edu.cn/zh-hans/taxonomy/term/37",
+    "title": "工作机会",
+    "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类职位，约40+职位。"
+  },
+  {
     "path": "/www.sse.com.cn/assortment/stock/areatrade/area",
     "title": "地区分类",
     "summary": "上交所地区分类。"
