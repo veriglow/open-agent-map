@@ -1,0 +1,392 @@
+[
+  {
+    "path": "/www.sse.com.cn/assortment/stock/areatrade/area",
+    "title": "地区分类",
+    "summary": "上交所地区分类。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/stock/areatrade/trade",
+    "title": "行业分类",
+    "summary": "上交所行业分类。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/stock/list/delisting",
+    "title": "暂停/终止上市公司",
+    "summary": "上交所暂停/终止上市公司。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/stock/list/info/company",
+    "title": "上市公司详情",
+    "summary": "上交所个股详情页，一页聚合多个 API：公司概况、股本结构、十大股东、分红送股、融资情况、成交概况、大宗交易、融资融券等。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/stock/list/info/depositoryreceipt",
+    "title": "存托凭证列表",
+    "summary": "上交所存托凭证列表。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/stock/list/share",
+    "title": "股票列表",
+    "summary": "上交所股票列表。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/announcement/general",
+    "title": "上交所公告",
+    "summary": "上交所上交所公告。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/bond/announcement/bookentry",
+    "title": "债券信息公告",
+    "summary": "上交所债券信息公告。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/dealinstruc/suspension/stock",
+    "title": "交易提示-停复牌",
+    "summary": "上交所交易提示-停复牌。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/diclosure/public/dailydata",
+    "title": "交易信息披露",
+    "summary": "上交所交易信息披露。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/fund/announcement",
+    "title": "基金信息公告",
+    "summary": "上交所基金信息公告。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/listedinfo/announcement",
+    "title": "上市公司公告搜索",
+    "summary": "按证券代码、关键字、日期范围、公告类型搜索上交所上市公司公告。返回公告列表及 PDF 下载链接。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/listedinfo/regular",
+    "title": "定期报告",
+    "summary": "上交所定期报告。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/listedinfo/summaries",
+    "title": "摘要信息",
+    "summary": "上交所摘要信息。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/listedinfo/tzzxzhb/zhbsy",
+    "title": "风险警示板",
+    "summary": "上交所风险警示板。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/magin/announcement",
+    "title": "融资融券信息公告",
+    "summary": "上交所融资融券信息公告。"
+  },
+  {
+    "path": "/www.sse.com.cn/disclosure/optioninfo/update",
+    "title": "股票期权信息",
+    "summary": "上交所股票期权信息。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/dxkzzcj",
+    "title": "大额可转债成交",
+    "summary": "上交所大额可转债成交。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/exchangeable",
+    "title": "可交换债券",
+    "summary": "上交所可交换债券数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/livelybond",
+    "title": "活跃债券",
+    "summary": "上交所活跃债券。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/netfull",
+    "title": "债券全价",
+    "summary": "上交所债券全价。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/day",
+    "title": "债券成交概况（日度）",
+    "summary": "上交所每日债券市场成交概况。含17个债券品种的每日成交笔数、成交面额、成交金额。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/month",
+    "title": "债券成交概况（月度）",
+    "summary": "上交所债券市场每月成交概况，含17个品种的成交笔数、成交金额、加权平均价格。TRADEDATE 参数格式 YYYY-MM。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/monthly",
+    "title": "债券成交概况（月度）",
+    "summary": "上交所债券成交概况（月度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/week",
+    "title": "债券成交概况（周度）",
+    "summary": "上交所债券市场每周成交概况，含17个品种的成交笔数、成交金额、加权平均价格。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/year",
+    "title": "债券成交概况（年度）",
+    "summary": "上交所债券市场年度成交概况，含17个品种的成交笔数、成交金额、加权平均价格。trade_year 参数格式 YYYY。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/overview/yearly",
+    "title": "债券成交概况（年度）",
+    "summary": "上交所债券成交概况（年度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/profit",
+    "title": "债券收益率",
+    "summary": "上交所债券收益率。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/bonddata/statistic",
+    "title": "债券统计数据",
+    "summary": "上交所债券市场托管统计数据，含9个债券品种的托管只数、托管市值（亿元）、托管面值（亿元）。通过 commonQuery.do 接口加载，sqlId 待确认。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/overview/day",
+    "title": "基金成交概况（日度）",
+    "summary": "上交所基金成交概况（日度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/overview/monthly",
+    "title": "基金成交概况（月度）",
+    "summary": "上交所基金成交概况（月度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/overview/weekly",
+    "title": "基金成交概况（周度）",
+    "summary": "上交所基金成交概况（周度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/overview/yearly",
+    "title": "基金成交概况（年度）",
+    "summary": "上交所基金成交概况（年度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/volumn/fjlofvolumn",
+    "title": "分级LOF基金规模",
+    "summary": "上交所分级LOF基金规模数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/volumn/lofvolumn",
+    "title": "LOF基金规模",
+    "summary": "上交所LOF基金规模数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/funddata/volumn/reits",
+    "title": "REITs规模",
+    "summary": "上交所REITs规模数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/asset",
+    "title": "资产管理计划",
+    "summary": "上交所资产管理计划数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/margin/detail",
+    "title": "融资融券明细",
+    "summary": "上交所融资融券明细数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/margin/sum",
+    "title": "融资融券汇总",
+    "summary": "上交所融资融券汇总数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/memberlist",
+    "title": "会员列表",
+    "summary": "上交所会员列表数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/hkexsc",
+    "title": "专项业务资格-沪港通",
+    "summary": "上交所专项业务资格-沪港通。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/list",
+    "title": "专项业务资格-会员列表",
+    "summary": "上交所专项业务资格-会员列表。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/margin",
+    "title": "专项业务资格-融资融券",
+    "summary": "上交所专项业务资格-融资融券。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/options",
+    "title": "专项业务资格-期权",
+    "summary": "上交所专项业务资格-期权。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/outrightrepo",
+    "title": "专项业务资格-回购",
+    "summary": "上交所专项业务资格-回购。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/szjjt",
+    "title": "专项业务资格-收债基金通",
+    "summary": "上交所专项业务资格-收债基金通。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/memberdata/zxywzg/warrants",
+    "title": "专项业务资格-权证",
+    "summary": "上交所专项业务资格-权证。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/refinancing/exchange",
+    "title": "转融通-交易所",
+    "summary": "上交所转融通-交易所。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/refinancing/lend",
+    "title": "转融通-出借",
+    "summary": "上交所转融通-出借数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/refinancing/mate",
+    "title": "转融通-撮合",
+    "summary": "上交所转融通-撮合数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/zlpskcjxx/main",
+    "title": "大宗交易-主板",
+    "summary": "上交所大宗交易-主板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/othersdata/zlpskcjxx/star",
+    "title": "大宗交易-科创板",
+    "summary": "上交所大宗交易-科创板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/price/report",
+    "title": "市场报告",
+    "summary": "上交所市场报告。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/price/trends",
+    "title": "行情走势",
+    "summary": "上交所行情走势。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/sseindex/indexlist/basic",
+    "title": "指数列表",
+    "summary": "上交所指数列表数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/sseindex/overview/focus",
+    "title": "重点指数行情",
+    "summary": "上交所重点指数行情数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/sseindex/quotation",
+    "title": "指数行情",
+    "summary": "上交所指数行情数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/activity/main",
+    "title": "活跃股排名-主板",
+    "summary": "上交所活跃股排名-主板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/activity/star",
+    "title": "活跃股排名-科创板",
+    "summary": "上交所活跃股排名-科创板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/dividends/bonus",
+    "title": "送股情况",
+    "summary": "上交所送股情况数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/dividends/dividend",
+    "title": "分红情况",
+    "summary": "上交所分红情况数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/firstday",
+    "title": "新股首日表现",
+    "summary": "上交所新股首日表现数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/marketvalue/main",
+    "title": "市值排名-主板",
+    "summary": "上交所市值排名-主板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/marketvalue/star",
+    "title": "市值排名-科创板",
+    "summary": "上交所市值排名-科创板数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/overview/day",
+    "title": "股票成交概况（日度）",
+    "summary": "上交所股票成交概况（日度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/overview/monthly",
+    "title": "股票成交概况（月度）",
+    "summary": "上交所股票成交概况（月度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/overview/weekly",
+    "title": "股票成交概况（周度）",
+    "summary": "上交所股票成交概况（周度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/overview/yearly",
+    "title": "股票成交概况（年度）",
+    "summary": "上交所股票成交概况（年度）数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/price/sh",
+    "title": "市盈率",
+    "summary": "上交所市盈率数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/pshare",
+    "title": "优先股成交统计",
+    "summary": "上交所优先股成交统计数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/raise/additional",
+    "title": "募集资金-增发",
+    "summary": "上交所募集资金-增发数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/raise/allotment",
+    "title": "募集资金-配股",
+    "summary": "上交所募集资金-配股数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/raise/ipo",
+    "title": "募集资金-首发",
+    "summary": "上交所募集资金-首发数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/statistic",
+    "title": "股票数据总貌",
+    "summary": "上交所股票数据总貌数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/structure/overview",
+    "title": "股本结构总貌",
+    "summary": "上交所股本结构总貌数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/structure/rank",
+    "title": "股本排行",
+    "summary": "上交所股本排行数据，通过 commonQuery.do 接口获取。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/stockdata/volumn/active",
+    "title": "交易活跃股（主板）",
+    "summary": "上交所主板交易活跃股排名，按成交量/成交额/涨跌幅等排序，返回最多20只股票。"
+  },
+  {
+    "path": "/www.sse.com.cn/market/view",
+    "title": "市场总览",
+    "summary": "上交所市场总览。"
+  }
+]

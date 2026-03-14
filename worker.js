@@ -55,7 +55,13 @@ export default {
     }
 
     // Try fetching path + .json from GitHub Pages
-    return fetchAndServe(request, path + ".json");
+    const specResp = await fetchAndServe(request, path + ".json");
+    if (specResp.status !== 404) {
+      return specResp;
+    }
+
+    // No exact match — try serving as a directory listing
+    return serveDirectoryListing(request, path);
   },
 };
 
@@ -483,6 +489,128 @@ function serveHomepage(request) {
 </html>`,
     { headers: { "Content-Type": "text/html; charset=utf-8" } }
   );
+}
+
+async function serveDirectoryListing(request, dirPath) {
+  // Fetch manifest
+  const manifestUrl = GITHUB_PAGES_ORIGIN + "/_manifest.json";
+  try {
+    const resp = await fetch(manifestUrl, {
+      headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
+      cf: { cacheTtl: 600 },
+    });
+    if (!resp.ok) return serve404(request, dirPath + ".json");
+    const manifest = await resp.json();
+
+    // Filter entries under this directory prefix
+    const prefix = dirPath.endsWith("/") ? dirPath : dirPath + "/";
+    const children = manifest.filter((e) => e.path.startsWith(prefix));
+
+    if (children.length === 0) {
+      return serve404(request, dirPath + ".json");
+    }
+
+    const accept = request.headers.get("Accept") || "";
+    if (accept.includes("text/html") && !accept.includes("application/json")) {
+      return new Response(renderDirectoryPage(dirPath, children), {
+        headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" },
+      });
+    }
+
+    // JSON response for agents
+    return new Response(JSON.stringify({
+      directory: dirPath,
+      count: children.length,
+      pages: children,
+    }, null, 2), {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=300",
+      },
+    });
+  } catch (e) {
+    return serve404(request, dirPath + ".json");
+  }
+}
+
+function renderDirectoryPage(dirPath, children) {
+  const domain = dirPath.split("/").filter(Boolean)[0] || dirPath;
+  const displayPath = dirPath.replace(/^\//, "");
+
+  // Group by immediate subdirectory
+  const prefix = dirPath + "/";
+  const groups = {};
+  for (const child of children) {
+    const rest = child.path.slice(prefix.length);
+    const segment = rest.split("/")[0];
+    if (!groups[segment]) groups[segment] = [];
+    groups[segment].push(child);
+  }
+
+  let listHtml = "";
+  for (const [segment, items] of Object.entries(groups)) {
+    if (items.length === 1 && !items[0].path.slice(prefix.length).includes("/")) {
+      // Leaf node — direct link
+      listHtml += `<li><a href="${escHtml(items[0].path)}">${escHtml(items[0].title || segment)}</a><span class="item-path">${escHtml(items[0].path)}</span></li>`;
+    } else {
+      // Subdirectory — link to subdirectory + show count
+      listHtml += `<li><a href="${escHtml(prefix + segment)}">${escHtml(segment)}/</a><span class="item-count">${items.length} APIs</span></li>`;
+    }
+  }
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escHtml(displayPath)} — Open Agent Map</title>
+<style>
+  :root { --bg: #ffffff; --card: #f9fafb; --border: #e5e7eb; --text: #111827; --muted: #6b7280; --accent: #2563eb; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; word-break: break-all; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .stats { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+  ul { list-style: none; }
+  li { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 0.75rem; }
+  li:first-child { border-top: 1px solid var(--border); }
+  li a { color: var(--accent); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+  li a:hover { text-decoration: underline; }
+  .item-path { font-family: 'SF Mono', Consolas, monospace; font-size: 0.75rem; color: var(--muted); }
+  .item-count { font-size: 0.8rem; color: var(--muted); background: #f3f4f6; padding: 0.1rem 0.5rem; border-radius: 3px; }
+  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); text-align: center; }
+  .footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="/">Open Agent Map</a> / ${renderBreadcrumbPath(dirPath)}
+  </div>
+
+  <h1>${escHtml(displayPath)}</h1>
+  <p class="stats">${children.length} mapped API${children.length > 1 ? "s" : ""}</p>
+
+  <ul>${listHtml}</ul>
+
+  <div class="footer">
+    <a href="https://github.com/ChizhongWang/open-agent-map">Open Agent Map</a> — crowdsourced API specs for AI agents
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+function renderBreadcrumbPath(dirPath) {
+  const parts = dirPath.split("/").filter(Boolean);
+  return parts.map((part, i) => {
+    const href = "/" + parts.slice(0, i + 1).join("/");
+    if (i === parts.length - 1) return escHtml(part);
+    return `<a href="${escHtml(href)}">${escHtml(part)}</a>`;
+  }).join(" / ");
 }
 
 function escHtml(str) {
