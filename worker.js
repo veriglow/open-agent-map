@@ -189,6 +189,11 @@ const BRAND_BASE_STYLE = `
 // ── HTML Renderers ──────────────────────────────────────────
 
 function renderSpecPage(spec, jsonPath) {
+  // Signpost type — self-documented sites need a different template
+  if (spec.type === "signpost") {
+    return renderSignpostPage(spec, jsonPath);
+  }
+
   const title = spec.title || "Agent Map";
   const url = spec.url || "";
   const summary = spec.summary || "";
@@ -344,6 +349,113 @@ ${BRAND_NAV}
   <div class="report-link">
     Data outdated? <a href="https://github.com/ChizhongWang/open-agent-map/issues/new?title=STALE:+${encodeURIComponent(jsonPath)}" target="_blank">Report an issue</a>
   </div>
+
+  <a class="json-link" href="#" onclick="copyJson(event, '${escHtml(jsonPath)}')">Copy raw JSON for agent</a>
+
+  ${BRAND_FOOTER}
+</div>
+</body>
+</html>`;
+}
+
+function renderSignpostPage(spec, jsonPath) {
+  const name = spec.name || spec.id || "Signpost";
+  const reason = spec.why_no_deep_map || "";
+  const quickStart = spec.quick_start || "";
+  const lastVerified = spec.last_verified || "unknown";
+  const csvEndpoint = spec.csv_endpoint || {};
+  const keySeries = spec.key_series || {};
+
+  const paramsHtml = csvEndpoint.params ? Object.entries(csvEndpoint.params).map(
+    ([k, v]) => `<tr><td>${escHtml(k)}</td><td>${escHtml(v)}</td></tr>`
+  ).join("") : "";
+
+  const seriesHtml = Object.entries(keySeries).map(
+    ([k, v]) => `<tr><td><code>${escHtml(k)}</code></td><td>${escHtml(v)}</td></tr>`
+  ).join("");
+
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escHtml(name)} — VeriGlow Agent Map</title>
+${BRAND_FONTS}
+<style>
+  ${BRAND_BASE_STYLE}
+  .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .signpost-badge { display: inline-block; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 4px; background: rgba(59,130,246,0.08); color: #3B82F6; font-weight: 600; margin-left: 0.75rem; vertical-align: middle; }
+  .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .reason { font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; padding: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; }
+  .card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .quick-start { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; background: #0C0F15; color: #E2E8F0; padding: 0.8rem 1rem; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+  .endpoint-pattern { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; background: #f0fdf4; padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.75rem; overflow-x: auto; word-break: break-all; }
+  .auth-note { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--muted); font-weight: 500; }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; white-space: nowrap; }
+  code { background: #f0fdf4; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+  .json-link { display: inline-block; margin-top: 1.5rem; color: var(--accent); font-size: 0.85rem; text-decoration: none; cursor: pointer; }
+  .json-link:hover { text-decoration: underline; }
+  .copied { color: #10B981 !important; }
+</style>
+<script>
+async function copyJson(e, path) {
+  e.preventDefault();
+  try {
+    const resp = await fetch(path, { headers: { 'Accept': 'application/json' } });
+    const text = await resp.text();
+    await navigator.clipboard.writeText(text);
+    e.target.textContent = 'Copied!';
+    e.target.classList.add('copied');
+    setTimeout(() => { e.target.textContent = 'Copy raw JSON for agent'; e.target.classList.remove('copied'); }, 2000);
+  } catch(err) { window.open(path, '_blank'); }
+}
+</script>
+</head>
+<body>
+${BRAND_NAV}
+<div class="container">
+  <div class="breadcrumb">
+    ${renderBreadcrumbPath("/" + jsonPath.replace(".json", "").replace(/^\//, ""))}
+  </div>
+
+  <h1>${escHtml(name)} <span class="signpost-badge">Signpost</span></h1>
+  <div class="meta">verified: ${escHtml(lastVerified)}</div>
+
+  <div class="reason">${escHtml(reason)}</div>
+
+  ${quickStart ? `
+  <div class="card">
+    <h2>Quick Start</h2>
+    <div class="quick-start">${escHtml(quickStart)}</div>
+  </div>` : ""}
+
+  ${csvEndpoint.pattern ? `
+  <div class="card">
+    <h2>Endpoint</h2>
+    <div class="endpoint-pattern">${escHtml(csvEndpoint.pattern)}</div>
+    ${csvEndpoint.auth ? `<div class="auth-note">Auth: ${escHtml(csvEndpoint.auth)}</div>` : ""}
+    ${paramsHtml ? `
+    <table>
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>${paramsHtml}</tbody>
+    </table>` : ""}
+  </div>` : ""}
+
+  ${seriesHtml ? `
+  <div class="card">
+    <h2>Key Series</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Description</th></tr></thead>
+      <tbody>${seriesHtml}</tbody>
+    </table>
+  </div>` : ""}
 
   <a class="json-link" href="#" onclick="copyJson(event, '${escHtml(jsonPath)}')">Copy raw JSON for agent</a>
 
