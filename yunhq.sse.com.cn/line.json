@@ -1,0 +1,25 @@
+{
+  "service": "yunhq.sse.com.cn",
+  "title": "个股当日分时走势",
+  "summary": "获取单只股票当日的分时走势数据（1分钟粒度）。",
+  "method": "GET",
+  "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/line/{stockCode}",
+  "path_params": {
+    "stockCode": {
+      "description": "6位股票代码",
+      "examples": ["600519", "601398"]
+    }
+  },
+  "params": {
+    "select": {
+      "value": "time,price,volume",
+      "description": "返回字段。time=时间, price=价格, volume=成交量"
+    }
+  },
+  "confidence": 0.90,
+  "last_verified": "2026-03-15",
+  "caveats": [
+    "无需认证",
+    "仅当日数据，收盘后保留到次日开盘"
+  ]
+}

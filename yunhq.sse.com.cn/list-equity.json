@@ -1,0 +1,31 @@
+{
+  "service": "yunhq.sse.com.cn",
+  "title": "全市场股票实时行情列表",
+  "summary": "获取上交所全部股票的实时行情快照（代码、名称、开高低收、涨跌幅、成交量额）。支持分页和排序。",
+  "method": "GET",
+  "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity",
+  "params": {
+    "select": {
+      "value": "code,name,open,high,low,last,prev_close,chg_rate,volume,amount,tradephase,change",
+      "description": "返回字段。last=最新价, prev_close=昨收, chg_rate=涨跌幅(%), tradephase=交易阶段"
+    },
+    "order": {
+      "required": false,
+      "description": "排序字段，如 'chg_rate' 按涨跌幅排序"
+    },
+    "begin": {
+      "value": "0",
+      "description": "起始索引（分页用）"
+    },
+    "end": {
+      "value": "25",
+      "description": "结束索引（分页用）"
+    }
+  },
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-03-14",
+  "caveats": [
+    "交易时段实时更新，非交易时段返回收盘数据"
+  ]
+}

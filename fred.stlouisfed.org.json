@@ -1,0 +1,30 @@
+{
+  "id": "fred.stlouisfed.org",
+  "name": "FRED (Federal Reserve Economic Data)",
+  "type": "signpost",
+  "verdict": "self-documented",
+  "why_no_deep_map": "官方文档完备，API 清晰，每个 series 自带标题/单位/频率注释，无隐藏接口",
+  "quick_start": "curl 'https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=2025-01-01&coed=2026-03-14'",
+  "csv_endpoint": {
+    "pattern": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={SERIES_ID}&cosd={START}&coed={END}",
+    "auth": "none",
+    "params": {
+      "id": "series_id (如 GDP, CPIAUCSL, DGS10)",
+      "cosd": "start date, YYYY-MM-DD",
+      "coed": "end date, YYYY-MM-DD"
+    }
+  },
+  "key_series": {
+    "GDP": "Gross Domestic Product (quarterly)",
+    "CPIAUCSL": "CPI — Consumer Price Index (monthly, SA)",
+    "FEDFUNDS": "Federal Funds Rate (monthly)",
+    "DGS10": "10-Year Treasury Yield (daily)",
+    "DGS2": "2-Year Treasury Yield (daily)",
+    "T10Y2Y": "10Y-2Y Treasury Spread (daily)",
+    "UNRATE": "Unemployment Rate (monthly)",
+    "M2SL": "M2 Money Supply (monthly)",
+    "DEXUSEU": "USD/EUR Exchange Rate (daily)",
+    "VIXCLS": "VIX Volatility Index (daily)"
+  },
+  "last_verified": "2026-03-14"
+}

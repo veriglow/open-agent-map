@@ -1,0 +1,59 @@
+{
+  "service": "yunhq.sse.com.cn",
+  "title": "个股日K线历史数据",
+  "summary": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。",
+  "method": "GET",
+  "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/dayk/{stockCode}",
+  "path_params": {
+    "stockCode": {
+      "description": "6位股票代码，如 600519（贵州茅台）、601398（工商银行）",
+      "examples": ["600519", "601398", "600036"]
+    }
+  },
+  "params": {
+    "select": {
+      "value": "date,open,high,low,close,volume,amount",
+      "description": "返回字段。date=交易日(YYYYMMDD), open/high/low/close=价格, volume=成交量(股), amount=成交额(元)"
+    },
+    "begin": {
+      "value": "0",
+      "description": "起始索引。0=从IPO第一天开始，负数=-N表示倒数第N天"
+    },
+    "end": {
+      "value": "-1",
+      "description": "结束索引。-1=最新交易日"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "code": "股票代码",
+      "total": "总K线条数",
+      "begin": "实际起始索引",
+      "end": "实际结束索引",
+      "kline": "二维数组，每行=[date, open, high, low, close, volume, amount]"
+    },
+    "example_snippet": {
+      "code": "600519",
+      "total": 5878,
+      "begin": 5848,
+      "end": 5878,
+      "kline": [
+        [20260310, 1488.88, 1501.0, 1480.01, 1495.55, 2834700, 4230000000]
+      ]
+    }
+  },
+  "recipes": {
+    "最近30个交易日": "?select=date,open,high,low,close,volume,amount&begin=-30&end=-1",
+    "全部历史": "?select=date,open,high,low,close,volume,amount&begin=0&end=-1",
+    "最近1天": "?select=date,open,high,low,close,volume,amount&begin=-1&end=-1"
+  },
+  "confidence": 0.97,
+  "last_verified": "2026-03-15",
+  "caveats": [
+    "无需 Referer 或认证",
+    "仅限沪市股票（6开头代码），深市股票需用深交所接口",
+    "非交易时段也可查询，数据更新到最近交易日收盘",
+    "volume 单位是股（非手），amount 单位是元"
+  ]
+}

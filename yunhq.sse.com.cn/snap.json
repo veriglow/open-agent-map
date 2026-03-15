@@ -1,0 +1,25 @@
+{
+  "service": "yunhq.sse.com.cn",
+  "title": "个股实时快照",
+  "summary": "获取单只股票的实时行情快照，包括最新价、涨跌、五档盘口等。",
+  "method": "GET",
+  "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/snap/{stockCode}",
+  "path_params": {
+    "stockCode": {
+      "description": "6位股票代码",
+      "examples": ["600519", "601398"]
+    }
+  },
+  "params": {
+    "select": {
+      "value": "name,last,chg_rate,volume,amount,open,high,low,prev_close",
+      "description": "返回字段"
+    }
+  },
+  "confidence": 0.90,
+  "last_verified": "2026-03-15",
+  "caveats": [
+    "无需认证",
+    "交易时段实时更新"
+  ]
+}
