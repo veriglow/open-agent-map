@@ -375,6 +375,11 @@
     "summary": "上市公司问询函件列表：关注函、年报问询函等。CATALOGID=main_wxhj。"
   },
   {
+    "path": "/www.szse.cn/market/history-kline",
+    "title": "深交所个股历史K线",
+    "summary": "个股日K/周K/月K历史数据（OHLCV），cycleType=32/33/34。ssjjhq/getHistoryData 接口。"
+  },
+  {
     "path": "/www.szse.cn/market/trading-calendar",
     "title": "深交所交易日历",
     "summary": "当月交易日/非交易日标识。onepersistenthour/monthList 接口。"
