@@ -1,0 +1,22 @@
+{
+  "domain": "www.szse.cn",
+  "title": "深交所交易日历",
+  "description": "获取当月交易日历，标识哪些日期是交易日（jybz=0）、哪些是非交易日（jybz=1）。",
+  "endpoint": "https://www.szse.cn/api/report/exchange/onepersistenthour/monthList",
+  "method": "GET",
+  "params": {},
+  "response": {
+    "format": "JSON",
+    "fields": {
+      "data[].jyrq": "日期 (YYYY-MM-DD)",
+      "data[].jybz": "交易标志 (0=交易日, 1=非交易日)",
+      "data[].zrxh": "周日序号 (1=周日, 2=周一, ..., 7=周六)",
+      "nowdate": "当前日期"
+    }
+  },
+  "example": "curl -sk 'https://www.szse.cn/api/report/exchange/onepersistenthour/monthList'",
+  "auth": "none",
+  "confidence": 0.97,
+  "last_verified": "2026-03-18",
+  "notes": "只返回当月数据，无法查询历史月份。"
+}

@@ -1,0 +1,41 @@
+{
+  "domain": "www.szse.cn",
+  "page_url": "https://www.szse.cn/market/trend/index.html",
+  "title": "深交所股票日行情",
+  "description": "深圳证券交易所全市场股票行情快照，含 OHLC、涨跌幅、成交量额、市盈率。支持按代码/简称筛选、按日期范围查询。",
+  "endpoint": "https://www.szse.cn/api/report/ShowReport/data",
+  "method": "GET",
+  "params": {
+    "SHOWTYPE": { "value": "JSON", "required": true },
+    "CATALOGID": { "value": "1815_stock_snapshot", "required": true },
+    "TABKEY": { "value": "tab1", "required": true, "description": "tab1=股票, tab2=基金, tab3=债券, tab4=回购, tab6=期权, tab7=指数" },
+    "txtBeginDate": { "example": "2026-03-17", "format": "YYYY-MM-DD", "required": true, "description": "开始日期" },
+    "txtEndDate": { "example": "2026-03-17", "format": "YYYY-MM-DD", "required": true, "description": "结束日期" },
+    "txtDMorJC": { "example": "000001", "required": false, "description": "证券代码或简称筛选" },
+    "PAGENO": { "example": "1", "description": "页码（从1开始）" },
+    "PAGESIZE": { "example": "20", "description": "每页条数（默认10）" }
+  },
+  "response": {
+    "format": "JSON array",
+    "structure": "[{metadata: {...}, data: [{jyrq, zqdm, zqjc, qss, ks, zg, zd, ss, sdf, cjgs, cjje, syl1}]}]",
+    "fields": {
+      "jyrq": "交易日期",
+      "zqdm": "证券代码",
+      "zqjc": "证券简称",
+      "qss": "前收",
+      "ks": "开盘",
+      "zg": "最高",
+      "zd": "最低",
+      "ss": "今收",
+      "sdf": "涨跌幅(%)",
+      "cjgs": "成交量(万股)",
+      "cjje": "成交金额(万元)",
+      "syl1": "市盈率"
+    }
+  },
+  "example": "curl -sk 'https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1815_stock_snapshot&TABKEY=tab1&txtBeginDate=2026-03-17&txtEndDate=2026-03-17&PAGENO=1&PAGESIZE=3'",
+  "auth": "none",
+  "confidence": 0.97,
+  "last_verified": "2026-03-18",
+  "notes": "需指定日期才返回数据。PAGESIZE 可设大值一次获取全部。数值字段含千分位逗号。"
+}

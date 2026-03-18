@@ -1,0 +1,28 @@
+{
+  "domain": "www.szse.cn",
+  "page_url": "https://www.szse.cn/market/overview/index.html",
+  "title": "深交所市场总览",
+  "description": "深圳证券交易所市场总览统计：证券类别数量、成交金额、总市值、流通市值。覆盖股票、基金、债券等全部证券类别。",
+  "endpoint": "https://www.szse.cn/api/report/ShowReport/data",
+  "method": "GET",
+  "params": {
+    "SHOWTYPE": { "value": "JSON", "required": true },
+    "CATALOGID": { "value": "1803_sczm", "required": true },
+    "PAGENO": { "example": "1" },
+    "PAGESIZE": { "example": "20" }
+  },
+  "response": {
+    "format": "JSON array",
+    "fields": {
+      "zqlb": "证券类别",
+      "sl": "数量(只)",
+      "cjje": "成交金额(亿元)",
+      "zsz": "总市值(亿元)",
+      "ltsz": "流通市值(亿元)"
+    }
+  },
+  "example": "curl -sk 'https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1803_sczm&PAGENO=1&PAGESIZE=20'",
+  "auth": "none",
+  "confidence": 0.97,
+  "last_verified": "2026-03-18"
+}

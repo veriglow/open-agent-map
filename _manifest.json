@@ -345,6 +345,41 @@
     "summary": "自文档化站点。GraphQL API 完备，支持 posts/comments/topics/users/collections 查询，需 OAuth2 token。"
   },
   {
+    "path": "/www.szse.cn/market/stock-snapshot",
+    "title": "深交所股票日行情",
+    "summary": "深交所全市场股票行情快照：OHLC、涨跌幅、成交量额、市盈率。CATALOGID=1815_stock_snapshot, TABKEY=tab1。"
+  },
+  {
+    "path": "/www.szse.cn/market/realtime-quote",
+    "title": "深交所个股实时行情",
+    "summary": "单只深市股票实时行情：最新价、五档盘口、分时走势。ssjjhq/getTimeData 接口。"
+  },
+  {
+    "path": "/www.szse.cn/market/index-snapshot",
+    "title": "深交所指数行情",
+    "summary": "深证成指、创业板指等指数日行情。CATALOGID=1826_snapshot。"
+  },
+  {
+    "path": "/www.szse.cn/market/market-overview",
+    "title": "深交所市场总览",
+    "summary": "证券类别统计：数量、成交金额、总市值、流通市值。CATALOGID=1803_sczm。"
+  },
+  {
+    "path": "/www.szse.cn/market/margin-securities",
+    "title": "深交所融资融券标的",
+    "summary": "融资融券标的证券列表。CATALOGID=1834_xxpl。"
+  },
+  {
+    "path": "/www.szse.cn/market/inquiry-letters",
+    "title": "深交所问询函件",
+    "summary": "上市公司问询函件列表：关注函、年报问询函等。CATALOGID=main_wxhj。"
+  },
+  {
+    "path": "/www.szse.cn/market/trading-calendar",
+    "title": "深交所交易日历",
+    "summary": "当月交易日/非交易日标识。onepersistenthour/monthList 接口。"
+  },
+  {
     "path": "/www.sse.com.cn/market/sseindex/indexlist/basic",
     "title": "指数列表",
     "summary": "上交所指数列表数据，通过 commonQuery.do 接口获取。"

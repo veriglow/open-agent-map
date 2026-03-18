@@ -1,0 +1,28 @@
+{
+  "domain": "www.szse.cn",
+  "page_url": "https://www.szse.cn/disclosure/supervision/inquire/index.html",
+  "title": "深交所问询函件",
+  "description": "深交所对上市公司的问询函件列表：公司代码、简称、发函日期、函件类别（年报问询函、关注函等）、函件内容链接。",
+  "endpoint": "https://www.szse.cn/api/report/ShowReport/data",
+  "method": "GET",
+  "params": {
+    "SHOWTYPE": { "value": "JSON", "required": true },
+    "CATALOGID": { "value": "main_wxhj", "required": true },
+    "PAGENO": { "example": "1" },
+    "PAGESIZE": { "example": "20" }
+  },
+  "response": {
+    "format": "JSON array",
+    "fields": {
+      "gsdm": "公司代码",
+      "gsjc": "公司简称",
+      "fhrq": "发函日期",
+      "hjlb": "函件类别",
+      "hjnr": "函件内容（含链接）"
+    }
+  },
+  "example": "curl -sk 'https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=main_wxhj&PAGENO=1&PAGESIZE=5'",
+  "auth": "none",
+  "confidence": 0.97,
+  "last_verified": "2026-03-18"
+}
