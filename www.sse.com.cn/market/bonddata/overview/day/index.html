@@ -534,6 +534,41 @@ overviewDay.<span class="f">setOverviewDayParams</span>()
   [...tr.<span class="f">querySelectorAll</span>(<span class="s">'td'</span>)].<span class="f">map</span>(td => td.textContent.<span class="f">trim</span>())
 )</pre>
   </div>
+  <div class="sub-label" style="margin-top:24px;">Action Steps Template (Machine-Readable)</div>
+  <p style="font-size:13px;color:var(--am-text-2);margin-bottom:12px;">
+    在浏览器中回放到指定日期的操作步骤。将 {{date}} 替换为 YYYY-MM-DD 格式的目标日期。
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span class="code-lang">action_steps_template.json</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>{
+  "description": "\u5728\u6d4f\u89c8\u5668\u4e2d\u56de\u653e\u5230\u6307\u5b9a\u65e5\u671f\u7684\u64cd\u4f5c\u6b65\u9aa4\u3002\u5c06 {{date}} \u66ff\u6362\u4e3a YYYY-MM-DD \u683c\u5f0f\u7684\u76ee\u6807\u65e5\u671f\u3002",
+  "example": [
+    {
+      "code": "document.querySelector(\u0027.js_date input\u0027).value = \u00272025-03-10\u0027",
+      "type": "exec_js",
+      "wait": 0
+    },
+    {
+      "code": "overviewDay.setOverviewDayParams()",
+      "type": "exec_js",
+      "wait": 3000
+    }
+  ],
+  "steps": [
+    {
+      "code": "document.querySelector(\u0027.js_date input\u0027).value = \u0027{{date}}\u0027",
+      "type": "exec_js",
+      "wait": 0
+    },
+    {
+      "code": "overviewDay.setOverviewDayParams()",
+      "type": "exec_js",
+      "wait": 3000
+    }
+  ]
+}</pre>
+  </div>
 </div>
 
 <!-- 03 AGENT REPORTS -->
