@@ -66,6 +66,25 @@
     {"TYPE": "合计", "TYPE_CODE": "9999", "VOLUME": "6694960", "AMOUNT": "236109648.86", "AVG_PRICE": "100.031", "TRADE_DATE": "2025-03-10"}
   ],
 
+  "page_internals": {
+    "date_selector": ".js_date input",
+    "js_controller": "overviewDay",
+    "query_trigger": "overviewDay.setOverviewDayParams()",
+    "description": "页面默认显示最新交易日。日期选择器使用 laydate 组件绑定到 .js_date input。设置日期后调用 setOverviewDayParams() 会读取输入框值、更新参数、发起 AJAX 查询。"
+  },
+
+  "action_steps_template": {
+    "description": "在浏览器中回放到指定日期的操作步骤。将 {{date}} 替换为 YYYY-MM-DD 格式的目标日期。",
+    "steps": [
+      {"type": "exec_js", "code": "document.querySelector('.js_date input').value = '{{date}}'", "wait": 0},
+      {"type": "exec_js", "code": "overviewDay.setOverviewDayParams()", "wait": 3000}
+    ],
+    "example": [
+      {"type": "exec_js", "code": "document.querySelector('.js_date input').value = '2025-03-10'", "wait": 0},
+      {"type": "exec_js", "code": "overviewDay.setOverviewDayParams()", "wait": 3000}
+    ]
+  },
+
   "failure_modes": [
     { "condition": "非交易日", "behavior": "返回17行全零数据", "detection": "合计行 VOLUME=0" },
     { "condition": "海外 IP", "behavior": "HTTP 403", "mitigation": "使用中国境内代理" },
