@@ -1,0 +1,51 @@
+{
+  "service": "push2ex.eastmoney.com",
+  "page": "https://quote.eastmoney.com/ztb/detail#type=zrzt",
+  "title": "昨日涨停股池",
+  "summary": "上一交易日收盘时涨停的所有A股股票（不含ST和科创板）。相比当日涨停池，额外包含振幅、涨速、昨日封板时间字段，适合分析次日开板行为。",
+  "method": "GET",
+  "endpoint": "https://push2ex.eastmoney.com/getYesterdayZTPool",
+  "params": {
+    "ut": { "value": "7eea3edcaed734bea9cbfc24409ed989", "description": "固定 token" },
+    "dpt": { "value": "wz.ztzt", "description": "固定值" },
+    "Pageindex": { "type": "integer", "default": "0" },
+    "pagesize": { "type": "integer", "default": "5000" },
+    "sort": {
+      "value": "zs:desc",
+      "description": "按涨速降序。其他可选：yfbt:asc（按昨日封板时间）、ylbc:desc（按昨日连板数）"
+    },
+    "date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询日期（即"今日"，返回的是该日期的前一交易日涨停股）",
+      "example": "20260317"
+    }
+  },
+  "response": {
+    "pool_item_fields": {
+      "c": "股票代码",
+      "n": "股票简称",
+      "p": "最新价（÷1000 得元）",
+      "ztp": "涨停价（÷1000 得元）",
+      "zdp": "涨跌幅（%）",
+      "amount": "成交额（元）",
+      "ltsz": "流通市值（元）",
+      "tshare": "总市值（元）",
+      "hs": "换手率（%）",
+      "zf": "振幅（%）",
+      "zs": "涨速（%/min，涨停前的速度）",
+      "yfbt": "昨日封板时间（HHMMSS 整数，需 zfill(6)）",
+      "ylbc": "昨日连板数",
+      "hybk": "所属行业",
+      "zttj": "涨停统计 {days, ct}"
+    }
+  },
+  "example_call": "curl \"https://push2ex.eastmoney.com/getYesterdayZTPool?ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=5000&sort=zs:desc&date=20260317\"",
+  "caveats": [
+    "历史数据保留期约 30 个交易日",
+    "不含 ST 和科创板"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-03-18"
+}

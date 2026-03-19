@@ -1,0 +1,48 @@
+{
+  "service": "push2ex.eastmoney.com",
+  "page": "https://quote.eastmoney.com/ztb/detail#type=dtgc",
+  "title": "跌停股池",
+  "summary": "当日当前跌停的所有A股股票（不含ST和科创板）。含封单资金、板上成交额、连续跌停数等字段。历史数据仅保留最近 30 个交易日。",
+  "method": "GET",
+  "endpoint": "https://push2ex.eastmoney.com/getTopicDTPool",
+  "params": {
+    "ut": { "value": "7eea3edcaed734bea9cbfc24409ed989", "description": "固定 token" },
+    "dpt": { "value": "wz.ztzt", "description": "固定值" },
+    "Pageindex": { "type": "integer", "default": "0" },
+    "pagesize": { "type": "integer", "default": "10000" },
+    "sort": { "value": "fund:asc", "description": "按封单资金升序" },
+    "date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询日期（交易日），仅限最近 30 个交易日",
+      "example": "20260317"
+    }
+  },
+  "response": {
+    "pool_item_fields": {
+      "c": "股票代码",
+      "n": "股票简称",
+      "p": "最新价（÷1000 得元）",
+      "zdp": "涨跌幅（%，负数）",
+      "amount": "成交额（元）",
+      "ltsz": "流通市值（元）",
+      "tshare": "总市值（元）",
+      "dtsyl": "动态市盈率",
+      "hs": "换手率（%）",
+      "fund": "封单资金（元，买一封单）",
+      "lbt": "最后封板时间（HHMMSS 整数）",
+      "bscje": "板上成交额（元，封板后继续成交的金额）",
+      "lbc": "连续跌停数",
+      "zbc": "开板次数",
+      "hybk": "所属行业"
+    }
+  },
+  "example_call": "curl \"https://push2ex.eastmoney.com/getTopicDTPool?ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=10000&sort=fund:asc&date=20260317\"",
+  "caveats": [
+    "历史数据仅保留最近 30 个交易日",
+    "不含 ST 和科创板"
+  ],
+  "confidence": 0.90,
+  "last_verified": "2026-03-18"
+}

@@ -1,0 +1,91 @@
+{
+  "service": "push2ex.eastmoney.com",
+  "page": "https://quote.eastmoney.com/ztb/detail#type=ztgc",
+  "title": "涨停股池",
+  "summary": "当日当前涨停的所有A股股票（不含未中断连续一字涨停的新股，不含ST和科创板）。含连板数、首次封板时间、封板资金等打板核心字段。历史数据仅保留近期（约30个交易日），更早的日期返回空。",
+  "method": "GET",
+  "endpoint": "https://push2ex.eastmoney.com/getTopicZTPool",
+  "params": {
+    "ut": {
+      "value": "7eea3edcaed734bea9cbfc24409ed989",
+      "description": "固定 token，硬编码在东方财富前端 JS 中，无需登录"
+    },
+    "dpt": {
+      "value": "wz.ztzt",
+      "description": "固定值"
+    },
+    "Pageindex": {
+      "type": "integer",
+      "default": "0",
+      "description": "分页索引，从 0 开始"
+    },
+    "pagesize": {
+      "type": "integer",
+      "default": "10000",
+      "description": "每页条数，设为 10000 可一次取全量"
+    },
+    "sort": {
+      "value": "fbt:asc",
+      "description": "排序字段:方向。fbt=首次封板时间，asc=升序（最早封板的在前）"
+    },
+    "date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询日期（交易日）",
+      "example": "20260317"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "rc": "返回码，0=成功",
+      "data.tc": "总条数",
+      "data.qdate": "服务器实际查询日期（YYYYMMDD）",
+      "data.pool": "涨停股数组"
+    },
+    "pool_item_fields": {
+      "c": "股票代码（6位）",
+      "n": "股票简称",
+      "p": "最新价（单位：毫元，÷1000 得元）",
+      "zdp": "涨跌幅（%，浮点数）",
+      "amount": "成交额（元）",
+      "ltsz": "流通市值（元）",
+      "tshare": "总市值（元）",
+      "hs": "换手率（%）",
+      "lbc": "连板数（整数，1=首板，2=二连板，...）",
+      "fbt": "首次封板时间（整数 HHMMSS，如 92500=09:25:00）",
+      "lbt": "最后封板时间（同 fbt 格式）",
+      "fund": "封板资金（元，即卖一封单金额）",
+      "zbc": "炸板次数（整数，0=从未炸板）",
+      "hybk": "所属行业",
+      "zttj": "涨停统计 {days: 统计天数, ct: 期间涨停次数}"
+    }
+  },
+  "example_call": "curl \"https://push2ex.eastmoney.com/getTopicZTPool?ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=10000&sort=fbt:asc&date=20260317\"",
+  "example_response": {
+    "rc": 0,
+    "data": {
+      "tc": 39,
+      "qdate": 20260317,
+      "pool": [
+        {
+          "c": "000020", "n": "深华发Ａ", "p": 17530, "zdp": 9.97,
+          "amount": 130046340, "ltsz": 3175829304, "tshare": 4963816396,
+          "hs": 4.09, "lbc": 2, "fbt": 92500, "lbt": 92500,
+          "fund": 371406321, "zbc": 0, "hybk": "光学光电",
+          "zttj": {"days": 2, "ct": 2}
+        }
+      ]
+    }
+  },
+  "caveats": [
+    "历史数据保留期约 30 个交易日，更早日期返回 pool:[]",
+    "ut token 硬编码在前端，稳定性依赖东方财富不改 JS",
+    "不含 ST 股票和科创板（688 开头）",
+    "不含未中断连续一字涨停的新股",
+    "p 字段单位是毫元（÷1000 才是实际价格），fbt/lbt 是 HHMMSS 整数需 zfill(6)"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-03-18"
+}

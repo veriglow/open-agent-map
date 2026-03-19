@@ -1,33 +1,73 @@
 [
   {
+    "path": "/akshare",
+    "title": "AKShare (开源财经数据)",
+    "summary": ""
+  },
+  {
     "path": "/cuhk.edu.cn/zh-hans/article-search",
     "title": "新闻搜索",
-    "summary": "香港中文大学（深圳）新闻文章搜索，支持按关键词、分类、日期范围、标签筛选，约130页。"
+    "summary": "香港中文大学（深圳）新闻文章搜索，支持按关键词、分类、日期范围、标签筛选，约 130 页，Drupal 服务端渲染。"
   },
   {
     "path": "/cuhk.edu.cn/zh-hans/event-search",
     "title": "活动搜索",
-    "summary": "香港中文大学（深圳）校园活动预告与搜索，支持按类型、状态、日期范围筛选。"
+    "summary": "香港中文大学（深圳）校园活动预告与搜索，支持按活动类型、状态（未开始/进行中/已结束）、日期范围筛选。"
   },
   {
     "path": "/cuhk.edu.cn/zh-hans/media/focus",
     "title": "媒体聚焦",
-    "summary": "香港中文大学（深圳）媒体报道汇总，含媒体来源、日期、文章标题与外部链接，约48页。"
+    "summary": "香港中文大学（深圳）媒体报道汇总，含媒体来源、日期、文章标题与外部链接，约 48 页。"
   },
   {
     "path": "/cuhk.edu.cn/zh-hans/research-news",
     "title": "科研新闻",
-    "summary": "香港中文大学（深圳）科研成果新闻列表，按时间倒序排列，约48页。"
+    "summary": "香港中文大学（深圳）科研成果新闻列表，按时间倒序排列，约 48 页。"
   },
   {
     "path": "/cuhk.edu.cn/zh-hans/scholars",
     "title": "科研学者",
-    "summary": "香港中文大学（深圳）科研学者名录，含姓名、职称、院士头衔，约7页。"
+    "summary": "香港中文大学（深圳）科研学者名录，含姓名、职称、院士头衔等信息，约 7 页，链接指向各学院教师详情页。"
   },
   {
     "path": "/cuhk.edu.cn/zh-hans/taxonomy/term/37",
     "title": "工作机会",
-    "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类职位，约40+职位。"
+    "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类、附属机构职位，约 40+ 职位，单页无分页。"
+  },
+  {
+    "path": "/fred.stlouisfed.org",
+    "title": "FRED (Federal Reserve Economic Data)",
+    "summary": ""
+  },
+  {
+    "path": "/push2ex.eastmoney.com/dt-pool",
+    "title": "跌停股池",
+    "summary": "当日当前跌停的所有A股股票（不含ST和科创板）。含封单资金、板上成交额、连续跌停数等字段。历史数据仅保留最近 30 个交易日。"
+  },
+  {
+    "path": "/push2ex.eastmoney.com/qs-pool",
+    "title": "强势股池",
+    "summary": "创下60日新高或近期多次涨停的A股股票。入选理由：1=60日新高，2=近期多次涨停，3=两者兼具。含量比、涨速字段，适合寻找持续强势标的。"
+  },
+  {
+    "path": "/push2ex.eastmoney.com/zb-pool",
+    "title": "炸板股池",
+    "summary": "当日触及过涨停板但当前未封板的A股股票（炸板 = 封板后被砸开）。是涨停失败的信号，用于分析封板强度不足的股票。历史数据仅保留最近 30 个交易日。"
+  },
+  {
+    "path": "/push2ex.eastmoney.com/zt-pool",
+    "title": "涨停股池",
+    "summary": "当日当前涨停的所有A股股票（不含未中断连续一字涨停的新股，不含ST和科创板）。含连板数、首次封板时间、封板资金等打板核心字段。历史数据仅保留近期（约30个交易日），更早的日期返回空。"
+  },
+  {
+    "path": "/tushare.pro",
+    "title": "Tushare Pro (挖地兔)",
+    "summary": ""
+  },
+  {
+    "path": "/www.producthunt.com",
+    "title": "Product Hunt",
+    "summary": ""
   },
   {
     "path": "/www.sse.com.cn/assortment/stock/areatrade/area",
@@ -310,89 +350,14 @@
     "summary": "上交所大宗交易-科创板数据，通过 commonQuery.do 接口获取。"
   },
   {
-    "path": "/yunhq.sse.com.cn/dayk",
-    "title": "个股日K线历史数据",
-    "summary": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。"
+    "path": "/www.sse.com.cn/market/price/report",
+    "title": "市场报告",
+    "summary": "上交所市场报告。"
   },
   {
-    "path": "/yunhq.sse.com.cn/mink",
-    "title": "个股5分钟K线",
-    "summary": "获取上交所股票5分钟K线数据，约250个交易日历史。"
-  },
-  {
-    "path": "/yunhq.sse.com.cn/line",
-    "title": "个股当日分时走势",
-    "summary": "获取单只股票当日的分时走势数据（1分钟粒度）。"
-  },
-  {
-    "path": "/yunhq.sse.com.cn/snap",
-    "title": "个股实时快照",
-    "summary": "获取单只股票的实时行情快照，包括最新价、涨跌、五档盘口等。"
-  },
-  {
-    "path": "/yunhq.sse.com.cn/list-equity",
-    "title": "全市场股票实时行情列表",
-    "summary": "获取上交所全部股票的实时行情快照（代码、名称、开高低收、涨跌幅、成交量额）。"
-  },
-  {
-    "path": "/fred.stlouisfed.org",
-    "title": "FRED (Federal Reserve Economic Data)",
-    "summary": "自文档化站点。CSV 端点无需认证：fredgraph.csv?id={SERIES_ID}&cosd={START}&coed={END}。常用 series: GDP, CPIAUCSL, DGS10, FEDFUNDS, UNRATE。"
-  },
-  {
-    "path": "/www.producthunt.com",
-    "title": "Product Hunt",
-    "summary": "自文档化站点。GraphQL API 完备，支持 posts/comments/topics/users/collections 查询，需 OAuth2 token。"
-  },
-  {
-    "path": "/tushare.pro",
-    "title": "Tushare Pro (挖地兔)",
-    "summary": "Python SDK + REST API。A股日线(10年+)、涨跌停统计、龙虎榜、概念板块、融资融券。注册获取 token。"
-  },
-  {
-    "path": "/akshare",
-    "title": "AKShare (开源财经数据)",
-    "summary": "开源 Python 库，无需 token。涨停板池、炸板池、概念板块、龙虎榜。底层爬取东方财富/新浪等。"
-  },
-  {
-    "path": "/www.szse.cn/market/stock-snapshot",
-    "title": "深交所股票日行情",
-    "summary": "深交所全市场股票行情快照：OHLC、涨跌幅、成交量额、市盈率。CATALOGID=1815_stock_snapshot, TABKEY=tab1。"
-  },
-  {
-    "path": "/www.szse.cn/market/realtime-quote",
-    "title": "深交所个股实时行情",
-    "summary": "单只深市股票实时行情：最新价、五档盘口、分时走势。ssjjhq/getTimeData 接口。"
-  },
-  {
-    "path": "/www.szse.cn/market/index-snapshot",
-    "title": "深交所指数行情",
-    "summary": "深证成指、创业板指等指数日行情。CATALOGID=1826_snapshot。"
-  },
-  {
-    "path": "/www.szse.cn/market/market-overview",
-    "title": "深交所市场总览",
-    "summary": "证券类别统计：数量、成交金额、总市值、流通市值。CATALOGID=1803_sczm。"
-  },
-  {
-    "path": "/www.szse.cn/market/margin-securities",
-    "title": "深交所融资融券标的",
-    "summary": "融资融券标的证券列表。CATALOGID=1834_xxpl。"
-  },
-  {
-    "path": "/www.szse.cn/market/inquiry-letters",
-    "title": "深交所问询函件",
-    "summary": "上市公司问询函件列表：关注函、年报问询函等。CATALOGID=main_wxhj。"
-  },
-  {
-    "path": "/www.szse.cn/market/history-kline",
-    "title": "深交所个股历史K线",
-    "summary": "个股日K/周K/月K历史数据（OHLCV），cycleType=32/33/34。ssjjhq/getHistoryData 接口。"
-  },
-  {
-    "path": "/www.szse.cn/market/trading-calendar",
-    "title": "深交所交易日历",
-    "summary": "当月交易日/非交易日标识。onepersistenthour/monthList 接口。"
+    "path": "/www.sse.com.cn/market/price/trends",
+    "title": "行情走势",
+    "summary": "上交所行情走势。"
   },
   {
     "path": "/www.sse.com.cn/market/sseindex/indexlist/basic",
@@ -532,11 +497,71 @@
   {
     "path": "/www.sse.com.cn/regulation/supervision/dynamic",
     "title": "上市公司监管动态",
-    "summary": "上交所上市公司监管动态公告列表，包含纪律处分决定、监管措施决定等。"
+    "summary": "上交所上市公司监管动态公告列表，包含纪律处分、监管措施、工作评价等信息。"
   },
   {
     "path": "/www.sse.com.cn/regulation/trading/dynamic",
     "title": "交易监管动态",
     "summary": "上交所交易监管动态公告列表，包含程序化交易管理、异常交易监控等信息。"
+  },
+  {
+    "path": "/www.szse.cn/market/history-kline",
+    "title": "深交所个股历史K线",
+    "summary": "获取深市任意股票的历史K线数据（日K/周K/月K），含 OHLCV 和涨跌幅。日K约201条（~10个月），周K约201条（~4年），月K约201条（~17年）。无需认证。"
+  },
+  {
+    "path": "/www.szse.cn/market/index-snapshot",
+    "title": "深交所指数行情",
+    "summary": "深圳证券交易所指数日行情：深证成指、创业板指等。含 OHLC、涨跌幅、成交金额。使用 1815_stock_snapshot 的 tab7 或 1826_snapshot。"
+  },
+  {
+    "path": "/www.szse.cn/market/inquiry-letters",
+    "title": "深交所问询函件",
+    "summary": "深交所对上市公司的问询函件列表：公司代码、简称、发函日期、函件类别（年报问询函、关注函等）、函件内容链接。"
+  },
+  {
+    "path": "/www.szse.cn/market/margin-securities",
+    "title": "深交所融资融券标的证券",
+    "summary": "深交所融资融券标的证券信息列表：证券代码、简称、融资/融券标的标识、当日可融资状态。"
+  },
+  {
+    "path": "/www.szse.cn/market/market-overview",
+    "title": "深交所市场总览",
+    "summary": "深圳证券交易所市场总览统计：证券类别数量、成交金额、总市值、流通市值。覆盖股票、基金、债券等全部证券类别。"
+  },
+  {
+    "path": "/www.szse.cn/market/realtime-quote",
+    "title": "深交所个股实时行情",
+    "summary": "单只股票实时行情数据：最新价、开高低收、涨跌幅、成交量额、五档盘口、分时走势数据。盘中实时更新。"
+  },
+  {
+    "path": "/www.szse.cn/market/stock-snapshot",
+    "title": "深交所股票日行情",
+    "summary": "深圳证券交易所全市场股票行情快照，含 OHLC、涨跌幅、成交量额、市盈率。支持按代码/简称筛选、按日期范围查询。"
+  },
+  {
+    "path": "/www.szse.cn/market/trading-calendar",
+    "title": "深交所交易日历",
+    "summary": "获取当月交易日历，标识哪些日期是交易日（jybz=0）、哪些是非交易日（jybz=1）。"
+  },
+  {
+    "path": "/yunhq.sse.com.cn/dayk",
+    "title": "个股日K线历史数据",
+    "summary": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。"
+  },
+  {
+    "path": "/yunhq.sse.com.cn/line",
+    "title": "个股当日分时走势",
+    "summary": "获取单只股票当日的分时走势数据（1分钟粒度）。"
+  },
+  {
+    "path": "/yunhq.sse.com.cn/list-equity",
+    "title": "全市场股票实时行情列表",
+    "summary": "获取上交所全部股票的实时行情快照（代码、名称、开高低收、涨跌幅、成交量额）。支持分页和排序。"
+  },
+  {
+    "path": "/yunhq.sse.com.cn/snap",
+    "title": "个股实时快照",
+    "summary": "获取单只股票的实时行情快照，包括最新价、涨跌、五档盘口等。"
   }
 ]

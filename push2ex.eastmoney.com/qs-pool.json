@@ -1,0 +1,48 @@
+{
+  "service": "push2ex.eastmoney.com",
+  "page": "https://quote.eastmoney.com/ztb/detail#type=qsgc",
+  "title": "强势股池",
+  "summary": "创下60日新高或近期多次涨停的A股股票。入选理由：1=60日新高，2=近期多次涨停，3=两者兼具。含量比、涨速字段，适合寻找持续强势标的。",
+  "method": "GET",
+  "endpoint": "https://push2ex.eastmoney.com/getTopicQSPool",
+  "params": {
+    "ut": { "value": "7eea3edcaed734bea9cbfc24409ed989", "description": "固定 token" },
+    "dpt": { "value": "wz.ztzt", "description": "固定值" },
+    "Pageindex": { "type": "integer", "default": "0" },
+    "pagesize": { "type": "integer", "default": "5000" },
+    "sort": { "value": "zdp:desc", "description": "按涨跌幅降序" },
+    "date": {
+      "type": "string",
+      "format": "YYYYMMDD",
+      "required": true,
+      "description": "查询日期（交易日）",
+      "example": "20260317"
+    }
+  },
+  "response": {
+    "pool_item_fields": {
+      "c": "股票代码",
+      "n": "股票简称",
+      "p": "最新价（÷1000 得元）",
+      "ztp": "涨停价（÷1000 得元）",
+      "zdp": "涨跌幅（%）",
+      "amount": "成交额（元）",
+      "ltsz": "流通市值（元）",
+      "tshare": "总市值（元）",
+      "hs": "换手率（%）",
+      "zs": "涨速（%/min）",
+      "sxh": "是否新高（1=是，0=否）",
+      "lj": "量比",
+      "reason": "入选理由（1=60日新高，2=近期多次涨停，3=两者兼具）",
+      "hybk": "所属行业",
+      "zttj": "涨停统计 {days, ct}"
+    }
+  },
+  "example_call": "curl \"https://push2ex.eastmoney.com/getTopicQSPool?ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wz.ztzt&Pageindex=0&pagesize=5000&sort=zdp:desc&date=20260317\"",
+  "caveats": [
+    "不含 ST 和科创板",
+    "历史数据保留期约 30 个交易日"
+  ],
+  "confidence": 0.85,
+  "last_verified": "2026-03-18"
+}
