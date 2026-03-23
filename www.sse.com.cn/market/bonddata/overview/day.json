@@ -73,6 +73,18 @@
     "description": "页面默认显示最新交易日。日期选择器使用 laydate 组件绑定到 .js_date input。设置日期后调用 setOverviewDayParams() 会读取输入框值、更新参数、发起 AJAX 查询。"
   },
 
+  "page_table": {
+    "description": "页面上用户看到的表格结构。制作 table 类型证据时，row_anchor 和 col_anchor 必须使用这里的原始文本。",
+    "headers": ["类型", "成交笔数", "成交金额(万元)", "加权平均价格"],
+    "row_identifier": "类型",
+    "api_to_header": {
+      "TYPE": "类型",
+      "VOLUME": "成交笔数",
+      "AMOUNT": "成交金额(万元)",
+      "AVG_PRICE": "加权平均价格"
+    }
+  },
+
   "action_steps_template": {
     "description": "在浏览器中回放到指定日期的操作步骤。将 {{date}} 替换为 YYYY-MM-DD 格式的目标日期。",
     "steps": [
