@@ -655,14 +655,54 @@ async function serveHomepage(request) {
     );
   }
 
-  // Fetch the real index.html from GitHub
+  // Build the agent JSON for homepage
+  let agentJson = "";
+  try {
+    const mResp2 = await fetch(GITHUB_RAW_ORIGIN + "/_manifest.json", {
+      headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
+      cf: { cacheTtl: 600 },
+    });
+    if (mResp2.ok) {
+      const manifest = await mResp2.json();
+      agentJson = JSON.stringify({
+        service: "VeriGlow Agent Map",
+        description: "Web data extraction maps for AI agents",
+        usage: {
+          list_pages: "GET /{domain}",
+          get_spec: "GET /{domain}/{path}",
+          search: "GET /_manifest.json",
+        },
+        sites,
+        total_pages: totalPages,
+        pages: manifest,
+      }, null, 2);
+    }
+  } catch {}
+
+  // Fetch the real index.html from GitHub and inject toggle
   try {
     const resp = await fetch(GITHUB_RAW_ORIGIN + "/index.html", {
       headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
       cf: { cacheTtl: 300 },
     });
     if (resp.ok) {
-      return new Response(resp.body, {
+      let html = await resp.text();
+      const toggleHtml = `
+<style>
+.view-toggle-home{display:inline-flex;border:1px solid #E5E7EB;border-radius:6px;overflow:hidden;font-size:0.8rem;margin-bottom:1rem;position:fixed;top:16px;right:16px;z-index:100}
+.view-toggle-home button{padding:0.35rem 0.85rem;border:none;background:#fff;color:#6B7280;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.view-toggle-home button.active{background:#10B981;color:#fff}
+.view-toggle-home button:hover:not(.active){background:#F3F4F6}
+.agent-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(255,255,255,0.97);padding:2rem;overflow:auto}
+.agent-overlay pre{max-width:900px;margin:3rem auto 2rem;background:#f0fdf4;padding:1.5rem;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;line-height:1.5}
+</style>
+<div class="view-toggle-home">
+  <button class="active" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active');document.getElementById('agentOverlay').style.display='none'">Human</button>
+  <button onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active');document.getElementById('agentOverlay').style.display='block'">Agent</button>
+</div>
+<div id="agentOverlay" class="agent-overlay"><pre>${escHtml(agentJson)}</pre></div>`;
+      html = html.replace("</body>", toggleHtml + "</body>");
+      return new Response(html, {
         headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" },
       });
     }
