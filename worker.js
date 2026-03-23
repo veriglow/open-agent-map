@@ -280,6 +280,13 @@ ${BRAND_FONTS}
   .report-link { color: var(--muted); font-size: 0.8rem; margin-top: 0.5rem; }
   .report-link a { color: #f59e0b; text-decoration: none; }
   .copied { color: #10B981 !important; }
+  .view-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .view-toggle button { padding: 0.35rem 0.85rem; border: none; background: var(--card); color: var(--muted); cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .view-toggle button.active { background: #10B981; color: #fff; }
+  .view-toggle button:hover:not(.active) { background: var(--border); }
+  .view-human { display: block; }
+  .view-agent { display: none; }
+  .agent-json { background: #f0fdf4; padding: 1rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: pre-wrap; word-break: break-all; overflow-x: auto; max-height: 80vh; overflow-y: auto; line-height: 1.5; }
 </style>
 <script>
 async function copyJson(e, path) {
@@ -295,6 +302,12 @@ async function copyJson(e, path) {
     window.open(path, '_blank');
   }
 }
+function switchView(mode) {
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  document.querySelector('.view-toggle button[data-mode="'+mode+'"]').classList.add('active');
+  document.querySelector('.view-human').style.display = mode === 'human' ? 'block' : 'none';
+  document.querySelector('.view-agent').style.display = mode === 'agent' ? 'block' : 'none';
+}
 </script>
 </head>
 <body>
@@ -304,6 +317,16 @@ ${BRAND_NAV}
     ${renderBreadcrumbPath("/" + jsonPath.replace(".json", "").replace(/^\//, ""))}
   </div>
 
+  <div class="view-toggle">
+    <button class="active" data-mode="human" onclick="switchView('human')">Human</button>
+    <button data-mode="agent" onclick="switchView('agent')">Agent</button>
+  </div>
+
+  <div class="view-agent">
+    <pre class="agent-json">${escHtml(JSON.stringify(spec, null, 2))}</pre>
+  </div>
+
+  <div class="view-human">
   <h1>${escHtml(title)}</h1>
 
   <div class="meta">
@@ -360,11 +383,26 @@ ${BRAND_NAV}
       : ""
   }
 
+  ${
+    spec.page_table
+      ? `
+  <div class="card">
+    <h2>Page Table Headers</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">${escHtml(spec.page_table.description || "Exact table header text as shown on the web page.")}</p>
+    <table>
+      <tr><th>API Field</th><th>Page Header</th></tr>
+      ${Object.entries(spec.page_table.api_to_header || {}).map(([k, v]) => `<tr><td>${escHtml(k)}</td><td>${escHtml(v)}</td></tr>`).join("")}
+    </table>
+  </div>`
+      : ""
+  }
+
   <div class="report-link">
     Data outdated? <a href="https://github.com/ChizhongWang/open-agent-map/issues/new?title=STALE:+${encodeURIComponent(jsonPath)}" target="_blank">Report an issue</a>
   </div>
 
   <a class="json-link" href="#" onclick="copyJson(event, '${escHtml(jsonPath)}')">Copy raw JSON for agent</a>
+  </div><!-- /view-human -->
 
   ${BRAND_FOOTER}
 </div>
