@@ -608,29 +608,30 @@ function submitRequest(e) {
 }
 
 async function serveHomepage(request) {
+  // Fetch manifest (shared by JSON and HTML branches)
+  let sites = [];
+  let totalPages = 0;
+  let manifestData = [];
+  try {
+    const mResp = await fetch(GITHUB_RAW_ORIGIN + "/_manifest.json", {
+      headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
+      cf: { cacheTtl: 600 },
+    });
+    if (mResp.ok) {
+      manifestData = await mResp.json();
+      totalPages = manifestData.length;
+      const domainMap = {};
+      for (const p of manifestData) {
+        const domain = p.path.split("/").filter(Boolean)[0];
+        if (!domainMap[domain]) domainMap[domain] = { domain, pages: 0 };
+        domainMap[domain].pages++;
+      }
+      sites = Object.values(domainMap);
+    }
+  } catch {}
+
   const accept = request.headers.get("Accept") || "";
   if (!accept.includes("text/html")) {
-    // Build service discovery document from manifest
-    let sites = [];
-    let totalPages = 0;
-    try {
-      const mResp = await fetch(GITHUB_RAW_ORIGIN + "/_manifest.json", {
-        headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
-        cf: { cacheTtl: 600 },
-      });
-      if (mResp.ok) {
-        const manifest = await mResp.json();
-        totalPages = manifest.length;
-        // Aggregate by domain
-        const domainMap = {};
-        for (const p of manifest) {
-          const domain = p.path.split("/").filter(Boolean)[0];
-          if (!domainMap[domain]) domainMap[domain] = { domain, pages: 0 };
-          domainMap[domain].pages++;
-        }
-        sites = Object.values(domainMap);
-      }
-    } catch {}
     return new Response(
       JSON.stringify({
         service: "VeriGlow Agent Map",
@@ -655,29 +656,19 @@ async function serveHomepage(request) {
     );
   }
 
-  // Build the agent JSON for homepage
-  let agentJson = "";
-  try {
-    const mResp2 = await fetch(GITHUB_RAW_ORIGIN + "/_manifest.json", {
-      headers: { "User-Agent": "Open-Agent-Map-Worker/1.0" },
-      cf: { cacheTtl: 600 },
-    });
-    if (mResp2.ok) {
-      const manifest = await mResp2.json();
-      agentJson = JSON.stringify({
-        service: "VeriGlow Agent Map",
-        description: "Web data extraction maps for AI agents",
-        usage: {
-          list_pages: "GET /{domain}",
-          get_spec: "GET /{domain}/{path}",
-          search: "GET /_manifest.json",
-        },
-        sites,
-        total_pages: totalPages,
-        pages: manifest,
-      }, null, 2);
-    }
-  } catch {}
+  // Build the agent JSON for homepage (reuse shared manifestData)
+  const agentJson = JSON.stringify({
+    service: "VeriGlow Agent Map",
+    description: "Web data extraction maps for AI agents",
+    usage: {
+      list_pages: "GET /{domain}",
+      get_spec: "GET /{domain}/{path}",
+      search: "GET /_manifest.json",
+    },
+    sites,
+    total_pages: totalPages,
+    pages: manifestData,
+  }, null, 2);
 
   // Fetch the real index.html from GitHub and inject toggle
   try {
