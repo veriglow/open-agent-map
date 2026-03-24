@@ -1,0 +1,9 @@
+{
+  "name": "CUHK Shenzhen (香港中文大学（深圳）)",
+  "domain": "cuhk.edu.cn",
+  "favicon_domain": "cuhk.edu.cn",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "Drupal 静态HTML解析",
+  "order": 90
+}

@@ -28,5 +28,15 @@
   },
   "strengths": "完全免费开源，无需注册，涨停板池/炸板池等打板策略专用接口，底层数据源多样",
   "limitations": "依赖第三方网站爬取，接口可能因源站改版而失效；无 SLA 保证",
+  "homepage_card": {
+    "order": 75,
+    "badge": "Open Source",
+    "badge_color": "green",
+    "description": "完全免费，无需 token，底层爬取东方财富/新浪",
+    "branches": [
+      {"prefix": "SDK", "text": "stock_zh_a_hist · zt_pool · board_concept · lhb_detail"},
+      {"desc": "历史行情 · 涨停板池/炸板池 · 概念板块 · 龙虎榜"}
+    ]
+  },
   "last_verified": "2026-03-18"
 }

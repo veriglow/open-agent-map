@@ -1,0 +1,9 @@
+{
+  "name": "Shanghai Stock Exchange (上海证券交易所)",
+  "domain": "www.sse.com.cn",
+  "favicon_domain": "www.sse.com.cn",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "commonQuery.do 隐藏 API 逆向",
+  "order": 10
+}

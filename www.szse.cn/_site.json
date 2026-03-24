@@ -1,0 +1,9 @@
+{
+  "name": "Shenzhen Stock Exchange (深圳证券交易所)",
+  "domain": "www.szse.cn",
+  "favicon_domain": "www.szse.cn",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "ShowReport + ssjjhq 隐藏 API 逆向",
+  "order": 30
+}

@@ -26,5 +26,13 @@
     "DEXUSEU": "USD/EUR Exchange Rate (daily)",
     "VIXCLS": "VIX Volatility Index (daily)"
   },
+  "homepage_card": {
+    "order": 40,
+    "description": "官方 API 完备，无需逆向",
+    "branches": [
+      {"prefix": "CSV", "text": "fredgraph.csv?id={SERIES}&cosd={START}&coed={END}"},
+      {"desc": "GDP · CPIAUCSL · DGS10 · FEDFUNDS · UNRATE · VIXCLS · M2SL · T10Y2Y"}
+    ]
+  },
   "last_verified": "2026-03-14"
 }

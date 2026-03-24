@@ -18,5 +18,13 @@
     "collections": "产品合集",
     "user": "用户信息 + 发布/投票历史"
   },
+  "homepage_card": {
+    "order": 60,
+    "description": "GraphQL API 完备，需 OAuth2 token",
+    "branches": [
+      {"prefix": "GQL", "text": "posts · post(slug) · comments · topics · collections · user"},
+      {"desc": "产品列表 · 评论/回复 · 话题分类 · 合集 · 用户投票历史"}
+    ]
+  },
   "last_verified": "2026-03-15"
 }

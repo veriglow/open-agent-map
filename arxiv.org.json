@@ -73,5 +73,14 @@
     "old_format": "archive/YYMMNNN (pre-2007), e.g. hep-th/9901001",
     "extract_from_api": "Strip 'http://arxiv.org/abs/' prefix and version suffix from <id> field"
   },
+  "homepage_card": {
+    "order": 45,
+    "description": "官方 Atom API 搜索 + ar5iv HTML 全文",
+    "branches": [
+      {"prefix": "Search", "text": "export.arxiv.org/api/query?search_query={QUERY}"},
+      {"prefix": "HTML", "text": "ar5iv.labs.arxiv.org/html/{ID}"},
+      {"prefix": "PDF", "text": "arxiv.org/pdf/{ID}"}
+    ]
+  },
   "last_verified": "2026-03-24"
 }

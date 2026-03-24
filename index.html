@@ -222,23 +222,24 @@ footer a:hover{color:var(--am-green);}
 <section class="sites">
   <div class="sites-heading">Indexed Sites</div>
   <div class="sites-grid">
+  <!-- SITES_START -->
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.sse.com.cn&sz=32" alt="" width="20" height="20">
         Shanghai Stock Exchange (上海证券交易所)
-        <small>www.sse.com.cn — 页面隐藏 API</small>
+        <small>页面隐藏 API</small>
       </div>
-      <div class="site-card-badge">Deep Map</div>
+      <div class="site-card-badge" >Deep Map</div>
     </div>
-    <div class="site-card-meta"><span id="sse-count">76</span> maps &middot; commonQuery.do 隐藏 API 逆向</div>
+    <div class="site-card-meta"><span class="site-count">87</span> maps &middot; commonQuery.do 隐藏 API 逆向</div>
     <div class="site-tree">
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">market/</span> <span class="branch-count">58 maps</span> <span class="branch-desc">— 股票、债券、基金、指数行情数据</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">disclosure/</span> <span class="branch-count">11 maps</span> <span class="branch-desc">— 公告、定期报告、信息披露</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">assortment/</span> <span class="branch-count">&nbsp;6 maps</span> <span class="branch-desc">— 股票分类、上市公司列表</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">regulation/</span> <span class="branch-count">&nbsp;5 maps</span> <span class="branch-desc">— 监管动态、处分措施</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">listing/</span> <span class="branch-count">&nbsp;3 maps</span> <span class="branch-desc">— IPO审核、业务通知</span></div>
-      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">lawandrules/</span> <span class="branch-count">&nbsp;1 map&nbsp;</span> <span class="branch-desc">— 业务指南</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">market/</span> <span class="branch-count">61 maps</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">disclosure/</span> <span class="branch-count">11 maps</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">assortment/</span> <span class="branch-count">6 maps</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">regulation/</span> <span class="branch-count">5 maps</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">listing/</span> <span class="branch-count">3 maps</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">lawandrules/</span> <span class="branch-count">1 map</span></div>
     </div>
     <a href="/www.sse.com.cn" class="site-card-action">Browse all maps &rarr;</a>
   </div>
@@ -248,19 +249,34 @@ footer a:hover{color:var(--am-green);}
       <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.sse.com.cn&sz=32" alt="" width="20" height="20">
         SSE Cloud Quotes (上交所云行情)
-        <small>yunhq.sse.com.cn — 独立 API 微服务</small>
+        <small>独立 API 微服务</small>
       </div>
-      <div class="site-card-badge">API Service</div>
+      <div class="site-card-badge" >API Service</div>
     </div>
-    <div class="site-card-meta">5 maps &middot; RESTful 行情接口，无需认证</div>
+    <div class="site-card-meta"><span class="site-count">4</span> maps &middot; RESTful 行情接口，无需认证</div>
     <div class="site-tree">
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">dayk</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 个股日K线（IPO至今完整历史）</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">mink</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 个股5分钟K线（~250交易日）</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">line</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 当日分时走势（1分钟粒度）</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">snap</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 实时快照（最新价、五档盘口）</span></div>
-      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">list-equity</span> <span class="branch-count">&nbsp;</span> <span class="branch-desc">— 全市场股票实时行情列表</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">dayk</span> <span class="branch-desc">— 获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">line</span> <span class="branch-desc">— 获取单只股票当日的分时走势数据（1分钟粒度）。</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">list-equity</span> <span class="branch-desc">— 获取上交所全部股票的实时行情快照（代码、名称、开高低收、涨跌幅、成交量额）...</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">snap</span> <span class="branch-desc">— 获取单只股票的实时行情快照，包括最新价、涨跌、五档盘口等。</span></div>
     </div>
     <a href="/yunhq.sse.com.cn" class="site-card-action">Browse all maps &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.szse.cn&sz=32" alt="" width="20" height="20">
+        Shenzhen Stock Exchange (深圳证券交易所)
+        <small>页面隐藏 API</small>
+      </div>
+      <div class="site-card-badge" >Deep Map</div>
+    </div>
+    <div class="site-card-meta"><span class="site-count">8</span> maps &middot; ShowReport + ssjjhq 隐藏 API 逆向</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">market/</span> <span class="branch-count">8 maps</span></div>
+    </div>
+    <a href="/www.szse.cn" class="site-card-action">Browse all maps &rarr;</a>
   </div>
 
   <div class="site-card">
@@ -274,7 +290,7 @@ footer a:hover{color:var(--am-green);}
     </div>
     <div class="site-card-meta">路由指引 &middot; 官方 API 完备，无需逆向</div>
     <div class="site-tree">
-      <div class="branch"><span class="branch-prefix">CSV</span> <span class="branch-dir">fredgraph.csv?id={SERIES}&cosd={START}&coed={END}</span></div>
+      <div class="branch"><span class="branch-prefix">CSV</span> <span class="branch-dir">fredgraph.csv?id={SERIES}&amp;cosd={START}&amp;coed={END}</span></div>
       <div class="branch"><span class="branch-prefix">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">GDP · CPIAUCSL · DGS10 · FEDFUNDS · UNRATE · VIXCLS · M2SL · T10Y2Y</span></div>
     </div>
     <a href="/fred.stlouisfed.org" class="site-card-action">View signpost &rarr;</a>
@@ -284,7 +300,7 @@ footer a:hover{color:var(--am-green);}
     <div class="site-card-head">
       <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=arxiv.org&sz=32" alt="" width="20" height="20">
-        arXiv (Open-Access Papers)
+        arXiv (Cornell University Open-Access Papers)
         <small>arxiv.org — 自文档化</small>
       </div>
       <div class="site-card-badge" style="background:var(--am-blue-dim);color:var(--am-blue);">Signpost</div>
@@ -301,23 +317,21 @@ footer a:hover{color:var(--am-green);}
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
-        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.szse.cn&sz=32" alt="" width="20" height="20">
-        Shenzhen Stock Exchange (深圳证券交易所)
-        <small>www.szse.cn — 页面隐藏 API</small>
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=eastmoney.com&sz=32" alt="" width="20" height="20">
+        East Money (东方财富涨跌停板)
+        <small>页面隐藏 API</small>
       </div>
-      <div class="site-card-badge">Deep Map</div>
+      <div class="site-card-badge" >Deep Map</div>
     </div>
-    <div class="site-card-meta"><span id="szse-count">8</span> maps &middot; ShowReport + ssjjhq 隐藏 API 逆向</div>
+    <div class="site-card-meta"><span class="site-count">5</span> maps &middot; 涨停/跌停/炸板/强势板池 API 逆向</div>
     <div class="site-tree">
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">stock-snapshot</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 股票/基金/债券/期权/指数日行情</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">realtime-quote</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 个股实时行情 + 五档盘口</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">index-snapshot</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 深证成指、创业板指等指数</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">market-overview</span> <span class="branch-count">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">— 市场总览统计</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">margin-securities</span> <span class="branch-count">&nbsp;</span> <span class="branch-desc">— 融资融券标的</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">inquiry-letters</span> <span class="branch-count">&nbsp;&nbsp;</span> <span class="branch-desc">— 问询函件</span></div>
-      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">trading-calendar</span> <span class="branch-count">&nbsp;</span> <span class="branch-desc">— 交易日历</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">dt-pool</span> <span class="branch-desc">— 当日当前跌停的所有A股股票（不含ST和科创板）。含封单资金、板上成交额、连...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">qs-pool</span> <span class="branch-desc">— 创下60日新高或近期多次涨停的A股股票。入选理由：1=60日新高，2=近期...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">zb-pool</span> <span class="branch-desc">— 当日触及过涨停板但当前未封板的A股股票（炸板 = 封板后被砸开）。是涨停失...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">zt-pool-yesterday</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">zt-pool</span> <span class="branch-desc">— 当日当前涨停的所有A股股票（不含未中断连续一字涨停的新股，不含ST和科创板...</span></div>
     </div>
-    <a href="/www.szse.cn" class="site-card-action">Browse all maps &rarr;</a>
+    <a href="/push2ex.eastmoney.com" class="site-card-action">Browse all maps &rarr;</a>
   </div>
 
   <div class="site-card">
@@ -342,7 +356,7 @@ footer a:hover{color:var(--am-green);}
       <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=tushare.pro&sz=32" alt="" width="20" height="20">
         Tushare Pro (挖地兔)
-        <small>tushare.pro — Python SDK</small>
+        <small>tushare.pro — 自文档化</small>
       </div>
       <div class="site-card-badge" style="background:var(--am-blue-dim);color:var(--am-blue);">Signpost</div>
     </div>
@@ -357,9 +371,9 @@ footer a:hover{color:var(--am-green);}
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
-        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=akshare.akfamily.xyz&sz=32" alt="" width="20" height="20">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=akshare&sz=32" alt="" width="20" height="20">
         AKShare (开源财经数据)
-        <small>akshare — 开源 Python 库</small>
+        <small>akshare — 自文档化</small>
       </div>
       <div class="site-card-badge" style="background:var(--am-green-dim);color:var(--am-green);">Open Source</div>
     </div>
@@ -376,21 +390,17 @@ footer a:hover{color:var(--am-green);}
       <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=cuhk.edu.cn&sz=32" alt="" width="20" height="20">
         CUHK Shenzhen (香港中文大学（深圳）)
-        <small>cuhk.edu.cn — 页面隐藏 API</small>
+        <small>页面隐藏 API</small>
       </div>
-      <div class="site-card-badge">Deep Map</div>
+      <div class="site-card-badge" >Deep Map</div>
     </div>
-    <div class="site-card-meta"><span id="cuhk-count">6</span> maps &middot; Drupal 静态HTML解析</div>
+    <div class="site-card-meta"><span class="site-count">6</span> maps &middot; Drupal 静态HTML解析</div>
     <div class="site-tree">
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">article-search</span> <span class="branch-count">~130页</span> <span class="branch-desc">— 新闻搜索（关键词/分类/日期筛选）</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">research-news</span> <span class="branch-count">~48页</span> <span class="branch-desc">— 科研成果新闻</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">media/focus</span> <span class="branch-count">~48页</span> <span class="branch-desc">— 媒体报道汇总</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">scholars</span> <span class="branch-count">&nbsp;7页&nbsp;</span> <span class="branch-desc">— 科研学者名录</span></div>
-      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">event-search</span> <span class="branch-count">多页&nbsp;</span> <span class="branch-desc">— 活动预告与搜索</span></div>
-      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">taxonomy/term/37</span> <span class="branch-count">&nbsp;1页&nbsp;</span> <span class="branch-desc">— 工作机会（40+职位）</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">zh-hans/</span> <span class="branch-count">6 maps</span></div>
     </div>
     <a href="/cuhk.edu.cn" class="site-card-action">Browse all maps &rarr;</a>
   </div>
+  <!-- SITES_END -->
   </div>
 </section>
 

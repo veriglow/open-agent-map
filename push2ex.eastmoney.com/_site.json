@@ -1,0 +1,9 @@
+{
+  "name": "East Money (东方财富涨跌停板)",
+  "domain": "push2ex.eastmoney.com",
+  "favicon_domain": "eastmoney.com",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "涨停/跌停/炸板/强势板池 API 逆向",
+  "order": 50
+}

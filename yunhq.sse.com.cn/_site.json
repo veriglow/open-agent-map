@@ -1,0 +1,9 @@
+{
+  "name": "SSE Cloud Quotes (上交所云行情)",
+  "domain": "yunhq.sse.com.cn",
+  "favicon_domain": "www.sse.com.cn",
+  "badge": "API Service",
+  "subtitle": "独立 API 微服务",
+  "description": "RESTful 行情接口，无需认证",
+  "order": 20
+}

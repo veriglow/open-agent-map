@@ -27,5 +27,13 @@
   },
   "strengths": "历史数据深度最好（10年+），涨跌停/龙虎榜/概念板块等衍生数据齐全",
   "limitations": "高级接口需积分（通过贡献或付费获取），免费账户有调用频率限制",
+  "homepage_card": {
+    "order": 70,
+    "description": "A股全量历史数据（10年+），注册获取 token",
+    "branches": [
+      {"prefix": "SDK", "text": "daily · limit_list · top_list · concept · margin_detail"},
+      {"desc": "日线行情 · 涨跌停统计 · 龙虎榜 · 概念板块 · 融资融券"}
+    ]
+  },
   "last_verified": "2026-03-18"
 }
