@@ -1,0 +1,77 @@
+{
+  "id": "arxiv.org",
+  "name": "arXiv (Cornell University Open-Access Papers)",
+  "type": "signpost",
+  "verdict": "self-documented",
+  "why_no_deep_map": "Official Atom API for search/metadata, PDF/HTML/LaTeX source all publicly accessible with predictable URL patterns",
+  "quick_start": "curl 'https://export.arxiv.org/api/query?search_query=all:%22attention+is+all+you+need%22&max_results=3'",
+  "search_api": {
+    "pattern": "https://export.arxiv.org/api/query?search_query={QUERY}&start={OFFSET}&max_results={LIMIT}",
+    "auth": "none",
+    "format": "Atom XML",
+    "rate_limit": "3 seconds between requests, HTTP 429 on violation",
+    "params": {
+      "search_query": "query string, prefix with field: all, ti (title), au (author), abs (abstract), cat (category). Phrase search requires quotes: all:\"graph neural network\"",
+      "start": "0-based offset for pagination (default 0)",
+      "max_results": "number of results per page (default 10, max 100)",
+      "sortBy": "relevance (default), lastUpdatedDate, submittedDate",
+      "sortOrder": "descending (default), ascending"
+    },
+    "query_examples": {
+      "phrase_in_title": "ti:\"attention is all you need\"",
+      "author": "au:\"Yann LeCun\"",
+      "category": "cat:cs.AI",
+      "combined": "ti:\"diffusion model\" AND cat:cs.CV",
+      "by_id": "id_list=2301.07041"
+    },
+    "response_fields": {
+      "entry/id": "Paper URL: http://arxiv.org/abs/{YYMM}.{NNNNN}v{VERSION}",
+      "entry/title": "Paper title",
+      "entry/author/name": "One <author> block per author",
+      "entry/published": "First submission date (ISO 8601)",
+      "entry/updated": "Latest version date (ISO 8601)",
+      "entry/summary": "Full abstract",
+      "entry/category/@term": "arXiv categories (e.g. cs.AI, math.CO)",
+      "entry/link[@type='text/html']": "Abstract page URL",
+      "entry/link[@type='application/pdf']": "PDF URL",
+      "entry/arxiv:comment": "Optional author comment (page count, conference)"
+    }
+  },
+  "full_text_access": {
+    "html": {
+      "pattern": "https://ar5iv.labs.arxiv.org/html/{ARXIV_ID}",
+      "note": "ar5iv renders LaTeX to semantic HTML. Not available for all papers (mainly 2020+). Clean <p>/<h2>/<table> structure, no JS needed. Math contains zero-width chars (\\u200B) — strip for clean text.",
+      "preferred_for": "agent reading, text search, citation highlighting"
+    },
+    "pdf": {
+      "pattern": "https://arxiv.org/pdf/{ARXIV_ID}",
+      "note": "Always available. Direct download, no auth.",
+      "preferred_for": "archival, human reading"
+    },
+    "latex_source": {
+      "pattern": "https://arxiv.org/src/{ARXIV_ID}",
+      "note": "Downloads .tar.gz of LaTeX source files. Most complete but requires parsing.",
+      "preferred_for": "extracting exact equations or figures"
+    }
+  },
+  "citation_metadata": {
+    "from_api": ["title", "authors", "published date", "abstract", "categories"],
+    "missing_from_api": "journal name, DOI, volume/issue (arXiv is a preprint server). Use CrossRef API (api.crossref.org) or Semantic Scholar API to get formal publication info if the paper was later published.",
+    "citation_format_example": "Author1, Author2. \"Title.\" arXiv preprint arXiv:2301.07041 (2023)."
+  },
+  "veriglow_citation": {
+    "how_to_cite": "Use ar5iv HTML URL as source_url with citation_type='text'. The page is static — no action_steps needed.",
+    "example": {
+      "source_url": "https://ar5iv.labs.arxiv.org/html/1706.03762",
+      "citation_type": "text",
+      "anchor": "scaled dot-product",
+      "quoted_text": "We call our particular attention Scaled Dot-Product Attention"
+    }
+  },
+  "arxiv_id_format": {
+    "new_format": "YYMM.NNNNN (2007-present), e.g. 2301.07041",
+    "old_format": "archive/YYMMNNN (pre-2007), e.g. hep-th/9901001",
+    "extract_from_api": "Strip 'http://arxiv.org/abs/' prefix and version suffix from <id> field"
+  },
+  "last_verified": "2026-03-24"
+}

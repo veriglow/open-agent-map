@@ -5,6 +5,11 @@
     "summary": ""
   },
   {
+    "path": "/arxiv.org",
+    "title": "arXiv (Cornell University Open-Access Papers)",
+    "summary": ""
+  },
+  {
     "path": "/cuhk.edu.cn/zh-hans/article-search",
     "title": "新闻搜索",
     "summary": "香港中文大学（深圳）新闻文章搜索，支持按关键词、分类、日期范围、标签筛选，约 130 页，Drupal 服务端渲染。"
