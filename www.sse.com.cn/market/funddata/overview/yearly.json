@@ -26,5 +26,32 @@
   "caveats": [
     "需要 Referer header",
     "返回 JSONP 格式，需去掉回调函数包装"
-  ]
+  ],
+  "action_steps_template": {
+    "description": "在浏览器中回放到指定年份的操作步骤。将 {{year}} 替换为 YYYY 格式。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '{{year}}'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "overviewYearly.setOverviewYearlyParams()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '2026'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "overviewYearly.setOverviewYearlyParams()",
+        "wait": 3000
+      }
+    ]
+  }
 }

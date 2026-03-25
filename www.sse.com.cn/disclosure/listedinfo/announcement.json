@@ -8,7 +8,6 @@
   "summary": "按证券代码、关键字、日期范围、公告类型搜索上交所上市公司公告。返回公告列表及 PDF 下载链接。",
   "data_freshness": "实时，公告发布后即可查询",
   "data_scope": "上交所全部上市公司（主板+科创板），历史公告可追溯",
-
   "method": "GET",
   "endpoint": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
   "headers": {
@@ -109,18 +108,44 @@
       "pageNo": "pageHelp.pageNo — 当前页"
     },
     "items": {
-      "SECURITY_CODE": { "type": "string", "description": "证券代码" },
-      "SECURITY_NAME": { "type": "string", "description": "证券简称" },
-      "TITLE": { "type": "string", "description": "公告标题" },
-      "SSEDATE": { "type": "string", "description": "发布日期 YYYY-MM-DD" },
-      "BULLETIN_TYPE_DESC": { "type": "string", "description": "公告类型描述" },
-      "BULLETIN_YEAR": { "type": "string", "description": "公告所属年度" },
-      "URL": { "type": "string", "description": "PDF 路径（相对），完整 URL = https://static.sse.com.cn + URL" },
-      "ORG_BULLETIN_ID": { "type": "string", "description": "公告唯一 ID" },
-      "IS_HOLDER_DISCLOSE": { "type": "string", "description": "是否股东披露" }
+      "SECURITY_CODE": {
+        "type": "string",
+        "description": "证券代码"
+      },
+      "SECURITY_NAME": {
+        "type": "string",
+        "description": "证券简称"
+      },
+      "TITLE": {
+        "type": "string",
+        "description": "公告标题"
+      },
+      "SSEDATE": {
+        "type": "string",
+        "description": "发布日期 YYYY-MM-DD"
+      },
+      "BULLETIN_TYPE_DESC": {
+        "type": "string",
+        "description": "公告类型描述"
+      },
+      "BULLETIN_YEAR": {
+        "type": "string",
+        "description": "公告所属年度"
+      },
+      "URL": {
+        "type": "string",
+        "description": "PDF 路径（相对），完整 URL = https://static.sse.com.cn + URL"
+      },
+      "ORG_BULLETIN_ID": {
+        "type": "string",
+        "description": "公告唯一 ID"
+      },
+      "IS_HOLDER_DISCLOSE": {
+        "type": "string",
+        "description": "是否股东披露"
+      }
     }
   },
-
   "example_call": "curl 'https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do?jsonCallBack=cb&isPagination=true&pageHelp.pageSize=5&SECURITY_CODE=600519&START_DATE=2026-01-01&END_DATE=2026-03-14&TITLE=&BULLETIN_TYPE=&stockType=' -H 'Referer: https://www.sse.com.cn/'",
   "example_response": [
     {
@@ -140,7 +165,6 @@
       "URL": "/disclosure/listedinfo/announcement/c/new/2026-03-04/600519_20260304_HMVE.pdf"
     }
   ],
-
   "related_endpoints": [
     {
       "name": "公告类型列表",
@@ -151,16 +175,37 @@
     {
       "name": "公告条数统计",
       "endpoint": "https://query.sse.com.cn/commonQuery.do",
-      "params_fixed": { "sqlId": "COMMON_PL_SSGSXX_ZXGG_NUM_L", "type": "inParams", "MAX_DATE": "1" },
-      "params_variable": ["SECURITY_CODE", "TITLE", "BULLETIN_TYPE", "START_DATE", "END_DATE"],
+      "params_fixed": {
+        "sqlId": "COMMON_PL_SSGSXX_ZXGG_NUM_L",
+        "type": "inParams",
+        "MAX_DATE": "1"
+      },
+      "params_variable": [
+        "SECURITY_CODE",
+        "TITLE",
+        "BULLETIN_TYPE",
+        "START_DATE",
+        "END_DATE"
+      ],
       "description": "查询符合条件的公告总数，用于分页前预知数据量"
     }
   ],
-
   "failure_modes": [
-    { "condition": "海外 IP", "behavior": "HTTP 403 或连接超时", "mitigation": "使用中国境内代理" },
-    { "condition": "证券代码为深交所股票", "behavior": "返回 total=0, data=[]", "detection": "pageHelp.total === 0" },
-    { "condition": "缺少 Referer 头", "behavior": "可能返回 403", "mitigation": "添加 Referer: https://www.sse.com.cn/" }
+    {
+      "condition": "海外 IP",
+      "behavior": "HTTP 403 或连接超时",
+      "mitigation": "使用中国境内代理"
+    },
+    {
+      "condition": "证券代码为深交所股票",
+      "behavior": "返回 total=0, data=[]",
+      "detection": "pageHelp.total === 0"
+    },
+    {
+      "condition": "缺少 Referer 头",
+      "behavior": "可能返回 403",
+      "mitigation": "添加 Referer: https://www.sse.com.cn/"
+    }
   ],
   "caveats": [
     "JSONP 响应格式：cb({...})，需剥离回调函数包装后解析 JSON",
@@ -168,8 +213,26 @@
     "pageHelp.data 是二维数组（每条公告被包在一个子数组里），取 data[i][0] 得到公告对象",
     "只覆盖上交所上市公司，深交所股票（如 002xxx、300xxx）查不到"
   ],
-
-  "neighbors": ["sse-company-info"],
+  "neighbors": [
+    "sse-company-info"
+  ],
   "confidence": 0.95,
-  "verified_date": "2026-03-14"
+  "verified_date": "2026-03-14",
+  "action_steps_template": {
+    "description": "调用 LatestAnnouncement.setAnnounceParam() 刷新页面数据。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "LatestAnnouncement.setAnnounceParam()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "LatestAnnouncement.setAnnounceParam()",
+        "wait": 3000
+      }
+    ]
+  }
 }

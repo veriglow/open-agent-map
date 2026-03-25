@@ -7,7 +7,6 @@
   "title_en": "Bond Trading Overview — Yearly",
   "summary": "上交所债券市场年度成交概况，含17个品种的成交笔数、成交金额、加权平均价格。trade_year 参数格式 YYYY。",
   "data_freshness": "每年末更新",
-
   "method": "GET",
   "endpoint": "https://query.sse.com.cn/commonQuery.do",
   "headers": {
@@ -27,49 +26,131 @@
       "description": "查询年份",
       "example": "2024"
     },
-    "isPagination": { "type": "string", "required": false, "value": "true" },
-    "pageHelp.pageSize": { "type": "integer", "required": false, "value": 25 }
+    "isPagination": {
+      "type": "string",
+      "required": false,
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "type": "integer",
+      "required": false,
+      "value": 25
+    }
   },
   "returns": {
     "location": "response.pageHelp.data",
     "description": "JSON 数组，17行（含合计行），每行一个债券品种年度汇总",
     "items": {
-      "TYPE": { "type": "string", "description": "债券品种名称" },
+      "TYPE": {
+        "type": "string",
+        "description": "债券品种名称"
+      },
       "TYPE_CODE": {
         "type": "string",
         "description": "品种代码",
         "value_map": {
-          "10": "记账式国债", "20": "地方政府债", "30": "金融债",
-          "40": "公开发行公司债券（含企业债券）", "50": "非公开发行公司债券（含企业债券）",
-          "80": "可转债", "90": "可交换债", "100": "分离债",
-          "110": "企业资产支持证券", "120": "信贷资产支持证券",
-          "130": "三方回购", "140": "通用质押式回购", "150": "报价回购",
-          "160": "协议回购", "165": "债券借贷", "170": "其他债券", "9999": "合计"
+          "10": "记账式国债",
+          "20": "地方政府债",
+          "30": "金融债",
+          "40": "公开发行公司债券（含企业债券）",
+          "50": "非公开发行公司债券（含企业债券）",
+          "80": "可转债",
+          "90": "可交换债",
+          "100": "分离债",
+          "110": "企业资产支持证券",
+          "120": "信贷资产支持证券",
+          "130": "三方回购",
+          "140": "通用质押式回购",
+          "150": "报价回购",
+          "160": "协议回购",
+          "165": "债券借贷",
+          "170": "其他债券",
+          "9999": "合计"
         }
       },
-      "NUM": { "type": "string", "description": "行序号 1-17" },
-      "VOLUME": { "type": "integer", "description": "成交笔数（笔）" },
-      "AMOUNT": { "type": "number", "description": "成交金额（万元），÷10000=亿元" },
-      "AVG_PRICE": { "type": "number", "description": "加权平均成交价（元）" },
-      "TRADE_YEAR": { "type": "string", "description": "年份 YYYY" }
+      "NUM": {
+        "type": "string",
+        "description": "行序号 1-17"
+      },
+      "VOLUME": {
+        "type": "integer",
+        "description": "成交笔数（笔）"
+      },
+      "AMOUNT": {
+        "type": "number",
+        "description": "成交金额（万元），÷10000=亿元"
+      },
+      "AVG_PRICE": {
+        "type": "number",
+        "description": "加权平均成交价（元）"
+      },
+      "TRADE_YEAR": {
+        "type": "string",
+        "description": "年份 YYYY"
+      }
     }
   },
-
   "example_call": "curl \"https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_SSE_SJ_ZQSJ_CJGK_YEAR&trade_year=2024&isPagination=true&pageHelp.pageSize=25&pageHelp.pageNo=1&pageHelp.beginPage=1&pageHelp.cacheSize=1&pageHelp.endPage=1&pagecache=false\" -H \"Referer: https://www.sse.com.cn/market/bonddata/overview/yearly/\"",
   "example_response": [
-    {"TYPE_CODE": "10", "NUM": "1", "VOLUME": "7407352", "AMOUNT": "773266368.67", "AVG_PRICE": "107.442", "TRADE_YEAR": "2024"},
-    {"TYPE_CODE": "9999", "NUM": "17", "VOLUME": "1279138067", "AMOUNT": "48490041420.72", "AVG_PRICE": "98.345", "TRADE_YEAR": "2024"}
+    {
+      "TYPE_CODE": "10",
+      "NUM": "1",
+      "VOLUME": "7407352",
+      "AMOUNT": "773266368.67",
+      "AVG_PRICE": "107.442",
+      "TRADE_YEAR": "2024"
+    },
+    {
+      "TYPE_CODE": "9999",
+      "NUM": "17",
+      "VOLUME": "1279138067",
+      "AMOUNT": "48490041420.72",
+      "AVG_PRICE": "98.345",
+      "TRADE_YEAR": "2024"
+    }
   ],
-
   "failure_modes": [
-    { "condition": "未来年份", "behavior": "返回空数组或全零数据" }
+    {
+      "condition": "未来年份",
+      "behavior": "返回空数组或全零数据"
+    }
   ],
   "caveats": [
     "成交金额单位万元"
   ],
-
-  "neighbors": ["sse-bond-daily", "sse-bond-weekly", "sse-bond-monthly"],
+  "neighbors": [
+    "sse-bond-daily",
+    "sse-bond-weekly",
+    "sse-bond-monthly"
+  ],
   "confidence": 0.97,
   "verified_date": "2024",
-  "last_verified": "2026-03-10"
+  "last_verified": "2026-03-10",
+  "action_steps_template": {
+    "description": "在浏览器中回放到指定年份的操作步骤。将 {{year}} 替换为 YYYY 格式。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '{{year}}'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "overviewYearly.setoverviewYearlyParams()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '2026'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "overviewYearly.setoverviewYearlyParams()",
+        "wait": 3000
+      }
+    ]
+  }
 }

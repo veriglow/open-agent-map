@@ -41,5 +41,22 @@
   "caveats": [
     "需要 Referer header",
     "返回 JSONP 格式，需去掉回调函数包装"
-  ]
+  ],
+  "action_steps_template": {
+    "description": "调用 UpgradingHeavyReturns.getAllAnnounceList(1) 加载第一页公告列表。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "UpgradingHeavyReturns.getAllAnnounceList(1)",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "UpgradingHeavyReturns.getAllAnnounceList(1)",
+        "wait": 3000
+      }
+    ]
+  }
 }

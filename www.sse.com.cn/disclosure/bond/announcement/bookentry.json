@@ -38,5 +38,22 @@
   "caveats": [
     "需要 Referer header",
     "公告搜索接口"
-  ]
+  ],
+  "action_steps_template": {
+    "description": "调用 LatestAnnouncement.setAnnounceParam() 刷新页面数据。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "LatestAnnouncement.setAnnounceParam()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "LatestAnnouncement.setAnnounceParam()",
+        "wait": 3000
+      }
+    ]
+  }
 }

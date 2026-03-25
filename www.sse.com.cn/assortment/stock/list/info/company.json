@@ -145,5 +145,22 @@
     "需要 Referer header",
     "返回 JSONP 格式，需去掉回调函数包装",
     "所有 API 共用 COMPANY_CODE 参数"
-  ]
+  ],
+  "action_steps_template": {
+    "description": "调用 company.setCompanyParams() 刷新页面数据。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "company.setCompanyParams()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "company.setCompanyParams()",
+        "wait": 3000
+      }
+    ]
+  }
 }

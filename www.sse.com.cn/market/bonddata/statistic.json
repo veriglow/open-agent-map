@@ -6,7 +6,6 @@
   "title": "债券统计数据",
   "title_en": "Bond Statistics",
   "summary": "上交所债券市场托管统计数据，含9个债券品种的托管只数、托管市值（亿元）、托管面值（亿元）。通过 commonQuery.do 接口加载，sqlId 待确认。",
-
   "method": "GET",
   "endpoint": "https://query.sse.com.cn/commonQuery.do",
   "headers": {
@@ -21,8 +20,36 @@
     }
   },
   "returns": null,
-
-  "neighbors": ["sse-bond-daily"],
-  "confidence": 0.70,
-  "last_verified": "2026-03-10"
+  "neighbors": [
+    "sse-bond-daily"
+  ],
+  "confidence": 0.7,
+  "last_verified": "2026-03-10",
+  "action_steps_template": {
+    "description": "在浏览器中回放到指定日期的操作步骤。将 {{date}} 替换为 YYYY-MM-DD 格式的目标日期。",
+    "steps": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '{{date}}'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "statisticActuals.setstatisticActualsParams()",
+        "wait": 3000
+      }
+    ],
+    "example": [
+      {
+        "type": "exec_js",
+        "code": "document.querySelector('.js_date input').value = '2026-03-23'",
+        "wait": 0
+      },
+      {
+        "type": "exec_js",
+        "code": "statisticActuals.setstatisticActualsParams()",
+        "wait": 3000
+      }
+    ]
+  }
 }

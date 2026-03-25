@@ -44,5 +44,10 @@
   "caveats": [
     "需要 Referer header",
     "返回 JSONP 格式，需去掉回调函数包装"
-  ]
+  ],
+  "action_steps_template": {
+    "description": "静态列表页，页面加载后数据直接显示，无需额外操作。",
+    "steps": [],
+    "example": []
+  }
 }

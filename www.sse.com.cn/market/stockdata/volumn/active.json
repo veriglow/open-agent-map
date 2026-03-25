@@ -6,7 +6,6 @@
   "title": "交易活跃股（主板）",
   "title_en": "Most Active Stocks — Main Board",
   "summary": "上交所主板交易活跃股排名，按成交量/成交额/涨跌幅等排序，返回最多20只股票。",
-
   "method": "GET",
   "endpoint": "https://query.sse.com.cn/commonQuery.do",
   "headers": {
@@ -38,42 +37,117 @@
       "value": 1,
       "description": "按成交量降序（默认排序），与其他排序参数互斥"
     },
-    "TRADE_AMT_DESC": { "type": "integer", "required": false, "description": "按成交额降序" },
-    "CHANGE_RATIO_DESC": { "type": "integer", "required": false, "description": "按涨幅降序（涨幅榜）" },
-    "CHANGE_RATIO_ASC": { "type": "integer", "required": false, "description": "按涨幅升序（跌幅榜）" },
-    "TO_RATE_DESC": { "type": "integer", "required": false, "description": "按换手率降序" },
-    "isPagination": { "type": "string", "required": false, "value": "true" },
-    "pageHelp.pageSize": { "type": "integer", "required": false, "value": 20 }
+    "TRADE_AMT_DESC": {
+      "type": "integer",
+      "required": false,
+      "description": "按成交额降序"
+    },
+    "CHANGE_RATIO_DESC": {
+      "type": "integer",
+      "required": false,
+      "description": "按涨幅降序（涨幅榜）"
+    },
+    "CHANGE_RATIO_ASC": {
+      "type": "integer",
+      "required": false,
+      "description": "按涨幅升序（跌幅榜）"
+    },
+    "TO_RATE_DESC": {
+      "type": "integer",
+      "required": false,
+      "description": "按换手率降序"
+    },
+    "isPagination": {
+      "type": "string",
+      "required": false,
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "type": "integer",
+      "required": false,
+      "value": 20
+    }
   },
   "returns": {
     "location": "response.pageHelp.data",
     "description": "JSON 数组，最多20行，每行一只活跃股",
     "items": {
-      "NUM": { "type": "string", "description": "排名序号" },
-      "SEC_CODE": { "type": "string", "description": "股票代码（6位）" },
-      "SEC_NAME": { "type": "string", "description": "股票简称" },
-      "TRADE_VOL": { "type": "number", "description": "成交量（万股）" },
-      "TRADE_AMT": { "type": "number", "description": "成交额（万元）" },
-      "CHANGE_RATIO": { "type": "number", "description": "涨跌幅（%）" },
-      "CLOSE_PRICE": { "type": "number", "description": "收盘价（元）" },
-      "OPEN_PRICE": { "type": "number", "description": "开盘价（元）" },
-      "AVG_PRICE": { "type": "number", "description": "均价（元）" },
-      "TO_RATE": { "type": "number", "description": "换手率（%）" }
+      "NUM": {
+        "type": "string",
+        "description": "排名序号"
+      },
+      "SEC_CODE": {
+        "type": "string",
+        "description": "股票代码（6位）"
+      },
+      "SEC_NAME": {
+        "type": "string",
+        "description": "股票简称"
+      },
+      "TRADE_VOL": {
+        "type": "number",
+        "description": "成交量（万股）"
+      },
+      "TRADE_AMT": {
+        "type": "number",
+        "description": "成交额（万元）"
+      },
+      "CHANGE_RATIO": {
+        "type": "number",
+        "description": "涨跌幅（%）"
+      },
+      "CLOSE_PRICE": {
+        "type": "number",
+        "description": "收盘价（元）"
+      },
+      "OPEN_PRICE": {
+        "type": "number",
+        "description": "开盘价（元）"
+      },
+      "AVG_PRICE": {
+        "type": "number",
+        "description": "均价（元）"
+      },
+      "TO_RATE": {
+        "type": "number",
+        "description": "换手率（%）"
+      }
     }
   },
-
   "example_call": "curl \"https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_SSE_SJ_GPSJ_HYGPM_L&LIST_BOARD=1&TRADE_VOL_DESC=1&TRADE_DATE=2025-03-03&isPagination=true&pageHelp.pageSize=5&pageHelp.cacheSize=1&pageHelp.pageNo=1&pageHelp.beginPage=1&pageHelp.endPage=1\" -H \"Referer: https://www.sse.com.cn/market/stockdata/overview/activity/\"",
   "example_response": [
-    {"NUM": "1", "SEC_CODE": "600050", "SEC_NAME": "中国联通", "TRADE_VOL": "57487.37", "TRADE_AMT": "361605.63", "CHANGE_RATIO": "-0.48", "CLOSE_PRICE": "6.22"},
-    {"NUM": "2", "SEC_CODE": "600010", "SEC_NAME": "包钢股份", "TRADE_VOL": "48205.13", "TRADE_AMT": "89359.56", "CHANGE_RATIO": "1.66", "CLOSE_PRICE": "1.84"}
+    {
+      "NUM": "1",
+      "SEC_CODE": "600050",
+      "SEC_NAME": "中国联通",
+      "TRADE_VOL": "57487.37",
+      "TRADE_AMT": "361605.63",
+      "CHANGE_RATIO": "-0.48",
+      "CLOSE_PRICE": "6.22"
+    },
+    {
+      "NUM": "2",
+      "SEC_CODE": "600010",
+      "SEC_NAME": "包钢股份",
+      "TRADE_VOL": "48205.13",
+      "TRADE_AMT": "89359.56",
+      "CHANGE_RATIO": "1.66",
+      "CLOSE_PRICE": "1.84"
+    }
   ],
-
   "failure_modes": [
-    { "condition": "非交易日", "behavior": "返回空数组" }
+    {
+      "condition": "非交易日",
+      "behavior": "返回空数组"
+    }
   ],
-
   "neighbors": [],
   "confidence": 0.97,
   "verified_date": "2025-03-03",
-  "last_verified": "2026-03-11"
+  "last_verified": "2026-03-11",
+  "action_steps_template": {
+    "description": "静态列表页，页面加载后数据直接显示，无需额外操作。",
+    "steps": [],
+    "example": []
+  }
 }
