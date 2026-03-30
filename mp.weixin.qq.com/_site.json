@@ -1,0 +1,19 @@
+{
+  "name": "WeChat Official Accounts (微信公众号)",
+  "domain": "mp.weixin.qq.com",
+  "favicon_domain": "mp.weixin.qq.com",
+  "badge": "Deep Map",
+  "subtitle": "后台管理 API",
+  "description": "微信公众号文章列表与内容接口，需公众号后台登录认证",
+  "order": 30,
+  "auth": {
+    "method": "cookie_session",
+    "description": "需要拥有一个微信公众号（免费个人订阅号即可），登录 mp.weixin.qq.com 后台获取 cookie 和 token",
+    "steps": [
+      "打开 https://mp.weixin.qq.com/ 并扫码登录",
+      "登录后从浏览器地址栏提取 token 参数（URL 中 token=XXXXX）",
+      "从浏览器 DevTools → Application → Cookies 提取完整 cookie",
+      "cookie 和 token 有效期通常为数小时"
+    ]
+  }
+}

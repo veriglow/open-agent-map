@@ -45,6 +45,21 @@
     "summary": ""
   },
   {
+    "path": "/mp.weixin.qq.com/cgi-bin/appmsg",
+    "title": "公众号文章列表",
+    "summary": "列出指定公众号的所有历史文章。这是获取某个公众号全部文章的核心接口，利用公众号后台'搜索其他公众号文章'功能。"
+  },
+  {
+    "path": "/mp.weixin.qq.com/cgi-bin/searchbiz",
+    "title": "搜索公众号（获取 fakeid）",
+    "summary": "通过公众号名称搜索，获取目标公众号的 fakeid，用于后续文章列表接口。"
+  },
+  {
+    "path": "/mp.weixin.qq.com/mp/profile_ext",
+    "title": "公众号历史消息（客户端接口）",
+    "summary": "从微信客户端内查看公众号历史消息的接口。需要从微信客户端抓包获取认证参数，key 每 0.5-2 小时过期。"
+  },
+  {
     "path": "/push2ex.eastmoney.com/dt-pool",
     "title": "跌停股池",
     "summary": "当日当前跌停的所有A股股票（不含ST和科创板）。含封单资金、板上成交额、连续跌停数等字段。历史数据仅保留最近 30 个交易日。"

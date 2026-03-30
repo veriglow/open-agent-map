@@ -1,0 +1,105 @@
+{
+  "domain": "mp.weixin.qq.com",
+  "url": "https://mp.weixin.qq.com/cgi-bin/appmsg",
+  "title": "公众号文章列表",
+  "summary": "列出指定公众号的所有历史文章。这是获取某个公众号全部文章的核心接口，利用公众号后台'搜索其他公众号文章'功能。",
+  "method": "GET",
+  "endpoint": "https://mp.weixin.qq.com/cgi-bin/appmsg",
+  "headers": {
+    "Cookie": "{{session_cookie}}",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://mp.weixin.qq.com/"
+  },
+  "params": {
+    "action": {
+      "value": "list_ex",
+      "description": "固定值，列出文章"
+    },
+    "begin": {
+      "value": "0",
+      "description": "分页偏移量（0, 5, 10, ...）"
+    },
+    "count": {
+      "value": "5",
+      "description": "每页文章数（最大 5）"
+    },
+    "fakeid": {
+      "required": true,
+      "description": "目标公众号的 fakeid，通过 searchbiz 接口获取"
+    },
+    "type": {
+      "value": "9",
+      "description": "固定值"
+    },
+    "query": {
+      "required": false,
+      "description": "在该公众号文章中搜索关键词（可选）"
+    },
+    "token": {
+      "required": true,
+      "description": "登录后从 URL 获取的 token"
+    },
+    "lang": {
+      "value": "zh_CN"
+    },
+    "f": {
+      "value": "json"
+    },
+    "ajax": {
+      "value": "1"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "base_resp": {
+        "ret": "0 表示成功，200013 表示频率限制"
+      },
+      "app_msg_cnt": "该公众号文章总数",
+      "app_msg_list": [
+        {
+          "aid": "文章 ID",
+          "appmsgid": "消息 ID",
+          "title": "文章标题",
+          "digest": "摘要",
+          "link": "文章永久链接（https://mp.weixin.qq.com/s?__biz=...）",
+          "cover": "封面图 URL",
+          "create_time": "创建时间（Unix 时间戳）",
+          "update_time": "更新时间（Unix 时间戳）"
+        }
+      ]
+    }
+  },
+  "pagination": {
+    "method": "offset",
+    "param": "begin",
+    "step": 5,
+    "total_field": "app_msg_cnt",
+    "note": "每次请求最多返回 5 篇，需循环递增 begin 直到 >= app_msg_cnt"
+  },
+  "rate_limiting": {
+    "error_code": 200013,
+    "message": "freq control",
+    "recommended_delay_seconds": "5-15（随机）",
+    "cooldown_on_throttle": "触发 200013 后暂停 60 分钟"
+  },
+  "confidence": 0.9,
+  "last_verified": "2026-03-30",
+  "caveats": [
+    "需要已登录 mp.weixin.qq.com 的有效 cookie 和 token（需拥有公众号）",
+    "每次最多返回 5 篇文章",
+    "请求间隔建议 5-15 秒随机延迟，避免触发频率限制",
+    "返回的 link 是永久链接，可直接访问（但从非微信客户端访问可能触发验证）",
+    "session 有效期通常为数小时，过期需重新登录"
+  ],
+  "example_usage": {
+    "description": "获取'表舅是养基大户'的所有文章",
+    "steps": [
+      "1. 登录 mp.weixin.qq.com 获取 cookie 和 token",
+      "2. 调用 searchbiz?query=表舅是养基大户 获取 fakeid",
+      "3. 调用 appmsg?action=list_ex&fakeid={fakeid}&begin=0&count=5 获取第一批文章",
+      "4. 循环 begin+=5 直到获取所有文章（app_msg_cnt 篇）",
+      "5. 每次请求间隔 5-15 秒随机延迟"
+    ]
+  }
+}

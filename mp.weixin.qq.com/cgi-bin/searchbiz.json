@@ -1,0 +1,76 @@
+{
+  "domain": "mp.weixin.qq.com",
+  "url": "https://mp.weixin.qq.com/cgi-bin/searchbiz",
+  "title": "搜索公众号（获取 fakeid）",
+  "summary": "通过公众号名称搜索，获取目标公众号的 fakeid，用于后续文章列表接口。",
+  "method": "GET",
+  "endpoint": "https://mp.weixin.qq.com/cgi-bin/searchbiz",
+  "headers": {
+    "Cookie": "{{session_cookie}}",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://mp.weixin.qq.com/"
+  },
+  "params": {
+    "action": {
+      "value": "search_biz",
+      "description": "固定值"
+    },
+    "begin": {
+      "value": "0",
+      "description": "分页偏移量"
+    },
+    "count": {
+      "value": "5",
+      "description": "每页结果数"
+    },
+    "query": {
+      "required": true,
+      "description": "公众号名称，如 '表舅是养基大户'"
+    },
+    "token": {
+      "required": true,
+      "description": "登录后从 URL 获取的 token"
+    },
+    "lang": {
+      "value": "zh_CN"
+    },
+    "f": {
+      "value": "json"
+    },
+    "ajax": {
+      "value": "1"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "base_resp": {
+        "ret": "0 表示成功"
+      },
+      "list": [
+        {
+          "fakeid": "目标公众号的唯一标识，用于 appmsg 接口",
+          "nickname": "公众号名称",
+          "alias": "微信号",
+          "round_head_img": "头像 URL",
+          "service_type": "0=订阅号, 1=服务号"
+        }
+      ],
+      "total": "匹配结果总数"
+    }
+  },
+  "confidence": 0.9,
+  "last_verified": "2026-03-30",
+  "caveats": [
+    "需要已登录 mp.weixin.qq.com 的有效 cookie 和 token",
+    "token 从登录后的 URL 中提取",
+    "请求频率过高会触发限制（建议间隔 5-15 秒）"
+  ],
+  "known_accounts": {
+    "表舅是养基大户": {
+      "__biz": "Mzg2MDc2NzQ3MQ==",
+      "gh_id": "gh_88cb72c00847",
+      "note": "fakeid 需通过本接口获取"
+    }
+  }
+}

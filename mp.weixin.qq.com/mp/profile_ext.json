@@ -1,0 +1,71 @@
+{
+  "domain": "mp.weixin.qq.com",
+  "url": "https://mp.weixin.qq.com/mp/profile_ext",
+  "title": "公众号历史消息（客户端接口）",
+  "summary": "从微信客户端内查看公众号历史消息的接口。需要从微信客户端抓包获取认证参数，key 每 0.5-2 小时过期。",
+  "method": "GET",
+  "endpoint": "https://mp.weixin.qq.com/mp/profile_ext",
+  "headers": {
+    "User-Agent": "微信客户端 UA"
+  },
+  "params": {
+    "action": {
+      "value": "getmsg",
+      "description": "固定值"
+    },
+    "__biz": {
+      "required": true,
+      "description": "公众号的 Base64 编码标识，如 Mzg2MDc2NzQ3MQ=="
+    },
+    "uin": {
+      "required": true,
+      "description": "当前用户加密标识（需抓包获取）"
+    },
+    "key": {
+      "required": true,
+      "description": "会话密钥（需抓包获取，每 0.5-2 小时过期）"
+    },
+    "pass_ticket": {
+      "required": true,
+      "description": "会话票据（需抓包获取）"
+    },
+    "offset": {
+      "value": "0",
+      "description": "分页偏移量"
+    },
+    "count": {
+      "value": "10",
+      "description": "每页文章数"
+    },
+    "f": {
+      "value": "json"
+    },
+    "is_ok": {
+      "value": "1"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "ret": "0 表示成功",
+      "errmsg": "ok",
+      "msg_count": "本次返回数量",
+      "can_msg_continue": "1=还有更多, 0=已到底",
+      "next_offset": "下一页偏移量",
+      "general_msg_list": "JSON 字符串，需二次解析，包含 list 数组，每项有 comm_msg_info（时间戳等）和 app_msg_ext_info（标题、链接、摘要）"
+    }
+  },
+  "confidence": 0.75,
+  "last_verified": "2026-03-30",
+  "caveats": [
+    "需要从微信客户端通过 MITM 代理（Fiddler/Charles/mitmproxy）抓包获取 uin/key/pass_ticket",
+    "key 每 0.5-2 小时过期，无法自动续期",
+    "不推荐作为主要方案，优先使用 cgi-bin/appmsg 后台接口",
+    "每个 key 可能仅对抓包时访问的公众号有效"
+  ],
+  "known_accounts": {
+    "表舅是养基大户": {
+      "__biz": "Mzg2MDc2NzQ3MQ=="
+    }
+  }
+}
