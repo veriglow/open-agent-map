@@ -565,6 +565,21 @@
     "summary": "获取当月交易日历，标识哪些日期是交易日（jybz=0）、哪些是非交易日（jybz=1）。"
   },
   {
+    "path": "/www.zhihu.com/api/v4/members/answers",
+    "title": "用户回答列表（含正文）",
+    "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。"
+  },
+  {
+    "path": "/www.zhihu.com/api/v4/members/articles",
+    "title": "用户文章列表（含正文）",
+    "summary": "获取知乎用户的专栏文章列表，include 参数中加入 content 可直接返回完整 HTML 正文。"
+  },
+  {
+    "path": "/www.zhihu.com/api/v4/members/info",
+    "title": "用户个人信息",
+    "summary": "获取知乎用户的基本信息，包括粉丝数、回答数、文章数等。"
+  },
+  {
     "path": "/yunhq.sse.com.cn/dayk",
     "title": "个股日K线历史数据",
     "summary": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。"

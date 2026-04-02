@@ -1,0 +1,19 @@
+{
+  "name": "Zhihu (知乎)",
+  "domain": "www.zhihu.com",
+  "favicon_domain": "www.zhihu.com",
+  "badge": "Deep Map",
+  "subtitle": "API v4 内容接口",
+  "description": "知乎用户文章、回答、个人信息等 RESTful API，需登录 cookie 认证",
+  "order": 35,
+  "auth": {
+    "method": "cookie_session",
+    "description": "需要知乎账号登录，获取 cookie 中的 z_c0（登录凭证）和 d_c0（设备标识）",
+    "steps": [
+      "打开 https://www.zhihu.com/ 并登录",
+      "从浏览器 DevTools → Application → Cookies 提取完整 cookie",
+      "关键 cookie：z_c0（登录凭证，有效期数周）、d_c0（设备标识）、__zse_ck",
+      "带 cookie 直接调用 API 即可，无需计算 x-zse-96 签名"
+    ]
+  }
+}

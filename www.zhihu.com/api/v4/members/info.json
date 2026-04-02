@@ -1,0 +1,45 @@
+{
+  "domain": "www.zhihu.com",
+  "url": "https://www.zhihu.com/api/v4/members/{url_token}",
+  "title": "用户个人信息",
+  "summary": "获取知乎用户的基本信息，包括粉丝数、回答数、文章数等。",
+  "method": "GET",
+  "endpoint": "https://www.zhihu.com/api/v4/members/{url_token}",
+  "headers": {
+    "Cookie": "{{session_cookie}}",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.zhihu.com/"
+  },
+  "params": {
+    "include": {
+      "value": "follower_count,answer_count,articles_count,voteup_count,description,headline",
+      "description": "指定返回的字段"
+    }
+  },
+  "path_params": {
+    "url_token": {
+      "required": true,
+      "description": "用户的 URL 标识"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "id": "用户 ID",
+      "url_token": "URL 标识",
+      "name": "用户昵称",
+      "headline": "一句话介绍",
+      "description": "个人简介",
+      "follower_count": "粉丝数",
+      "answer_count": "回答数",
+      "articles_count": "文章数",
+      "voteup_count": "获赞总数",
+      "avatar_url": "头像 URL"
+    }
+  },
+  "confidence": 0.85,
+  "last_verified": "2026-04-02",
+  "caveats": [
+    "认证要求与文章接口相同"
+  ]
+}

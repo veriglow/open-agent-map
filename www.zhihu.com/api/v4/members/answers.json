@@ -1,0 +1,65 @@
+{
+  "domain": "www.zhihu.com",
+  "url": "https://www.zhihu.com/api/v4/members/{url_token}/answers",
+  "title": "用户回答列表（含正文）",
+  "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。",
+  "method": "GET",
+  "endpoint": "https://www.zhihu.com/api/v4/members/{url_token}/answers",
+  "headers": {
+    "Cookie": "{{session_cookie}}",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.zhihu.com/"
+  },
+  "params": {
+    "offset": {
+      "value": "0",
+      "description": "分页偏移量，从 0 开始"
+    },
+    "limit": {
+      "value": "10",
+      "description": "每页条数，最大 20"
+    },
+    "sort_by": {
+      "value": "created",
+      "description": "排序方式：created（按时间）或 voteups（按赞数）"
+    },
+    "include": {
+      "value": "data[*].content,voteup_count,comment_count,created,updated,question",
+      "description": "指定返回字段。必须包含 content 才能获取正文 HTML"
+    }
+  },
+  "path_params": {
+    "url_token": {
+      "required": true,
+      "description": "用户的 URL 标识"
+    }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "paging": {
+        "is_end": "布尔值",
+        "totals": "回答总数"
+      },
+      "data": [
+        {
+          "id": "回答 ID",
+          "question": {
+            "id": "问题 ID",
+            "title": "问题标题"
+          },
+          "content": "完整回答 HTML",
+          "created_time": "Unix 时间戳",
+          "voteup_count": "点赞数",
+          "comment_count": "评论数"
+        }
+      ]
+    }
+  },
+  "confidence": 0.85,
+  "last_verified": "2026-04-02",
+  "caveats": [
+    "认证要求与文章接口相同",
+    "回答内容中同样包含 zhimg.com 图片，需 Referer 头下载"
+  ]
+}
