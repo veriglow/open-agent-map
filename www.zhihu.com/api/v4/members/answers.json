@@ -2,7 +2,7 @@
   "domain": "www.zhihu.com",
   "url": "https://www.zhihu.com/api/v4/members/{url_token}/answers",
   "title": "用户回答列表（含正文）",
-  "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。",
+  "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。注意回答的时间字段是 created_time（文章接口是 created）。",
   "method": "GET",
   "endpoint": "https://www.zhihu.com/api/v4/members/{url_token}/answers",
   "headers": {
@@ -16,7 +16,7 @@
       "description": "分页偏移量，从 0 开始"
     },
     "limit": {
-      "value": "10",
+      "value": "20",
       "description": "每页条数，最大 20"
     },
     "sort_by": {
@@ -24,42 +24,49 @@
       "description": "排序方式：created（按时间）或 voteups（按赞数）"
     },
     "include": {
-      "value": "data[*].content,voteup_count,comment_count,created,updated,question",
-      "description": "指定返回字段。必须包含 content 才能获取正文 HTML"
+      "value": "data[*].content,voteup_count,comment_count,created_time,question.title",
+      "description": "指定返回字段。content=正文HTML，question.title=所回答的问题标题，created_time=回答创建时间"
     }
   },
   "path_params": {
     "url_token": {
       "required": true,
-      "description": "用户的 URL 标识"
+      "description": "用户的 URL 标识，如 mr-dang-77"
     }
   },
   "response": {
     "format": "JSON",
     "structure": {
       "paging": {
-        "is_end": "布尔值",
-        "totals": "回答总数"
+        "is_end": "布尔值，是否最后一页",
+        "totals": "回答总数",
+        "next": "下一页完整 URL",
+        "previous": "上一页完整 URL"
       },
       "data": [
         {
           "id": "回答 ID",
           "question": {
-            "id": "问题 ID",
-            "title": "问题标题"
+            "id": "问题 ID（用于拼接 URL）",
+            "title": "问题标题（需在 include 中指定 question.title）"
           },
-          "content": "完整回答 HTML",
-          "created_time": "Unix 时间戳",
+          "content": "完整回答 HTML（包含 <p>、<figure>、<img> 等标签）",
+          "created_time": "Unix 时间戳（注意：与文章接口的 created 字段名不同）",
           "voteup_count": "点赞数",
           "comment_count": "评论数"
         }
       ]
-    }
+    },
+    "url_template": "https://www.zhihu.com/question/{question.id}/answer/{id}"
   },
-  "confidence": 0.85,
-  "last_verified": "2026-04-02",
+  "confidence": 0.95,
+  "last_verified": "2026-04-03",
   "caveats": [
-    "认证要求与文章接口相同",
-    "回答内容中同样包含 zhimg.com 图片，需 Referer 头下载"
+    "认证要求与文章接口相同（需 z_c0 cookie）",
+    "回答的时间字段是 created_time，文章的是 created——两个接口不一致",
+    "回答 URL 需要 question.id 和 answer.id 两个字段拼接",
+    "图片在 pic{1-4}.zhimg.com CDN，下载需 Referer: https://www.zhihu.com/",
+    "图片优先取 data-original > data-actualsrc > src 属性",
+    "分页：offset 递增 limit 值，直到 paging.is_end=true"
   ]
 }

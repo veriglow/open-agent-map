@@ -567,7 +567,7 @@
   {
     "path": "/www.zhihu.com/api/v4/members/answers",
     "title": "用户回答列表（含正文）",
-    "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。"
+    "summary": "获取知乎用户的回答列表，include 参数中加入 content 可直接返回完整 HTML 正文。注意回答的时间字段是 created_time（文章接口是 created）。"
   },
   {
     "path": "/www.zhihu.com/api/v4/members/articles",
