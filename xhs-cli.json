@@ -1,0 +1,46 @@
+{
+  "id": "xhs-cli",
+  "name": "xhs (小红书 Python 客户端)",
+  "type": "signpost",
+  "verdict": "self-documented",
+  "why_no_deep_map": "开源 Python 库，GitHub 文档完整；底层 API 端点已在 edith.xiaohongshu.com 地图中单独覆盖",
+  "related_map": "edith.xiaohongshu.com（API 签名细节）、www.xiaohongshu.com（xsec_token 规则）",
+  "quick_start": "pip install xhs\n\n# 需要从浏览器 DevTools 复制 cookie\nfrom xhs import XhsClient\nfrom xhs.core import sign\n\ndef my_sign(uri, data=None, a1='', web_session=''):\n    return sign(uri, data, a1=a1)\n\nclient = XhsClient(cookie=YOUR_COOKIE, sign=my_sign)\nresult = client.get_note_by_keyword('关键词', page=1)\n# {'has_more': True, 'items': [{...}, ...]}",
+  "api": {
+    "type": "Python SDK（封装 edith.xiaohongshu.com REST API）",
+    "github": "https://github.com/ReaJason/xhs",
+    "docs": "https://reajason.github.io/xhs/basic",
+    "install": "pip install xhs",
+    "version": "0.2.13（2024-04-29，低维护状态）",
+    "auth": "需要浏览器 Cookie（a1 + web_session + webId），时效数小时",
+    "http_api": "xhs-api Docker 封装：docker run -d -p 5005:5005 reajason/xhs-api:latest"
+  },
+  "key_interfaces": {
+    "get_note_by_keyword()": "按关键词搜索笔记（对应 POST /api/sns/web/v1/search/notes）",
+    "get_note_by_id()": "获取单篇笔记详情",
+    "get_user_notes()": "获取指定用户的笔记列表",
+    "get_note_comments()": "获取笔记评论",
+    "get_homefeed_posts()": "获取首页推荐流"
+  },
+  "limitations": [
+    "Cookie 时效短（数小时），需手动刷新",
+    "中国 IP 才能正常使用（海外 IP 返回 300011 账号异常）",
+    "库本身已约 1 年未发新版，XHS 前端签名算法更新后可能失效",
+    "不处理 xsec_token（直接调 API，不走页面 URL 路径）"
+  ],
+  "vs_browser_interception": {
+    "xhs_cli": "直接 HTTP POST + 签名，毫秒级，适合批量",
+    "browser_interception": "Playwright 拦截响应，秒级，无需签名/中国IP，适合偶发查询（见 edith.xiaohongshu.com 地图）"
+  },
+  "homepage_card": {
+    "order": 72,
+    "badge": "Open Source",
+    "badge_color": "green",
+    "description": "Python SDK，封装 XHS 签名 + REST API；需中国 IP + 登录 Cookie",
+    "branches": [
+      {"prefix": "SDK", "text": "get_note_by_keyword · get_note_by_id · get_user_notes · get_note_comments"},
+      {"desc": "搜索笔记 · 帖子详情 · 用户主页 · 评论列表"}
+    ]
+  },
+  "last_verified": "2026-04-04"
+}

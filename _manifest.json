@@ -590,6 +590,11 @@
     "summary": "获取知乎用户的基本信息，包括粉丝数、回答数、文章数等。"
   },
   {
+    "path": "/xhs-cli",
+    "title": "xhs (小红书 Python 客户端)",
+    "summary": ""
+  },
+  {
     "path": "/yunhq.sse.com.cn/dayk",
     "title": "个股日K线历史数据",
     "summary": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。"
