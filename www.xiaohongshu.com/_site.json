@@ -1,0 +1,12 @@
+{
+  "name": "小红书（Xiaohongshu）",
+  "domain": "www.xiaohongshu.com",
+  "favicon_domain": "www.xiaohongshu.com",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "API 在 edith.xiaohongshu.com，需登录 Cookie + XHS 签名",
+  "order": 70,
+  "auth_required": true,
+  "api_domain": "edith.xiaohongshu.com",
+  "note": "数据接口实际在 edith.xiaohongshu.com，www 域下的页面 URL 可用于直接访问帖子（需 xsec_token）"
+}

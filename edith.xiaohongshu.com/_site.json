@@ -1,0 +1,31 @@
+{
+  "name": "小红书 API 服务",
+  "domain": "edith.xiaohongshu.com",
+  "favicon_domain": "www.xiaohongshu.com",
+  "badge": "API Service",
+  "subtitle": "页面隐藏 API 微服务",
+  "description": "小红书 Web 端核心 API 域，需登录 Cookie + XHS 签名头",
+  "order": 71,
+  "auth": {
+    "type": "cookie + signing",
+    "required_cookies": ["a1", "web_session", "webId", "gid"],
+    "required_cookie_values": {
+      "xsecappid": "xhs-pc-web"
+    },
+    "signing_headers": {
+      "x-s": "XHS 自定义签名，由 window._webmsxyw(uri, data) 生成（需在 XHS 页面内调用）",
+      "x-t": "毫秒时间戳（与 x-s 配对）",
+      "x-s-common": "设备指纹 PBKDF2 衍生，固定值可复用"
+    },
+    "ip_requirement": "中国大陆 IP（海外 IP 返回 300011 账号异常）",
+    "cookie_ttl": "数小时，需定期刷新"
+  },
+  "error_codes": {
+    "-100": "登录已过期（web_session 失效）",
+    "-101": "未登录",
+    "-104": "无权限（游客态）",
+    "300": "签名错误（x-s/x-t 计算错误）",
+    "300011": "账号异常（海外 IP 或账号风控）"
+  },
+  "bypass_strategy": "用 Playwright 在登录态浏览器中加载 XHS 页面，拦截 response 获取 API 数据，避免手动签名"
+}

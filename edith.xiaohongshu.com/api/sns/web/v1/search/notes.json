@@ -1,0 +1,100 @@
+{
+  "domain": "edith.xiaohongshu.com",
+  "url": "https://www.xiaohongshu.com/search_result/?keyword={keyword}&source=web_search_result_notes&type=normal",
+  "title": "小红书笔记搜索",
+  "summary": "按关键词搜索小红书笔记，返回笔记列表（含 note_id、标题、作者、xsec_token）。",
+  "method": "POST",
+  "endpoint": "https://edith.xiaohongshu.com/api/sns/web/v1/search/notes",
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8",
+    "x-s": "<XHS 签名>",
+    "x-t": "<毫秒时间戳>",
+    "x-s-common": "<设备指纹签名>"
+  },
+  "body": {
+    "keyword": {
+      "type": "string",
+      "required": true,
+      "description": "搜索关键词",
+      "example": "泰康资产校招软件开发笔试"
+    },
+    "page": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "description": "页码，从 1 开始"
+    },
+    "page_size": {
+      "type": "integer",
+      "required": true,
+      "default": 20
+    },
+    "search_id": {
+      "type": "string",
+      "required": true,
+      "description": "搜索会话 ID，可传空字符串"
+    },
+    "sort": {
+      "type": "string",
+      "required": true,
+      "default": "general",
+      "enum": ["general", "time_descending", "popularity_descending"],
+      "description": "排序方式：综合/最新/最热"
+    },
+    "note_type": {
+      "type": "integer",
+      "default": 0,
+      "description": "笔记类型：0=全部, 1=视频, 2=图文"
+    },
+    "ext_flags": {
+      "type": "array",
+      "default": []
+    },
+    "image_formats": {
+      "type": "array",
+      "default": ["jpg", "webp", "avif"]
+    }
+  },
+  "response": {
+    "success": "boolean",
+    "code": "integer（0=成功）",
+    "data": {
+      "has_more": "boolean",
+      "items": [
+        {
+          "id": "笔记 ID（note_id），用于构造帖子 URL",
+          "model_type": "note",
+          "xsec_token": "访问笔记页面所需的 token，必须附在 URL 中",
+          "note_card": {
+            "display_title": "笔记标题",
+            "type": "normal（图文）或 video",
+            "user": {
+              "nickname": "作者昵称",
+              "userid": "作者 ID"
+            },
+            "interact_info": {
+              "liked_count": "点赞数（字符串）"
+            },
+            "cover": {
+              "url": "封面图 URL"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "confidence": 0.95,
+  "last_verified": "2026-04-04",
+  "caveats": [
+    "需要完整登录 Cookie（web_session + a1 + webId 等）",
+    "需要 x-s/x-t 签名头（由 window._webmsxyw 在浏览器中生成）",
+    "海外 IP 返回 300011，需使用中国 IP",
+    "最简化实现：用 Playwright 打开搜索页面，拦截 search/notes 响应，无需手动签名"
+  ],
+  "browser_bypass": {
+    "description": "绕过签名要求：用 Playwright 导航到搜索 URL，拦截 API 响应",
+    "search_url_template": "https://www.xiaohongshu.com/search_result/?keyword={encoded_keyword}&source=web_search_result_notes&type=normal",
+    "intercept_pattern": "search/notes",
+    "key_insight": "response.json()['data']['items'][i]['id'] 是 note_id，['xsec_token'] 用于后续访问"
+  }
+}

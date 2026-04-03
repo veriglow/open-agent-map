@@ -40,6 +40,11 @@
     "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类、附属机构职位，约 40+ 职位，单页无分页。"
   },
   {
+    "path": "/edith.xiaohongshu.com/api/sns/web/v1/search/notes",
+    "title": "小红书笔记搜索",
+    "summary": "按关键词搜索小红书笔记，返回笔记列表（含 note_id、标题、作者、xsec_token）。"
+  },
+  {
     "path": "/fred.stlouisfed.org",
     "title": "FRED (Federal Reserve Economic Data)",
     "summary": ""
@@ -563,6 +568,11 @@
     "path": "/www.szse.cn/market/trading-calendar",
     "title": "深交所交易日历",
     "summary": "获取当月交易日历，标识哪些日期是交易日（jybz=0）、哪些是非交易日（jybz=1）。"
+  },
+  {
+    "path": "/www.xiaohongshu.com/explore/note",
+    "title": "小红书笔记详情页",
+    "summary": "访问单篇笔记正文。note_id 和 xsec_token 均来自搜索 API 响应（items[].id 和 items[].xsec_token）。"
   },
   {
     "path": "/www.zhihu.com/api/v4/members/answers",

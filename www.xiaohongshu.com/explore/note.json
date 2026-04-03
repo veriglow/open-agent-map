@@ -1,0 +1,53 @@
+{
+  "domain": "www.xiaohongshu.com",
+  "url": "https://www.xiaohongshu.com/explore/{note_id}?xsec_token={xsec_token}&xsec_source=pc_search",
+  "title": "小红书笔记详情页",
+  "summary": "访问单篇笔记正文。note_id 和 xsec_token 均来自搜索 API 响应（items[].id 和 items[].xsec_token）。",
+  "method": "GET（页面导航）",
+  "key_insight": "URL 必须携带 xsec_token 参数，否则页面重定向到 /explore 首页，笔记内容不渲染",
+  "url_params": {
+    "note_id": {
+      "required": true,
+      "source": "搜索 API 响应 items[].id",
+      "example": "68f5c2f50000000004013393"
+    },
+    "xsec_token": {
+      "required": true,
+      "source": "搜索 API 响应 items[].xsec_token",
+      "example": "ABAnDt9b2nLdUiBoj80b8OseJ1mq9ghLDvpwGN4x8XIhI=",
+      "note": "URL encode 后传入"
+    },
+    "xsec_source": {
+      "required": true,
+      "value": "pc_search",
+      "description": "固定值，标识来源为 PC 搜索"
+    }
+  },
+  "dom_extraction": {
+    "note_container": ".note-container（完整笔记区域，含标题+作者+正文+评论）",
+    "note_desc": "#detail-desc（仅正文）",
+    "note_title": "#detail-title（标题）"
+  },
+  "anti_bot_behavior": {
+    "without_xsec_token": "重定向到 /explore，note_info API 返回 HTTP 461 + data:{}",
+    "headless_detection": "XHS 通过 window._webmsxyw 指纹和 cookie 组合检测 headless，需注入 stealth.min.js",
+    "note_info_api": {
+      "endpoint": "https://edith.xiaohongshu.com/api/sns/h5/v1/note_info?note_id={note_id}",
+      "status": "HTTP 461（headless 被检测），HTTP 200 + data:{} 也可能发生",
+      "conclusion": "此 API 在 headless 下不可靠，建议直接从 DOM 提取"
+    }
+  },
+  "confidence": 0.9,
+  "last_verified": "2026-04-04",
+  "caveats": [
+    "需要登录态 Cookie（web_session 等）",
+    "必须带 xsec_token，来自对应的搜索 API 结果",
+    "headless 浏览器需注入 stealth.min.js 才能正常渲染"
+  ],
+  "workflow": {
+    "step1": "搜索 API 获取 items[].id（note_id）和 items[].xsec_token",
+    "step2": "构造 URL：/explore/{note_id}?xsec_token={token}&xsec_source=pc_search",
+    "step3": "Playwright 导航到该 URL，等待 networkidle",
+    "step4": "从 .note-container 提取 innerText"
+  }
+}
