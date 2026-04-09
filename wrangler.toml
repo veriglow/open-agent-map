@@ -5,3 +5,14 @@ compatibility_date = "2024-01-01"
 routes = [
   { pattern = "agentmap.veri-glow.com/*", zone_name = "veri-glow.com" }
 ]
+
+# KV namespace for storing map requests
+# After creating, run: npx wrangler kv namespace create MAP_REQUESTS
+# Then replace the id below with the actual namespace ID
+[[kv_namespaces]]
+binding = "MAP_REQUESTS"
+id = "128c6c74fddc44d98ec9093aeaab2f7c"
+
+# Set webhook URL as a secret:
+# npx wrangler secret put FEISHU_WEBHOOK
+# npx wrangler secret put SLACK_WEBHOOK

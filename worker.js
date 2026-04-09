@@ -11,15 +11,36 @@
 const GITHUB_RAW_ORIGIN = "https://raw.githubusercontent.com/ChizhongWang/open-agent-map/main";
 
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     let path = url.pathname;
+
+    // CORS preflight
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    }
 
     // Health check
     if (path === "/health") {
       return new Response(JSON.stringify({ status: "ok" }), {
         headers: { "Content-Type": "application/json" },
       });
+    }
+
+    // Request-map API
+    if (path === "/api/request-map") {
+      if (request.method === "POST") {
+        return handleRequestMap(request, env, ctx);
+      }
+      if (request.method === "GET") {
+        return listRequestMaps(env);
+      }
     }
 
     // Root path — serve homepage
@@ -134,9 +155,13 @@ function serve404(request, jsonPath) {
     JSON.stringify({
       error: "map_not_found",
       path: path,
-      message:
-        "No agent map found for this URL. Request one at agentmap.veri-glow.com" +
-        path,
+      message: "No agent map found for this URL.",
+      report: {
+        method: "POST",
+        url: "https://agentmap.veri-glow.com/api/request-map",
+        body: { path: path, user_query: "<what the user asked>" },
+        note: "Report this missing URL so the team can prioritize adding it.",
+      },
     }),
     {
       status: 404,
@@ -147,6 +172,112 @@ function serve404(request, jsonPath) {
     }
   );
 }
+
+
+// ── Request Map API ──────────────────────────────────────────
+
+async function handleRequestMap(request, env, ctx) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ error: "Invalid JSON" }, 400);
+  }
+
+  const path = (body.path || "").trim();
+  if (!path) {
+    return jsonResponse({ error: "Missing 'path' field" }, 400);
+  }
+
+  const email = (body.email || "").trim();
+  const userQuery = (body.user_query || "").trim();
+  const now = new Date().toISOString();
+
+  // Read existing record from KV (if any)
+  const kvKey = `request:${path}`;
+  let record = null;
+  if (env.MAP_REQUESTS) {
+    try {
+      const existing = await env.MAP_REQUESTS.get(kvKey, "json");
+      if (existing) record = existing;
+    } catch {}
+  }
+
+  if (record) {
+    record.request_count += 1;
+    record.last_seen = now;
+    if (email && !record.emails.includes(email)) record.emails.push(email);
+    if (userQuery && !record.queries.includes(userQuery)) record.queries.push(userQuery);
+  } else {
+    record = {
+      path,
+      request_count: 1,
+      emails: email ? [email] : [],
+      queries: userQuery ? [userQuery] : [],
+      first_seen: now,
+      last_seen: now,
+    };
+  }
+
+  // Store in KV
+  if (env.MAP_REQUESTS) {
+    await env.MAP_REQUESTS.put(kvKey, JSON.stringify(record));
+  }
+
+  // Webhook notification (fire-and-forget)
+  const webhookUrl = env.FEISHU_WEBHOOK || env.SLACK_WEBHOOK || "";
+  if (webhookUrl) {
+    const msg = `🗺️ AgentMap Request\nURL: ${path}\nQuery: ${userQuery || "(none)"}\nTotal: ${record.request_count}`;
+    try {
+      const isFeishu = webhookUrl.includes("feishu.cn");
+      const payload = isFeishu
+        ? { msg_type: "text", content: { text: msg } }
+        : { text: msg };
+      // Don't await — fire and forget via waitUntil
+      const webhookPromise = fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (ctx && ctx.waitUntil) {
+        ctx.waitUntil(webhookPromise);
+      }
+    } catch {}
+  }
+
+  return jsonResponse({ status: "ok", path, total_requests: record.request_count });
+}
+
+async function listRequestMaps(env) {
+  if (!env.MAP_REQUESTS) {
+    return jsonResponse({ error: "KV not configured", requests: [] });
+  }
+
+  const list = await env.MAP_REQUESTS.list({ prefix: "request:" });
+  const requests = [];
+
+  for (const key of list.keys) {
+    try {
+      const record = await env.MAP_REQUESTS.get(key.name, "json");
+      if (record) requests.push(record);
+    } catch {}
+  }
+
+  // Sort by request_count descending
+  requests.sort((a, b) => b.request_count - a.request_count);
+  return jsonResponse({ total: requests.length, requests });
+}
+
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
+
 
 // ── Brand Components ──────────────────────────────────────────
 
