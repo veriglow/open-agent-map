@@ -159,8 +159,8 @@ function serve404(request, jsonPath) {
       report: {
         method: "POST",
         url: "https://agentmap.veri-glow.com/api/request-map",
-        body: { path: path, user_query: "<what the user asked>" },
-        note: "Report this missing URL so the team can prioritize adding it.",
+        body: { path: path, type: "missing", user_query: "<what the user asked>" },
+        note: "Report this missing URL so the team can prioritize adding it. Use type: 'incomplete' if map exists but data is missing, 'incorrect' if data is wrong.",
       },
     }),
     {
@@ -189,6 +189,10 @@ async function handleRequestMap(request, env, ctx) {
     return jsonResponse({ error: "Missing 'path' field" }, 400);
   }
 
+  // Issue type: missing (URL not indexed), incomplete (map exists but data missing),
+  // incorrect (map data is wrong), other
+  const issueType = (body.type || "missing").trim();
+  const detail = (body.detail || "").trim();
   const email = (body.email || "").trim();
   const userQuery = (body.user_query || "").trim();
   const now = new Date().toISOString();
@@ -208,12 +212,17 @@ async function handleRequestMap(request, env, ctx) {
     record.last_seen = now;
     if (email && !record.emails.includes(email)) record.emails.push(email);
     if (userQuery && !record.queries.includes(userQuery)) record.queries.push(userQuery);
+    if (detail && !record.details.includes(detail)) record.details.push(detail);
+    // Upgrade type: incomplete/incorrect take priority over missing
+    if (issueType !== "missing") record.type = issueType;
   } else {
     record = {
       path,
+      type: issueType,
       request_count: 1,
       emails: email ? [email] : [],
       queries: userQuery ? [userQuery] : [],
+      details: detail ? [detail] : [],
       first_seen: now,
       last_seen: now,
     };
@@ -225,15 +234,16 @@ async function handleRequestMap(request, env, ctx) {
   }
 
   // Webhook notification (fire-and-forget)
+  const typeLabels = { missing: "🆕 未收录", incomplete: "⚠️ 信息不完整", incorrect: "❌ 信息有误", other: "📋 其他" };
+  const typeLabel = typeLabels[issueType] || issueType;
   const webhookUrl = env.FEISHU_WEBHOOK || env.SLACK_WEBHOOK || "";
   if (webhookUrl) {
-    const msg = `🗺️ AgentMap Request\nURL: ${path}\nQuery: ${userQuery || "(none)"}\nTotal: ${record.request_count}`;
+    const msg = `🗺️ AgentMap 问题上报\n类型: ${typeLabel}\nURL: ${path}\n${detail ? "详情: " + detail + "\n" : ""}查询: ${userQuery || "(none)"}\n累计: ${record.request_count}`;
     try {
       const isFeishu = webhookUrl.includes("feishu.cn");
       const payload = isFeishu
         ? { msg_type: "text", content: { text: msg } }
         : { text: msg };
-      // Don't await — fire and forget via waitUntil
       const webhookPromise = fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -245,7 +255,7 @@ async function handleRequestMap(request, env, ctx) {
     } catch {}
   }
 
-  return jsonResponse({ status: "ok", path, total_requests: record.request_count });
+  return jsonResponse({ status: "ok", path, type: issueType, total_requests: record.request_count });
 }
 
 async function listRequestMaps(env) {
