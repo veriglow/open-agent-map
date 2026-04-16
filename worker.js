@@ -186,41 +186,14 @@ function serve404(request, jsonPath) {
 
 // ── Scout integration ─────────────────────────────────────────────────────────
 // Dispatch to agentmap-scout (sniff data endpoints) for user-reported missing
-// URLs. Results are cached in KV under scout:<path> so human reviewers (or an
-// LLM step) can turn raw sniff output into a proper AgentMap JSON entry.
-
-const CN_KNOWN_DOMAINS = [
-  "sse.com.cn", "szse.cn", "bse.cn",
-  "eastmoney.com", "hexun.com", "sina.com.cn", "10jqka.com.cn",
-  "cninfo.com.cn", "xueqiu.com", "cls.cn", "caixin.com", "yicai.com", "stcn.com",
-  "baidu.com", "sogou.com", "so.com", "zhihu.com", "weibo.com",
-  "douban.com", "bilibili.com", "xiaohongshu.com",
-  "taobao.com", "tmall.com", "jd.com", "aliyun.com",
-  "tencent.com", "qq.com", "163.com", "ifeng.com", "sohu.com", "cctv.com",
-];
-
-function isChineseUrlPath(path) {
-  try {
-    // Path from request-map is "www.example.com/some/path" (no protocol)
-    const host = (path.split("/")[0] || "").toLowerCase();
-    if (!host) return false;
-    if (host.endsWith(".cn")) return true;
-    for (const d of CN_KNOWN_DOMAINS) {
-      if (host === d || host.endsWith("." + d)) return true;
-    }
-    return false;
-  } catch {
-    return false;
-  }
-}
+// URLs. The Singapore scout transparently forwards Chinese URLs to the CN
+// instance via internal HTTP, so the Worker only needs one endpoint.
+// Results are cached in KV under scout:<path> so human reviewers (or an LLM
+// step) can turn raw sniff output into a proper AgentMap JSON entry.
 
 async function triggerScout(path, env) {
-  const scoutUrlIntl = env.SCOUT_URL_INTL || "";
-  const scoutUrlCn = env.SCOUT_URL_CN || "";
+  const scoutBase = env.SCOUT_URL_INTL || "";
   const scoutToken = env.SCOUT_API_TOKEN || "";
-
-  const isCn = isChineseUrlPath(path);
-  const scoutBase = isCn ? scoutUrlCn : scoutUrlIntl;
   if (!scoutBase) return; // scout not configured
 
   const scoutKey = `scout:${path}`;
@@ -247,7 +220,6 @@ async function triggerScout(path, env) {
     const result = {
       path,
       target_url: targetUrl,
-      scout_region: isCn ? "cn" : "intl",
       scouted_at: new Date().toISOString(),
       status: resp.status,
       body: null,
@@ -266,7 +238,6 @@ async function triggerScout(path, env) {
     const result = {
       path,
       target_url: targetUrl,
-      scout_region: isCn ? "cn" : "intl",
       scouted_at: new Date().toISOString(),
       status: 0,
       body: null,
@@ -384,7 +355,6 @@ async function listScoutResults(env) {
       // Summary only, not full body
       results.push({
         path: v.path,
-        scout_region: v.scout_region,
         scouted_at: v.scouted_at,
         status: v.status,
         endpoint_count: v.body && v.body.endpoints ? v.body.endpoints.length : 0,
