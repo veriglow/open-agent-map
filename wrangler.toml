@@ -16,3 +16,9 @@ id = "128c6c74fddc44d98ec9093aeaab2f7c"
 # Set webhook URL as a secret:
 # npx wrangler secret put FEISHU_WEBHOOK
 # npx wrangler secret put SLACK_WEBHOOK
+
+# Scout integration — auto-sniff missing URLs reported via /api/request-map
+# Set these secrets:
+#   npx wrangler secret put SCOUT_URL_INTL    # e.g. http://143.198.93.207:8010
+#   npx wrangler secret put SCOUT_URL_CN      # e.g. http://120.26.203.9:8010
+#   npx wrangler secret put SCOUT_API_TOKEN   # bearer token (same on both servers)

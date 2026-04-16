@@ -43,6 +43,14 @@ export default {
       }
     }
 
+    // Scout results API — GET /api/scout?path=<path>  or  GET /api/scouts (list)
+    if (path === "/api/scout" && request.method === "GET") {
+      return getScoutResult(request, env);
+    }
+    if (path === "/api/scouts" && request.method === "GET") {
+      return listScoutResults(env);
+    }
+
     // Root path — serve homepage
     if (path === "/" || path === "") {
       return serveHomepage(request);
@@ -176,6 +184,97 @@ function serve404(request, jsonPath) {
 
 // ── Request Map API ──────────────────────────────────────────
 
+// ── Scout integration ─────────────────────────────────────────────────────────
+// Dispatch to agentmap-scout (sniff data endpoints) for user-reported missing
+// URLs. Results are cached in KV under scout:<path> so human reviewers (or an
+// LLM step) can turn raw sniff output into a proper AgentMap JSON entry.
+
+const CN_KNOWN_DOMAINS = [
+  "sse.com.cn", "szse.cn", "bse.cn",
+  "eastmoney.com", "hexun.com", "sina.com.cn", "10jqka.com.cn",
+  "cninfo.com.cn", "xueqiu.com", "cls.cn", "caixin.com", "yicai.com", "stcn.com",
+  "baidu.com", "sogou.com", "so.com", "zhihu.com", "weibo.com",
+  "douban.com", "bilibili.com", "xiaohongshu.com",
+  "taobao.com", "tmall.com", "jd.com", "aliyun.com",
+  "tencent.com", "qq.com", "163.com", "ifeng.com", "sohu.com", "cctv.com",
+];
+
+function isChineseUrlPath(path) {
+  try {
+    // Path from request-map is "www.example.com/some/path" (no protocol)
+    const host = (path.split("/")[0] || "").toLowerCase();
+    if (!host) return false;
+    if (host.endsWith(".cn")) return true;
+    for (const d of CN_KNOWN_DOMAINS) {
+      if (host === d || host.endsWith("." + d)) return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+async function triggerScout(path, env) {
+  const scoutUrlIntl = env.SCOUT_URL_INTL || "";
+  const scoutUrlCn = env.SCOUT_URL_CN || "";
+  const scoutToken = env.SCOUT_API_TOKEN || "";
+
+  const isCn = isChineseUrlPath(path);
+  const scoutBase = isCn ? scoutUrlCn : scoutUrlIntl;
+  if (!scoutBase) return; // scout not configured
+
+  const scoutKey = `scout:${path}`;
+  // Skip if we've scouted this URL in the last hour
+  try {
+    const existing = await env.MAP_REQUESTS.get(scoutKey, "json");
+    if (existing && existing.scouted_at) {
+      const age = Date.now() - new Date(existing.scouted_at).getTime();
+      if (age < 3600 * 1000) return;
+    }
+  } catch {}
+
+  const targetUrl = `https://${path}`;
+  try {
+    const resp = await fetch(`${scoutBase}/sniff_endpoints`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(scoutToken ? { Authorization: `Bearer ${scoutToken}` } : {}),
+      },
+      body: JSON.stringify({ url: targetUrl, timeout_ms: 30000 }),
+    });
+
+    const result = {
+      path,
+      target_url: targetUrl,
+      scout_region: isCn ? "cn" : "intl",
+      scouted_at: new Date().toISOString(),
+      status: resp.status,
+      body: null,
+      error: null,
+    };
+    try {
+      result.body = await resp.json();
+    } catch {
+      result.body = await resp.text();
+    }
+    if (!resp.ok) result.error = `HTTP ${resp.status}`;
+
+    await env.MAP_REQUESTS.put(scoutKey, JSON.stringify(result));
+  } catch (e) {
+    const result = {
+      path,
+      target_url: targetUrl,
+      scout_region: isCn ? "cn" : "intl",
+      scouted_at: new Date().toISOString(),
+      status: 0,
+      body: null,
+      error: String(e).slice(0, 500),
+    };
+    try { await env.MAP_REQUESTS.put(scoutKey, JSON.stringify(result)); } catch {}
+  }
+}
+
 async function handleRequestMap(request, env, ctx) {
   let body;
   try {
@@ -233,6 +332,11 @@ async function handleRequestMap(request, env, ctx) {
     await env.MAP_REQUESTS.put(kvKey, JSON.stringify(record));
   }
 
+  // Trigger scout auto-sniffing for missing URLs (fire-and-forget)
+  if (issueType === "missing" && env.MAP_REQUESTS && ctx && ctx.waitUntil) {
+    ctx.waitUntil(triggerScout(path, env));
+  }
+
   // Webhook notification (fire-and-forget)
   const typeLabels = { missing: "🆕 未收录", incomplete: "⚠️ 信息不完整", incorrect: "❌ 信息有误", other: "📋 其他" };
   const typeLabel = typeLabels[issueType] || issueType;
@@ -256,6 +360,39 @@ async function handleRequestMap(request, env, ctx) {
   }
 
   return jsonResponse({ status: "ok", path, type: issueType, total_requests: record.request_count });
+}
+
+async function getScoutResult(request, env) {
+  const url = new URL(request.url);
+  const path = url.searchParams.get("path") || "";
+  if (!path) return jsonResponse({ error: "Missing 'path' query param" }, 400);
+  if (!env.MAP_REQUESTS) return jsonResponse({ error: "KV not configured" }, 500);
+
+  const result = await env.MAP_REQUESTS.get(`scout:${path}`, "json");
+  if (!result) return jsonResponse({ error: "No scout result for this path" }, 404);
+  return jsonResponse(result);
+}
+
+async function listScoutResults(env) {
+  if (!env.MAP_REQUESTS) return jsonResponse({ error: "KV not configured" }, 500);
+  const list = await env.MAP_REQUESTS.list({ prefix: "scout:" });
+  const results = [];
+  for (const { name } of list.keys) {
+    const v = await env.MAP_REQUESTS.get(name, "json");
+    if (v) {
+      // Summary only, not full body
+      results.push({
+        path: v.path,
+        scout_region: v.scout_region,
+        scouted_at: v.scouted_at,
+        status: v.status,
+        endpoint_count: v.body && v.body.endpoints ? v.body.endpoints.length : 0,
+        error: v.error,
+      });
+    }
+  }
+  results.sort((a, b) => (a.scouted_at > b.scouted_at ? -1 : 1));
+  return jsonResponse({ count: results.length, results });
 }
 
 async function listRequestMaps(env) {
