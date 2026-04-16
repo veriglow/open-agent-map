@@ -253,10 +253,11 @@ async function triggerScout(path, env) {
       body: null,
       error: null,
     };
+    const rawText = await resp.text();
     try {
-      result.body = await resp.json();
+      result.body = JSON.parse(rawText);
     } catch {
-      result.body = await resp.text();
+      result.body = rawText.slice(0, 2000);
     }
     if (!resp.ok) result.error = `HTTP ${resp.status}`;
 
