@@ -51,6 +51,18 @@ export default {
       return listScoutResults(env);
     }
 
+    // Draft API — AgentMap drafts produced by the autonomous agent.
+    //   POST /api/draft              {path, json, agent_notes?, tokens_used?}  (requires Bearer auth)
+    //   GET  /api/draft?path=<path>  return single draft
+    //   GET  /api/drafts             list drafts (summary)
+    if (path === "/api/draft") {
+      if (request.method === "POST") return saveDraft(request, env);
+      if (request.method === "GET") return getDraft(request, env);
+    }
+    if (path === "/api/drafts" && request.method === "GET") {
+      return listDrafts(env);
+    }
+
     // Root path — serve homepage
     if (path === "/" || path === "") {
       return serveHomepage(request);
@@ -363,6 +375,67 @@ async function listScoutResults(env) {
     }
   }
   results.sort((a, b) => (a.scouted_at > b.scouted_at ? -1 : 1));
+  return jsonResponse({ count: results.length, results });
+}
+
+// ── Draft API (autonomous agent → human review) ──────────────────────────────
+
+async function saveDraft(request, env) {
+  // Require Bearer auth matching AGENT_TOKEN
+  const expected = env.AGENT_TOKEN;
+  if (!expected) return jsonResponse({ error: "AGENT_TOKEN not configured" }, 500);
+  const auth = request.headers.get("Authorization") || "";
+  if (auth !== `Bearer ${expected}`) return jsonResponse({ error: "Unauthorized" }, 401);
+
+  let body;
+  try { body = await request.json(); }
+  catch { return jsonResponse({ error: "Invalid JSON" }, 400); }
+
+  const path = (body.path || "").trim();
+  if (!path) return jsonResponse({ error: "Missing 'path'" }, 400);
+  if (!body.json) return jsonResponse({ error: "Missing 'json' (the draft content)" }, 400);
+  if (!env.MAP_REQUESTS) return jsonResponse({ error: "KV not configured" }, 500);
+
+  const record = {
+    path,
+    json: body.json,
+    agent_notes: body.agent_notes || "",
+    tokens_used: body.tokens_used || null,
+    tool_calls: body.tool_calls || null,
+    created_at: new Date().toISOString(),
+    status: "pending_review",
+  };
+  await env.MAP_REQUESTS.put(`draft:${path}`, JSON.stringify(record));
+  return jsonResponse({ status: "ok", path });
+}
+
+async function getDraft(request, env) {
+  const url = new URL(request.url);
+  const path = url.searchParams.get("path") || "";
+  if (!path) return jsonResponse({ error: "Missing 'path' query param" }, 400);
+  if (!env.MAP_REQUESTS) return jsonResponse({ error: "KV not configured" }, 500);
+  const result = await env.MAP_REQUESTS.get(`draft:${path}`, "json");
+  if (!result) return jsonResponse({ error: "No draft for this path" }, 404);
+  return jsonResponse(result);
+}
+
+async function listDrafts(env) {
+  if (!env.MAP_REQUESTS) return jsonResponse({ error: "KV not configured" }, 500);
+  const list = await env.MAP_REQUESTS.list({ prefix: "draft:" });
+  const results = [];
+  for (const { name } of list.keys) {
+    const v = await env.MAP_REQUESTS.get(name, "json");
+    if (v) {
+      results.push({
+        path: v.path,
+        created_at: v.created_at,
+        status: v.status,
+        agent_notes: (v.agent_notes || "").slice(0, 200),
+        tokens_used: v.tokens_used,
+      });
+    }
+  }
+  results.sort((a, b) => (a.created_at > b.created_at ? -1 : 1));
   return jsonResponse({ count: results.length, results });
 }
 
