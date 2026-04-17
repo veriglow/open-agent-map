@@ -1,0 +1,39 @@
+{
+  "id": "sz-opendata-hotdata",
+  "domain": "opendata.sz.gov.cn",
+  "path": "/maintenance/hotData/*",
+  "title": "热门数据集 / 热门 API",
+  "summary": "站内最热数据集和最热 API 排行，无需参数。适合探索时找高价值入口。",
+
+  "endpoints": [
+    {
+      "method": "POST",
+      "url": "https://opendata.sz.gov.cn/maintenance/hotData/getHotApi",
+      "description": "最热 API（按调用次数排序）",
+      "response_shape": "[{resTitle, updateDate, count, resId}, ...]",
+      "top_result_example": {
+        "resTitle": "深圳范围自动站实况格点数据表",
+        "count": 137144382,
+        "resId": "29200_00903509",
+        "note": "1.37 亿次调用，深圳实时气象数据"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://opendata.sz.gov.cn/maintenance/hotData/getHotDataSet",
+      "description": "最热数据集（按页面访问次数排序）",
+      "response_shape": "[{resTitle, visits, updateDate, resId}, ...]",
+      "top_result_example": {
+        "resTitle": "商事主体基本信息",
+        "visits": 286577,
+        "resId": "29200_01300931",
+        "note": "深圳全量商事主体信息，ICP 备案 / 工商背调高价值"
+      }
+    }
+  ],
+  "caveats": [
+    "返回的 resId 是下划线格式 29200_xxxxx；如需用在 findPage 系列接口，转换为斜杠格式 29200/xxxxx 再 URL-encode",
+    "POST 请求无 body 参数，但必须用 POST 方法才返回数据"
+  ],
+  "last_verified": "2026-04-17"
+}

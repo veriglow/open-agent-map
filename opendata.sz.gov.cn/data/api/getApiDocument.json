@@ -1,0 +1,43 @@
+{
+  "id": "sz-opendata-api-doc",
+  "domain": "opendata.sz.gov.cn",
+  "path": "/data/api/getApiDocument",
+  "url": "https://opendata.sz.gov.cn/data/api/getApiDocument",
+  "title": "数据集 API 接口文档",
+  "summary": "对于提供可调 API 的数据集，返回其接口路径、请求参数、返回字段。实际 API 调用路径形如 api/{resId 下划线格式}/1/service.xhtml。",
+
+  "method": "POST",
+  "endpoint": "https://opendata.sz.gov.cn/data/api/getApiDocument",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Referer": "https://opendata.sz.gov.cn/"
+  },
+  "params": {
+    "resId": {
+      "type": "string",
+      "required": true,
+      "format": "29200%2F{code}",
+      "example": "29200%2F01103512"
+    }
+  },
+  "returns": {
+    "description": "接口描述数组，首项含 api_context（实际调用路径）",
+    "fields": {
+      "res_title": "数据集标题",
+      "api_context": "API 调用路径相对 URL，如 api/29200_01103512/1/service.xhtml",
+      "param_name": "参数名",
+      "param_type": "参数类型",
+      "remarks": "备注"
+    }
+  },
+  "actual_api_call": {
+    "endpoint_template": "https://opendata.sz.gov.cn/api/{resId_underscore}/1/service.xhtml",
+    "example": "https://opendata.sz.gov.cn/api/29200_01103512/1/service.xhtml",
+    "note": "resId 在 URL 路径中用下划线格式（29200_01103512），不是斜杠格式；具体调用参数看 getApiDocument 返回"
+  },
+  "caveats": [
+    "不是所有数据集都提供可调 API；有 API 的数据集页面会有 /toApiDetails/{resId} 入口",
+    "多数 API 需要先订阅（isSubscribe 检查），调用时带 appid/timestamp/sign 签名（待探查）"
+  ],
+  "last_verified": "2026-04-17"
+}

@@ -50,6 +50,11 @@
     "summary": ""
   },
   {
+    "path": "/hrss.sz.gov.cn/postmeta",
+    "title": "文章 / 分类 JSON API（政务 CMS）",
+    "summary": "深圳人社局官网的内容 JSON API。按 category_id 获取分类元数据和文章列表，覆盖就业创业、社保、人才、劳动关系、常见问题等。无需鉴权。"
+  },
+  {
     "path": "/mp.weixin.qq.com/cgi-bin/appmsg",
     "title": "公众号文章列表",
     "summary": "列出指定公众号的所有历史文章。这是获取某个公众号全部文章的核心接口，利用公众号后台'搜索其他公众号文章'功能。"
@@ -63,6 +68,41 @@
     "path": "/mp.weixin.qq.com/mp/profile_ext",
     "title": "公众号历史消息（客户端接口）",
     "summary": "从微信客户端内查看公众号历史消息的接口。需要从微信客户端抓包获取认证参数，key 每 0.5-2 小时过期。"
+  },
+  {
+    "path": "/node_modules/.cache/wrangler/wrangler-account",
+    "title": "wrangler-account",
+    "summary": ""
+  },
+  {
+    "path": "/node_modules/.mf/cf",
+    "title": "cf",
+    "summary": ""
+  },
+  {
+    "path": "/opendata.sz.gov.cn/data/api/getApiDocument",
+    "title": "数据集 API 接口文档",
+    "summary": "对于提供可调 API 的数据集，返回其接口路径、请求参数、返回字段。实际 API 调用路径形如 api/{resId 下划线格式}/1/service.xhtml。"
+  },
+  {
+    "path": "/opendata.sz.gov.cn/data/catalog/selectDataCatalogByResId",
+    "title": "数据集完整元数据",
+    "summary": "根据 resId 获取单个数据集的完整元数据（标题、部门、关键词、摘要、支持的下载格式、表名等）。"
+  },
+  {
+    "path": "/opendata.sz.gov.cn/data/dataSet/findPage",
+    "title": "数据集列表（按部门 / 主题 / 分类）",
+    "summary": "核心列表 API，返回深圳市政府开放数据集清单。支持按部门编码（deptCode）、分类、主题筛选；每条数据集含 resId、标题、发布部门、格式、更新日期等元数据。"
+  },
+  {
+    "path": "/opendata.sz.gov.cn/data/dataSet/getFileList",
+    "title": "数据集文件下载列表",
+    "summary": "获取某数据集所有可下载文件的列表（csv/json/xlsx 等），含下载次数与更新时间。"
+  },
+  {
+    "path": "/opendata.sz.gov.cn/maintenance/hotData",
+    "title": "热门数据集 / 热门 API",
+    "summary": "站内最热数据集和最热 API 排行，无需参数。适合探索时找高价值入口。"
   },
   {
     "path": "/push2ex.eastmoney.com/dt-pool",

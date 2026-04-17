@@ -1,0 +1,98 @@
+{
+  "id": "sz-opendata-findpage",
+  "domain": "opendata.sz.gov.cn",
+  "path": "/data/dataSet/findPage",
+  "url": "https://opendata.sz.gov.cn/data/dataSet/findPage",
+  "title": "数据集列表（按部门 / 主题 / 分类）",
+  "summary": "核心列表 API，返回深圳市政府开放数据集清单。支持按部门编码（deptCode）、分类、主题筛选；每条数据集含 resId、标题、发布部门、格式、更新日期等元数据。",
+
+  "method": "POST",
+  "endpoint": "https://opendata.sz.gov.cn/data/dataSet/findPage",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Referer": "https://opendata.sz.gov.cn/data/dataSet/toDataSet"
+  },
+  "params": {
+    "pageNo": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "description": "页码，从 1 开始"
+    },
+    "pageSize": {
+      "type": "integer",
+      "required": true,
+      "default": 6,
+      "description": "每页条数，官方前端默认 6，建议查询时设 20-100"
+    },
+    "sortType": {
+      "type": "string",
+      "required": false,
+      "default": "DESC",
+      "options": ["DESC", "ASC"]
+    },
+    "deptCode": {
+      "type": "string",
+      "required": false,
+      "description": "部门编码。空 = 所有部门；11 = 人社局；其他需枚举 /data/dataSet/toDataSet/dept/{N}",
+      "examples": {
+        "11": "深圳市人力资源和社会保障局",
+        "9": "深圳市气象局（台）"
+      }
+    },
+    "domainId": {
+      "type": "string",
+      "required": false,
+      "description": "主题域 ID（生态文明 / 政府机构 / 资源能源 / ...），空 = 全部"
+    },
+    "classifyType": {
+      "type": "string",
+      "required": false,
+      "description": "分类类型（需探查）"
+    },
+    "classifyId": {
+      "type": "string",
+      "required": false,
+      "description": "分类 ID（需探查）"
+    },
+    "sourceTypeArray": {
+      "type": "string",
+      "required": false,
+      "description": "来源类型数组（需探查；默认空表示全部）"
+    }
+  },
+  "returns": {
+    "location": "response.dataList (JSON string, needs double-parse)",
+    "description": "响应 body 的 dataList 字段是 JSON 字符串，再解析后得到 { list, otherData.cityCount, next, first, last } 分页结构。",
+    "list_item_fields": {
+      "id": "数据集内部 ID（长数字字符串）",
+      "resId": "对外 resId，格式 29200/01103512（用于其他详情 API）",
+      "resTitle": "数据集标题",
+      "domainName": "主题域名称",
+      "officeCode": "部门编码（对应 deptCode）",
+      "officeName": "部门名称",
+      "sourceType": "来源类型代码",
+      "publishDate": "首次发布时间",
+      "dataUpdateTime": "最新数据更新时间",
+      "updateCycle": "更新周期（按年 / 按月 / 有数据更新时 / ...）",
+      "invokedCount": "API 调用次数",
+      "visits": "页面访问次数",
+      "downloads": "下载次数",
+      "recordTotal": "记录条数",
+      "openLevelName": "开放级别（无条件开放 / 授权开放）",
+      "suffixes": "可下载格式列表（csv,json,rdf,xlsx,xml）"
+    },
+    "other_data_fields": {
+      "cityCount": "市本级数据集总数（该筛选条件下）",
+      "countyCount": "区级数据集总数（该筛选条件下）"
+    }
+  },
+  "example_curl": "curl -X POST 'https://opendata.sz.gov.cn/data/dataSet/findPage' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Referer: https://opendata.sz.gov.cn/' -d 'pageNo=1&pageSize=100&sortType=DESC&deptCode=11'",
+  "caveats": [
+    "Content-Type 必须是 application/x-www-form-urlencoded，JSON 格式会被忽略",
+    "响应的 dataList 字段是转义过的 JSON 字符串，需要 JSON.parse(response.dataList) 二次解析",
+    "resId 在本接口返回的是 29200/01103512 格式（带斜杠），在 URL 中需 URL-encode 为 29200%2F01103512",
+    "而 /toDataDetails/ URL 路径中使用下划线格式 29200_01103512"
+  ],
+  "last_verified": "2026-04-17"
+}

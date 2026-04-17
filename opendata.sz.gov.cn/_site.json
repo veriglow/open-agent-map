@@ -1,0 +1,9 @@
+{
+  "name": "Shenzhen Open Data Platform (深圳市政府数据开放平台)",
+  "domain": "opendata.sz.gov.cn",
+  "favicon_domain": "opendata.sz.gov.cn",
+  "badge": "Deep Map",
+  "subtitle": "全市政府开放数据 + 可调 API",
+  "description": "深圳市全市政府部门开放数据的统一平台，提供数据集下载（csv/json/xlsx/xml/rdf）和可调 HTTP API。按部门编码（deptCode）组织，含人社局、气象局、市监局、交通局等。",
+  "order": 20
+}

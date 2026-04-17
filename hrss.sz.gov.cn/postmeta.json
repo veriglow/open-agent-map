@@ -1,0 +1,83 @@
+{
+  "id": "hrss-postmeta",
+  "domain": "hrss.sz.gov.cn",
+  "path": "/postmeta/*",
+  "title": "文章 / 分类 JSON API（政务 CMS）",
+  "summary": "深圳人社局官网的内容 JSON API。按 category_id 获取分类元数据和文章列表，覆盖就业创业、社保、人才、劳动关系、常见问题等。无需鉴权。",
+
+  "endpoints": [
+    {
+      "name": "分类元数据",
+      "method": "GET",
+      "url_template": "https://hrss.sz.gov.cn/postmeta/c/{category_id}.json",
+      "description": "返回分类名称、总文章数、json_ext 自定义字段 schema、父分类 ID、关键词",
+      "example_url": "https://hrss.sz.gov.cn/postmeta/c/30456.json",
+      "example_response": {
+        "id": 30456,
+        "name": "劳动关系",
+        "pub_point": "zmhd/cjwt/cjwt/ldgx",
+        "publish_count": 180,
+        "parent": 30455,
+        "keywords": "仲裁，劳动关系，信访，监察"
+      }
+    },
+    {
+      "name": "分类下热门文章列表",
+      "method": "GET",
+      "url_template": "https://hrss.sz.gov.cn/postmeta/hot/{category_id}.json",
+      "description": "该分类下所有文章的元数据列表（通常是全量，不只是『热门』），响应约 80KB",
+      "example_url": "https://hrss.sz.gov.cn/postmeta/hot/30456.json",
+      "example_item": {
+        "id": 11052262,
+        "title": "关于企业职工基本养老保险缴费基数下限有关调整的通知",
+        "source": "深圳市人力资源和社会保障局",
+        "publish_time": 1710944379,
+        "date": "2025-10-23",
+        "url": "https://hrss.sz.gov.cn/xxgk/zcfgjjd/zcfg/shbx/content/post_11052262.html",
+        "category": 30693,
+        "visit": 597037
+      }
+    },
+    {
+      "name": "站点级热门文章",
+      "method": "GET",
+      "url": "https://hrss.sz.gov.cn/postmeta/hot/site.json",
+      "description": "全站热门文章 top N，跨分类",
+      "response_shape": "{ id, name, domain, articles: [...] }"
+    }
+  ],
+  "known_categories": {
+    "30455": {
+      "name": "常见问题（父分类）",
+      "children": [30456, 30459, 30625, 30453]
+    },
+    "30456": "常见问题 > 劳动关系（180 篇）",
+    "30459": "常见问题 > 社会保障（待验证数量）",
+    "30625": "常见问题 > 就业创业（待验证）",
+    "30693": "信息公开 > 政策法规（养老保险等）",
+    "64816": "深圳社保微信公众号 / 服务入口",
+    "102771": "深圳市考试院公告",
+    "163382": "（待探查）"
+  },
+  "article_content": {
+    "format": "HTML",
+    "url_field": "url in the postmeta response",
+    "note": "每篇文章的完整正文在 response.url 指向的 HTML 页面上，需要解析 DOM。metadata（标题/发布时间/来源）已在 postmeta JSON 里，无需二次抓取"
+  },
+  "caveats": [
+    "category_id 不连续，枚举需要通过父分类的 json_ext 或人工发现",
+    "列表 API 名字叫 hot 但实际返回该分类下所有文章",
+    "publish_time 是 Unix 秒级时间戳；date 字段是 YYYY-MM-DD 字符串",
+    "该 CMS 疑似是 TRS / 同族政务 CMS 的定制版本，其他 *.sz.gov.cn 子站可能有类似 /postmeta/ 结构"
+  ],
+  "workflow": {
+    "description": "典型查询流程",
+    "steps": [
+      "1. GET /postmeta/c/{parent_id}.json 了解分类结构",
+      "2. GET /postmeta/hot/{category_id}.json 拉该分类下全部文章 metadata",
+      "3. 按 publish_time 或关键词筛选",
+      "4. 访问命中文章的 url 字段获取正文（HTML）"
+    ]
+  },
+  "last_verified": "2026-04-17"
+}

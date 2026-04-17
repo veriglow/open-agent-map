@@ -1,0 +1,44 @@
+{
+  "id": "sz-opendata-catalog-detail",
+  "domain": "opendata.sz.gov.cn",
+  "path": "/data/catalog/selectDataCatalogByResId",
+  "url": "https://opendata.sz.gov.cn/data/catalog/selectDataCatalogByResId",
+  "title": "数据集完整元数据",
+  "summary": "根据 resId 获取单个数据集的完整元数据（标题、部门、关键词、摘要、支持的下载格式、表名等）。",
+
+  "method": "POST",
+  "endpoint": "https://opendata.sz.gov.cn/data/catalog/selectDataCatalogByResId",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Referer": "https://opendata.sz.gov.cn/"
+  },
+  "params": {
+    "resId": {
+      "type": "string",
+      "required": true,
+      "format": "29200%2F{8-digit-code} (URL-encoded slash)",
+      "description": "数据集 resId。注意必须 URL-encode（/ → %2F）",
+      "example": "29200%2F01103512"
+    }
+  },
+  "returns": {
+    "description": "单条数据集的完整元数据 JSON",
+    "fields": {
+      "id": "内部 ID",
+      "resTitle": "标题",
+      "officeName": "发布部门",
+      "publishDate": "首次发布时间",
+      "updateDate": "最新元数据更新时间",
+      "dataUpdateTime": "数据实际更新时间",
+      "keyword": "关键词",
+      "resAbstract": "摘要描述",
+      "sourceTableName": "后端数据表名",
+      "sourceSuffix": "支持的文件格式",
+      "openLevel": "开放级别",
+      "invokedCount": "API 调用次数",
+      "visits": "访问次数"
+    }
+  },
+  "example_curl": "curl -X POST 'https://opendata.sz.gov.cn/data/catalog/selectDataCatalogByResId' -H 'Content-Type: application/x-www-form-urlencoded' -d 'resId=29200%2F01103512'",
+  "last_verified": "2026-04-17"
+}

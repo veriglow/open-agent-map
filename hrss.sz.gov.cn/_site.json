@@ -1,0 +1,16 @@
+{
+  "name": "Shenzhen Human Resources & Social Security Bureau (深圳市人力资源和社会保障局)",
+  "domain": "hrss.sz.gov.cn",
+  "favicon_domain": "hrss.sz.gov.cn",
+  "badge": "Deep Map",
+  "subtitle": "结构化 CMS，JSON 内容 API",
+  "description": "深圳市人社局官网，使用政务 CMS 自带的 /postmeta/ JSON API 暴露所有政策文件、常见问题、通知公告。按 category_id 组织，每篇文章带 title / source / publish_time / visit 元数据。",
+  "order": 21,
+  "related_sites": [
+    {
+      "domain": "opendata.sz.gov.cn",
+      "relationship": "数据开放入口",
+      "note": "HRSS 首页右上角『数据开放』链接直达 opendata.sz.gov.cn/data/dataSet/toDataSet/dept/11"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "sz-opendata-filelist",
+  "domain": "opendata.sz.gov.cn",
+  "path": "/data/dataSet/getFileList",
+  "url": "https://opendata.sz.gov.cn/data/dataSet/getFileList",
+  "title": "数据集文件下载列表",
+  "summary": "获取某数据集所有可下载文件的列表（csv/json/xlsx 等），含下载次数与更新时间。",
+
+  "method": "POST",
+  "endpoint": "https://opendata.sz.gov.cn/data/dataSet/getFileList",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Referer": "https://opendata.sz.gov.cn/"
+  },
+  "params": {
+    "resId": {
+      "type": "string",
+      "required": true,
+      "format": "29200%2F{code}",
+      "example": "29200%2F01103512"
+    },
+    "sourceType": {
+      "type": "string",
+      "required": false,
+      "default": "3"
+    },
+    "sourceSuffix": {
+      "type": "string",
+      "required": false,
+      "description": "过滤文件格式，空 = 全部；可选 csv, json, xlsx, xml, rdf"
+    },
+    "beginDate": {
+      "type": "string",
+      "required": false,
+      "format": "YYYY-MM-DD"
+    },
+    "endDate": {
+      "type": "string",
+      "required": false,
+      "format": "YYYY-MM-DD"
+    }
+  },
+  "returns": {
+    "description": "可下载文件数组，每项含 downloadUrl 和更新时间",
+    "fields": {
+      "downloads": "该文件累计下载次数",
+      "updateDate": "文件更新时间",
+      "downloadUrl": "实际下载 URL（需探查）",
+      "fileSize": "文件大小"
+    }
+  },
+  "caveats": [
+    "实际下载 URL 在返回字段里，需要从具体字段提取；若拿不到可尝试直接构造 /data/dataSet/downloadResourceFile?resId=...&suffix=csv"
+  ],
+  "last_verified": "2026-04-17"
+}
