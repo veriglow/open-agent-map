@@ -58,6 +58,28 @@
     "as_of": "2026-04-22",
     "total_lofs": 285
   },
+  "action_steps_template": {
+    "description": "深交所 LOF 列表页与 ETF 列表页使用相同的报表组件，支持翻页。将 {{page}} 替换为目标页码。",
+    "go_to_page": {
+      "description": "跳转到指定页码",
+      "steps": [
+        {
+          "type": "exec_js",
+          "code": "document.querySelector('.report-pager input.page-input').value = '{{page}}'",
+          "wait": 0
+        },
+        {
+          "type": "click",
+          "selector": ".report-pager .page-btn",
+          "wait": 2000
+        }
+      ]
+    },
+    "view_fund_detail": {
+      "description": "跳转到单只基金的行情页",
+      "alternative_url": "https://www.szse.cn/market/trend/index.html?code={{fundCode}}"
+    }
+  },
   "confidence": 0.9,
   "last_verified": "2026-04-22"
 }

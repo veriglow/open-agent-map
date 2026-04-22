@@ -68,6 +68,28 @@
     "metal_related_count": 17,
     "metal_keywords": ["黄金", "金ETF", "上海金", "有色金属", "稀有金属", "稀土", "工业有色", "矿业"]
   },
+  "action_steps_template": {
+    "description": "深交所 ETF 列表页使用分页报表组件，支持翻页和搜索。将 {{page}} 替换为目标页码。页面通过 JS 报表引擎渲染，翻页按钮在 .report-pager 区域。",
+    "go_to_page": {
+      "description": "跳转到指定页码",
+      "steps": [
+        {
+          "type": "exec_js",
+          "code": "document.querySelector('.report-pager input.page-input').value = '{{page}}'",
+          "wait": 0
+        },
+        {
+          "type": "click",
+          "selector": ".report-pager .page-btn",
+          "wait": 2000
+        }
+      ]
+    },
+    "search_by_code": {
+      "description": "深交所 ETF 列表页本身无搜索框。要定位特定基金，建议直接使用 API 遍历或通过基金代码跳转到行情页。",
+      "alternative_url": "https://www.szse.cn/market/trend/index.html?code={{fundCode}}"
+    }
+  },
   "confidence": 0.85,
   "last_verified": "2026-04-22"
 }

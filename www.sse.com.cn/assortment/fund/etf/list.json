@@ -92,6 +92,47 @@
     "metal_related_count": 22,
     "metal_keywords": ["黄金", "金ETF", "上海金", "有色金属", "稀有金属", "稀土", "钢铁", "矿业", "工业有色"]
   },
+  "action_steps_template": {
+    "description": "点击分类 tab 切换 ETF 类别。页面有4个 tab：股票ETF、债券ETF、跨境ETF、商品ETF。将 {{category}} 替换为目标分类名，{{nth}} 替换为 tab 序号（1-4）。",
+    "params": {
+      "category": {
+        "description": "分类名称",
+        "enum": {
+          "股票ETF": "nth=1（默认选中）",
+          "债券ETF": "nth=2",
+          "跨境ETF": "nth=3",
+          "商品ETF": "nth=4"
+        }
+      }
+    },
+    "steps": [
+      {
+        "type": "click",
+        "selector": ".js_navTabs span:nth-child({{nth}})",
+        "wait": 2000
+      }
+    ],
+    "verify": {
+      "selector": ".js_navTabs span.active",
+      "text": "{{category}}"
+    },
+    "examples": {
+      "commodity_etf": {
+        "description": "切换到商品ETF tab，显示8只商品ETF（含黄金ETF等）",
+        "steps": [
+          {"type": "click", "selector": ".js_navTabs span:nth-child(4)", "wait": 2000}
+        ],
+        "verify": {"selector": ".js_navTabs span.active", "text": "商品ETF"}
+      },
+      "bond_etf": {
+        "description": "切换到债券ETF tab",
+        "steps": [
+          {"type": "click", "selector": ".js_navTabs span:nth-child(2)", "wait": 2000}
+        ],
+        "verify": {"selector": ".js_navTabs span.active", "text": "债券ETF"}
+      }
+    }
+  },
   "confidence": 0.95,
   "last_verified": "2026-04-22"
 }
