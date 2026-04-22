@@ -86,8 +86,25 @@
       ]
     },
     "search_by_code": {
-      "description": "深交所 ETF 列表页本身无搜索框。要定位特定基金，建议直接使用 API 遍历或通过基金代码跳转到行情页。",
+      "description": "通过基金代码跳转到行情页",
       "alternative_url": "https://www.szse.cn/market/trend/index.html?code={{fundCode}}"
+    },
+    "keyword_filter": {
+      "description": "按关键词筛选 ETF。页面无搜索框，此模板通过浏览器内 fetch 遍历所有分页，按基金简称做关键词匹配，替换表格内容。将 {{keyword}} 替换为搜索词。需在深交所域名下执行（同源 fetch）。",
+      "steps": [
+        {
+          "type": "exec_js",
+          "code": "(async function(){var kw='{{keyword}}';var all=[];for(var p=1;p<=65;p++){try{var r=await fetch('/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1945&tab1PAGESIZE=10&tab1PAGENO='+p);var d=await r.json();var items=d[0].data;if(!items||!items.length)break;all=all.concat(items);await new Promise(function(r){setTimeout(r,200)})}catch(e){break}}var matched=all.filter(function(i){return(decodeURIComponent((i.kzjcurl||'').match(/name=([^&\"]+)/)||['',''])[1]||'').indexOf(kw)>=0||(i.nhzs||'').indexOf(kw)>=0});var container=document.querySelector('.report-body table tbody')||document.querySelector('table tbody');if(container){var html='';matched.forEach(function(i){var code=((i.sys_key||'').match(/code=(\\d+)/)||[])[1]||'?';var name=decodeURIComponent(((i.kzjcurl||'').match(/name=([^&\"]+)/)||[])[1]||'');var idx=(i.nhzs||'').replace(/<[^>]+>/g,'');var mgr=(i.glrmc||'').replace(/<[^>]+>/g,'');html+='<tr><td>'+code+'</td><td>'+name+'</td><td>'+idx+'</td><td>'+mgr+'</td></tr>'});container.innerHTML=html}var pager=document.querySelector('.report-pager');if(pager)pager.style.display='none';return 'keyword='+kw+' found='+matched.length+'/'+all.length})()",
+          "wait": 20000
+        }
+      ],
+      "caveats": [
+        "需在 www.szse.cn 域名下执行（同源策略），scout 海外节点可能连不上深交所",
+        "遍历 65 页需约 15-20 秒，每页间隔 200ms 防限流",
+        "字段值含 HTML 标签，需正则提取纯文本"
+      ],
+      "verified": false,
+      "verified_note": "深交所从海外节点不稳定，未能实测验证。API 逻辑与已验证的上交所方案对称。"
     }
   },
   "confidence": 0.85,

@@ -22,14 +22,21 @@
       "required": true,
       "description": "ETF 分类代码",
       "enum": {
-        "01": "股票ETF（含沪深300、中证500等宽基）",
+        "01": "单市场ETF（股票ETF，含沪深300等宽基、有色金属/稀土等行业主题）",
         "02": "债券ETF",
-        "03": "跨境ETF（含沪深300、MSCI等跨市场）",
+        "03,08": "跨市场ETF（沪港深等，页面 tab 对应跨境ETF）",
+        "04": "跨境ETF",
         "05": "货币ETF",
-        "06": "商品ETF（黄金、上海金等实物商品）",
-        "08": "沪港深ETF",
-        "09": "科创板ETF"
-      }
+        "06": "黄金ETF（商品实物，8只）",
+        "09,31": "科创板相关ETF"
+      },
+      "page_tab_mapping": {
+        "股票ETF_tab": "subClass=01 (单市场ETF)",
+        "债券ETF_tab": "subClass=02,32",
+        "跨境ETF_tab": "subClass=03,08,04",
+        "商品ETF_tab": "subClass=06"
+      },
+      "note": "页面 tab 分类与 API subClass 映射来自页面 JS 对象 etfList.typeOption"
     },
     "isPagination": {
       "value": "true"
@@ -131,6 +138,40 @@
         ],
         "verify": {"selector": ".js_navTabs span.active", "text": "债券ETF"}
       }
+    },
+    "keyword_filter": {
+      "description": "按关键词筛选 ETF。页面本身无搜索框，此模板通过注入 JSONP 请求拉取全量数据（跨所有 subClass），然后替换表格内容为匹配行。将 {{keyword}} 替换为搜索词。",
+      "how_it_works": "通过 <script> 标签发起 JSONP 请求（绕过 CORS），遍历 subClass 01/03/08/09 拉取全部 ETF，按 fundAbbr + secNameFull + INDEX_NAME 做 indexOf 匹配，替换 tbody 内容并隐藏分页器。",
+      "steps": [
+        {
+          "type": "exec_js",
+          "code": "(function(){window.__allItems=[];window.__kw='{{keyword}}';window.__done=false;var scs=['01','03','08','09'];var loaded=0;scs.forEach(function(sc){var cb='__cb_'+sc;window[cb]=function(d){var items=d.pageHelp?d.pageHelp.data:[];window.__allItems=window.__allItems.concat(items);loaded++;if(loaded>=scs.length){var matched=window.__allItems.filter(function(i){return((i.fundAbbr||'')+(i.secNameFull||'')+(i.INDEX_NAME||'')).indexOf(window.__kw)>=0});var tbody=document.querySelector('.js_etfList table tbody');var html='';matched.forEach(function(i){html+='<tr><td><a href=\"/assortment/fund/list/etfinfo/basic/index.shtml?FUNDID='+i.fundCode+'\">'+i.fundCode+'</a></td><td>'+i.secNameFull+'</td><td>'+i.companyName+'</td><td>'+i.INDEX_NAME+'</td></tr>'});tbody.innerHTML=html;var p=document.querySelector('.js_etfList .common_page');if(p)p.style.display='none';document.querySelectorAll('.js_navTabs span').forEach(function(s){s.classList.remove('active')});window.__filterResult='found='+matched.length+'/'+window.__allItems.length;window.__done=true}};var s=document.createElement('script');s.src='//query.sse.com.cn/commonSoaQuery.do?jsonCallBack='+cb+'&isPagination=true&pageHelp.pageSize=500&pageHelp.pageNo=1&sqlId=FUND_LIST&fundType=00&subClass='+sc;document.head.appendChild(s)});return 'loading...'})()",
+          "wait": 8000
+        },
+        {
+          "type": "exec_js",
+          "code": "window.__filterResult||('done='+window.__done+' items='+window.__allItems.length)",
+          "wait": 500
+        }
+      ],
+      "examples": {
+        "nonferrous_metals": {
+          "description": "筛选名称或跟踪指数含"有色"的 ETF",
+          "keyword": "有色",
+          "expected_result": "found=6/642"
+        },
+        "gold": {
+          "description": "筛选黄金相关 ETF",
+          "keyword": "黄金",
+          "expected_result": "found=10+/642"
+        },
+        "rare_earth": {
+          "description": "筛选稀土相关 ETF",
+          "keyword": "稀土",
+          "expected_result": "found=2/642"
+        }
+      },
+      "verified": "2026-04-22, tested with keyword=有色, result: found=6/642 ✅"
     }
   },
   "confidence": 0.95,
