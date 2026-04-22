@@ -155,6 +155,11 @@
     "summary": "单只 ETF 的详情页，包含申赎信息、基金规模、行情、成分股/成分品、公告列表。页面加载多个 API 接口。不含费率数据。"
   },
   {
+    "path": "/www.sse.com.cn/assortment/fund/etf/list",
+    "title": "上交所 ETF 产品列表",
+    "summary": "上交所全部上市 ETF 列表，含基金代码、简称、全称、管理人、基金经理、托管人、上市日期、跟踪指数。通过 commonSoaQuery.do 接口按 subClass 分类查询。不含费率数据。"
+  },
+  {
     "path": "/www.sse.com.cn/assortment/stock/areatrade/area",
     "title": "地区分类",
     "summary": "上交所地区分类。"

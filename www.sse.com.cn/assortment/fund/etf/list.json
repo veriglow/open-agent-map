@@ -156,7 +156,7 @@
       ],
       "examples": {
         "nonferrous_metals": {
-          "description": "筛选名称或跟踪指数含"有色"的 ETF",
+          "description": "筛选名称或跟踪指数含「有色」的 ETF",
           "keyword": "有色",
           "expected_result": "found=6/642"
         },
