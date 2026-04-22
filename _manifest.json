@@ -50,6 +50,11 @@
     "summary": ""
   },
   {
+    "path": "/fundf10.eastmoney.com/jbgk",
+    "title": "天天基金 — 基金基本概况（含费率）",
+    "summary": "东方财富旗下天天基金网的基金档案页，是国内唯一提供结构化费率数据的公开来源。数据服务端渲染在 HTML 中，无前端 API。覆盖全部公募基金（含 ETF），数据来源于基金招募说明书/基金合同。"
+  },
+  {
     "path": "/hrss.sz.gov.cn/postmeta",
     "title": "文章 / 分类 JSON API（政务 CMS）",
     "summary": "深圳人社局官网的内容 JSON API。按 category_id 获取分类元数据和文章列表，覆盖就业创业、社保、人才、劳动关系、常见问题等。无需鉴权。"
@@ -133,6 +138,16 @@
     "path": "/www.producthunt.com",
     "title": "Product Hunt",
     "summary": ""
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/fund/etf/detail",
+    "title": "上交所 ETF 产品详情",
+    "summary": "单只 ETF 的详情页，包含申赎信息、基金规模、行情、成分股/成分品、公告列表。页面加载多个 API 接口。不含费率数据。"
+  },
+  {
+    "path": "/www.sse.com.cn/assortment/fund/etf/list",
+    "title": "上交所 ETF 产品列表",
+    "summary": "上交所全部上市 ETF 列表，含基金代码、简称、全称、管理人、基金经理、托管人、上市日期、跟踪指数。通过 commonSoaQuery.do 接口按 subClass 分类查询。不含费率数据。"
   },
   {
     "path": "/www.sse.com.cn/assortment/stock/areatrade/area",
@@ -593,6 +608,11 @@
     "path": "/www.szse.cn/market/market-overview",
     "title": "深交所市场总览",
     "summary": "深圳证券交易所市场总览统计：证券类别数量、成交金额、总市值、流通市值。覆盖股票、基金、债券等全部证券类别。"
+  },
+  {
+    "path": "/www.szse.cn/market/product-etf-list",
+    "title": "深交所 ETF 产品列表",
+    "summary": "深交所全部上市 ETF 列表，含基金代码、简称、管理人、跟踪指数代码、当前规模。通过 ShowReport API 分页获取。不含费率数据。"
   },
   {
     "path": "/www.szse.cn/market/realtime-quote",

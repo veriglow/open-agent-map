@@ -1,0 +1,73 @@
+{
+  "domain": "www.szse.cn",
+  "url": "https://www.szse.cn/market/product/list/etfList/index.html",
+  "title": "深交所 ETF 产品列表",
+  "summary": "深交所全部上市 ETF 列表，含基金代码、简称、管理人、跟踪指数代码、当前规模。通过 ShowReport API 分页获取。不含费率数据。",
+  "method": "GET",
+  "endpoint": "https://www.szse.cn/api/report/ShowReport/data",
+  "headers": {
+    "Referer": "https://www.szse.cn/"
+  },
+  "params": {
+    "SHOWTYPE": {
+      "value": "JSON",
+      "description": "固定值"
+    },
+    "CATALOGID": {
+      "value": "1945",
+      "description": "ETF列表目录ID，固定值"
+    },
+    "tab1PAGENO": {
+      "type": "integer",
+      "required": true,
+      "description": "页码，从1开始"
+    },
+    "tab1PAGESIZE": {
+      "value": "10",
+      "description": "每页条数，固定为10，服务端强制限制无法调大"
+    },
+    "loading": {
+      "value": "first",
+      "description": "首次加载标记"
+    }
+  },
+  "returns": {
+    "format": "JSON array",
+    "data_path": "[0].data",
+    "metadata_path": "[0].metadata",
+    "metadata_fields": {
+      "recordcount": "总记录数",
+      "pagecount": "总页数",
+      "pageno": "当前页码",
+      "pagesize": "每页条数"
+    },
+    "fields": {
+      "sys_key": "HTML，含基金代码（需正则提取 code=(\\d+)）和行情链接",
+      "kzjcurl": "HTML，含基金简称（需正则提取 name=xxx 并 URL decode）和公告链接",
+      "nhzs": "跟踪指数代码（如 H11059, SHAU），部分为指数代码而非名称",
+      "dqgm": "当前规模（万元），HTML格式需去标签",
+      "glrmc": "基金管理人名称"
+    }
+  },
+  "examples": {
+    "first_page": "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1945&tab1PAGESIZE=10&tab1PAGENO=1",
+    "page_5": "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1945&tab1PAGESIZE=10&tab1PAGENO=5"
+  },
+  "caveats": [
+    "每页固定10条，无法调大，获取全部636只ETF需遍历64页",
+    "字段值为HTML片段，需用正则/DOM解析提取纯文本",
+    "基金简称在 kzjcurl 字段的 name= 参数中，需 URL decode",
+    "跟踪指数只有代码（如 H11059），没有中文名称",
+    "不含费率、基金经理、上市日期等元数据",
+    "深交所 SSL 证书不稳定，本地直连可能失败，建议通过 scout 浏览器端 fetch 获取",
+    "从 scout 浏览器内批量 fetch 时需加 200ms 延迟，否则会被限流"
+  ],
+  "data_coverage": {
+    "as_of": "2026-04-22",
+    "total_etfs": 636,
+    "metal_related_count": 17,
+    "metal_keywords": ["黄金", "金ETF", "上海金", "有色金属", "稀有金属", "稀土", "工业有色", "矿业"]
+  },
+  "confidence": 0.85,
+  "last_verified": "2026-04-22"
+}

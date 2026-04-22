@@ -1,0 +1,97 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/assortment/fund/etf/list/",
+  "title": "上交所 ETF 产品列表",
+  "summary": "上交所全部上市 ETF 列表，含基金代码、简称、全称、管理人、基金经理、托管人、上市日期、跟踪指数。通过 commonSoaQuery.do 接口按 subClass 分类查询。不含费率数据。",
+  "method": "GET",
+  "endpoint": "https://query.sse.com.cn/commonSoaQuery.do",
+  "headers": {
+    "Referer": "https://www.sse.com.cn/"
+  },
+  "params": {
+    "sqlId": {
+      "value": "FUND_LIST",
+      "description": "固定值"
+    },
+    "fundType": {
+      "value": "00",
+      "description": "基金类型，00=ETF"
+    },
+    "subClass": {
+      "type": "string",
+      "required": true,
+      "description": "ETF 分类代码",
+      "enum": {
+        "01": "股票ETF（含沪深300、中证500等宽基）",
+        "02": "债券ETF",
+        "03": "跨境ETF（含沪深300、MSCI等跨市场）",
+        "05": "货币ETF",
+        "06": "商品ETF（黄金、上海金等实物商品）",
+        "08": "沪港深ETF",
+        "09": "科创板ETF"
+      }
+    },
+    "isPagination": {
+      "value": "true"
+    },
+    "pageHelp.pageSize": {
+      "value": "500",
+      "description": "每页条数，最大500可一次拉全"
+    },
+    "pageHelp.pageNo": {
+      "value": "1"
+    },
+    "jsonCallBack": {
+      "value": "cb",
+      "description": "JSONP 回调函数名"
+    }
+  },
+  "returns": {
+    "format": "JSONP",
+    "data_path": "pageHelp.data",
+    "fields": {
+      "fundCode": "基金代码，如 518880",
+      "fundAbbr": "基金简称，如 黄金ETF",
+      "secNameFull": "基金全称，如 黄金ETF华安",
+      "companyName": "基金管理人，如 华安基金管理有限公司",
+      "fundManager": "基金经理，如 许之彦",
+      "TRUSTEE_NAME": "托管人，如 中国建设银行股份有限公司",
+      "listingDate": "上市日期，格式 YYYYMMDD",
+      "INDEX_NAME": "跟踪指数名称（商品ETF此字段为空）",
+      "INDEX_CODE": "跟踪指数代码",
+      "fundType": "基金类型代码",
+      "subClass": "分类代码"
+    },
+    "total_field": "pageHelp.total"
+  },
+  "examples": {
+    "all_stock_etf": "https://query.sse.com.cn/commonSoaQuery.do?jsonCallBack=cb&isPagination=true&pageHelp.pageSize=500&pageHelp.pageNo=1&sqlId=FUND_LIST&fundType=00&subClass=01",
+    "commodity_etf": "https://query.sse.com.cn/commonSoaQuery.do?jsonCallBack=cb&isPagination=true&pageHelp.pageSize=500&pageHelp.pageNo=1&sqlId=FUND_LIST&fundType=00&subClass=06",
+    "single_fund": "https://query.sse.com.cn/commonSoaQuery.do?jsonCallBack=cb&isPagination=false&sqlId=FUND_LIST&fundType=00&fundCode=518880"
+  },
+  "caveats": [
+    "必须带 Referer: https://www.sse.com.cn/ 否则被拒",
+    "返回 JSONP 格式，需用正则去掉 cb(...) 包装后解析 JSON",
+    "不含费率（管理费/托管费）数据，需从 fundf10.eastmoney.com 补充",
+    "商品ETF（subClass=06）的 INDEX_NAME 和 INDEX_CODE 为空",
+    "subClass=04/07/10/11/12 当前无数据",
+    "有色金属/稀土等 ETF 分散在 subClass=01（股票ETF）和 subClass=03（跨境ETF）中，需按名称关键词筛选"
+  ],
+  "data_coverage": {
+    "as_of": "2026-04-22",
+    "total_etfs": 696,
+    "by_subclass": {
+      "01_stock": 453,
+      "02_bond": 22,
+      "03_cross_border": 30,
+      "05_money_market": 24,
+      "06_commodity": 8,
+      "08_shenzhen_hk": 30,
+      "09_star_market": 108
+    },
+    "metal_related_count": 22,
+    "metal_keywords": ["黄金", "金ETF", "上海金", "有色金属", "稀有金属", "稀土", "钢铁", "矿业", "工业有色"]
+  },
+  "confidence": 0.95,
+  "last_verified": "2026-04-22"
+}

@@ -1,0 +1,75 @@
+{
+  "domain": "fundf10.eastmoney.com",
+  "url": "https://fundf10.eastmoney.com/jbgk_{fundCode}.html",
+  "title": "天天基金 — 基金基本概况（含费率）",
+  "summary": "东方财富旗下天天基金网的基金档案页，是国内唯一提供结构化费率数据的公开来源。数据服务端渲染在 HTML 中，无前端 API。覆盖全部公募基金（含 ETF），数据来源于基金招募说明书/基金合同。",
+  "method": "GET",
+  "endpoint": "https://fundf10.eastmoney.com/jbgk_{fundCode}.html",
+  "params": {
+    "fundCode": {
+      "type": "string",
+      "required": true,
+      "description": "基金代码，如 518880",
+      "examples": ["518880", "159831", "510300"]
+    }
+  },
+  "returns": {
+    "format": "HTML（服务端渲染，table.info 中的 tr/th/td）",
+    "extraction": {
+      "method": "DOM 解析 table.info tr",
+      "description": "表格为 4 列布局：[label1, value1, label2, value2]"
+    },
+    "fields": {
+      "基金全称": "如 华安易富黄金交易型开放式证券投资基金",
+      "基金简称": "如 黄金ETF华安",
+      "基金代码": "如 518880（主代码）",
+      "基金类型": "如 指数型-其他",
+      "发行日期": "如 2013年06月24日",
+      "成立日期/规模": "如 2013年07月18日 / 12.085亿份",
+      "净资产规模": "如 1,138.16亿元（截止至：2026年03月31日）",
+      "份额规模": "如 117.0944亿份",
+      "基金管理人": "如 华安基金",
+      "基金托管人": "如 建设银行",
+      "基金经理人": "如 许之彦",
+      "管理费率": "如 0.50%（每年）",
+      "托管费率": "如 0.10%（每年）",
+      "销售服务费率": "如 ---（每年）",
+      "最高认购费率": "如 0.50%",
+      "最高申购费率": "如 ---",
+      "最高赎回费率": "如 ---",
+      "业绩比较基准": "如 国内黄金现货价格收益率",
+      "跟踪标的": "如 黄金9999"
+    }
+  },
+  "extraction_recipe": {
+    "scout_exec_js": "Array.from(document.querySelectorAll('table.info tr')).map(tr=>{const cells=Array.from(tr.querySelectorAll('th,td')).map(c=>c.textContent.trim());return cells.join(' | ')}).join('\\n')",
+    "description": "在 scout exec_js 中运行此代码可提取全部字段为 pipe-separated 文本"
+  },
+  "batch_strategy": {
+    "description": "无批量 API，需逐只基金抓取详情页。建议先用交易所 API 获取目标基金代码列表，再逐个请求此页面。",
+    "rate_limit": "无明确限制，建议间隔 500ms",
+    "concurrency": "建议单线程顺序请求"
+  },
+  "data_provenance": {
+    "description": "费率等元数据的第一手来源是各基金公司的招募说明书/基金合同（PDF），由基金公司起草、证监会审批、交易所公告栏发布。东方财富从这些法律文件中提取并结构化存储。中国没有官方机构提供结构化的公募基金费率 API。",
+    "primary_source": "基金招募说明书 / 基金合同 (PDF)",
+    "official_pdf_sources": [
+      "上交所公告: https://query.sse.com.cn/commonQuery.do?sqlId=COMMON_PL_JJXX_JJGG_L&SECURITY_CODE={fundCode}",
+      "深交所公告: https://www.szse.cn/disclosure/fund/etf/index.html?stock={fundCode}"
+    ]
+  },
+  "related_pages": {
+    "费率详情": "https://fundf10.eastmoney.com/tsdata_{fundCode}.html",
+    "持仓明细": "https://fundf10.eastmoney.com/ccmx_{fundCode}.html",
+    "历史净值": "https://fundf10.eastmoney.com/jdzf_{fundCode}.html",
+    "基金公告": "https://fundf10.eastmoney.com/jjgg_{fundCode}.html"
+  },
+  "caveats": [
+    "数据为服务端 HTML 渲染，无 JSON API，必须解析 DOM",
+    "费率数据来自招募说明书，更新频率低（仅在基金合同变更时更新）",
+    "部分新基金可能页面尚未收录",
+    "作为二手聚合源，数据准确性取决于东方财富的解析质量，关键决策建议核对交易所公告原文"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-04-22"
+}

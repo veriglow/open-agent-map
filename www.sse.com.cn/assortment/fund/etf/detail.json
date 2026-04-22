@@ -1,0 +1,114 @@
+{
+  "domain": "www.sse.com.cn",
+  "url": "https://www.sse.com.cn/assortment/fund/list/etfinfo/basic/index.shtml?FUNDID={fundCode}",
+  "title": "上交所 ETF 产品详情",
+  "summary": "单只 ETF 的详情页，包含申赎信息、基金规模、行情、成分股/成分品、公告列表。页面加载多个 API 接口。不含费率数据。",
+  "endpoints": [
+    {
+      "title": "基金基本信息",
+      "method": "GET",
+      "endpoint": "https://query.sse.com.cn/commonSoaQuery.do",
+      "params": {
+        "sqlId": "FUND_LIST",
+        "fundType": "",
+        "fundCode": "{fundCode}",
+        "isPagination": "false",
+        "jsonCallBack": "cb"
+      },
+      "returns": "同列表接口字段：fundCode, fundAbbr, secNameFull, companyName, fundManager, TRUSTEE_NAME, listingDate, INDEX_NAME"
+    },
+    {
+      "title": "ETF 申赎清单 & 基本信息",
+      "method": "GET",
+      "endpoint": "https://query.sse.com.cn/commonQuery.do",
+      "params": {
+        "sqlId": "COMMON_SSE_CP_JJLB_ETFJJGK_GGSGSHQD_JBXX_C",
+        "FUNDID2": "{fundCode}",
+        "isPagination": "false",
+        "jsonCallBack": "cb"
+      },
+      "returns": {
+        "NAV": "单位净值",
+        "CREATION_REDEMPTION_UNIT": "最小申赎单位(份)",
+        "FUND_NAME": "基金全称",
+        "FUND_COMP_NAME": "管理人",
+        "ETF_TYPE": "ETF类型代码",
+        "CREATION_REDEMPTION": "申赎状态"
+      }
+    },
+    {
+      "title": "ETF 成分股/成分品清单",
+      "method": "GET",
+      "endpoint": "https://query.sse.com.cn/commonQuery.do",
+      "params": {
+        "sqlId": "COMMON_SSE_CP_JJLB_ETFJJGK_GGSGSHQD_COMPONENT_C",
+        "FUNDID2": "{fundCode}",
+        "isPagination": "true",
+        "pageHelp.pageSize": "100",
+        "jsonCallBack": "cb"
+      },
+      "returns": {
+        "INSTRUMENT_NAME": "成分名称",
+        "INSTRUMENT_ID": "成分代码",
+        "QUANTITY": "数量",
+        "SUBSTITUTION_FLAG": "现金替代标志",
+        "SUBSTITUTION_CASH_AMOUNT": "替代金额"
+      }
+    },
+    {
+      "title": "基金规模（每日份额）",
+      "method": "GET",
+      "endpoint": "https://query.sse.com.cn/commonQuery.do",
+      "params": {
+        "sqlId": "COMMON_SSE_ZQPZ_ETFZL_ETFJBXX_JJGM_MOREN_L",
+        "SEC_CODE": "{fundCode}",
+        "isPagination": "true",
+        "jsonCallBack": "cb"
+      },
+      "returns": {
+        "STAT_DATE": "日期",
+        "TOT_VOL": "总份额(万份)",
+        "SEC_NAME": "基金简称",
+        "ETF_TYPE": "ETF类型"
+      }
+    },
+    {
+      "title": "基金公告列表",
+      "method": "GET",
+      "endpoint": "https://query.sse.com.cn/commonQuery.do",
+      "params": {
+        "sqlId": "COMMON_PL_JJXX_JJGG_L",
+        "SECURITY_CODE": "{fundCode}",
+        "isPagination": "true",
+        "jsonCallBack": "cb"
+      },
+      "returns": {
+        "TITLE": "公告标题",
+        "SSEDATE": "日期",
+        "BULLETIN_TYPE": "公告类型（季报/年报/临时公告等）",
+        "URL": "PDF下载路径（相对路径，拼接 https://www.sse.com.cn）"
+      }
+    },
+    {
+      "title": "实时行情快照",
+      "method": "GET",
+      "endpoint": "https://yunhq.sse.com.cn:32042/v1/sh1/snap/{fundCode}",
+      "params": {
+        "select": "name,last,chg_rate,change,amount,volume,open,prev_close,high,low",
+        "callback": "cb"
+      },
+      "returns": "实时行情数组：[名称, 最新价, 涨跌幅, 涨跌额, 成交额, 成交量, 开盘, 昨收, 最高, 最低]"
+    }
+  ],
+  "headers": {
+    "Referer": "https://www.sse.com.cn/"
+  },
+  "caveats": [
+    "所有接口均为 JSONP 格式",
+    "必须带 Referer header",
+    "不含费率（管理费率/托管费率）数据",
+    "费率数据的第一手来源是招募说明书 PDF（可从公告列表中下载），结构化数据需从 fundf10.eastmoney.com 获取"
+  ],
+  "confidence": 0.9,
+  "last_verified": "2026-04-22"
+}
