@@ -50,6 +50,11 @@
     "summary": ""
   },
   {
+    "path": "/fundf10.eastmoney.com/fund-search",
+    "title": "天天基金 — 基金关键词搜索 API",
+    "summary": "按关键词搜索全部公募基金（ETF、LOF、指数联接、QDII、增强指数等）的免费 API。返回基金代码、名称、基金类型、管理人、基金经理、最新净值等。是跨类型基金产品发现的最高效入口。"
+  },
+  {
     "path": "/fundf10.eastmoney.com/jbgk",
     "title": "天天基金 — 基金基本概况（含费率）",
     "summary": "东方财富旗下天天基金网的基金档案页，是国内唯一提供结构化费率数据的公开来源。数据服务端渲染在 HTML 中，无前端 API。覆盖全部公募基金（含 ETF），数据来源于基金招募说明书/基金合同。"
@@ -108,6 +113,11 @@
     "path": "/opendata.sz.gov.cn/maintenance/hotData",
     "title": "热门数据集 / 热门 API",
     "summary": "站内最热数据集和最热 API 排行，无需参数。适合探索时找高价值入口。"
+  },
+  {
+    "path": "/push2.eastmoney.com/etf-quotes",
+    "title": "东方财富 — ETF 实时行情列表 API",
+    "summary": "东方财富行情推送接口，可获取全部 ETF 的实时行情数据（价格、涨跌幅、成交量、成交额、开盘价、最高最低价等）。支持排序和分页。"
   },
   {
     "path": "/push2ex.eastmoney.com/dt-pool",
@@ -613,6 +623,11 @@
     "path": "/www.szse.cn/market/product-etf-list",
     "title": "深交所 ETF 产品列表",
     "summary": "深交所全部上市 ETF 列表，含基金代码、简称、管理人、跟踪指数代码、当前规模。通过 ShowReport API 分页获取。不含费率数据。"
+  },
+  {
+    "path": "/www.szse.cn/market/product-lof-list",
+    "title": "深交所 LOF 基金列表",
+    "summary": "深交所全部上市 LOF 基金列表，含基金代码、简称、管理人、当前规模。通过 ShowReport API 分页获取，CATALOGID=fund_lof。"
   },
   {
     "path": "/www.szse.cn/market/realtime-quote",

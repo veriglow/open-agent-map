@@ -1,0 +1,99 @@
+{
+  "domain": "push2.eastmoney.com",
+  "url": "https://push2.eastmoney.com/api/qt/clist/get",
+  "title": "东方财富 — ETF 实时行情列表 API",
+  "summary": "东方财富行情推送接口，可获取全部 ETF 的实时行情数据（价格、涨跌幅、成交量、成交额、开盘价、最高最低价等）。支持排序和分页。",
+  "method": "GET",
+  "endpoint": "https://push2.eastmoney.com/api/qt/clist/get",
+  "headers": {
+    "Referer": "https://quote.eastmoney.com/",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+  },
+  "params": {
+    "cb": {
+      "type": "string",
+      "required": false,
+      "description": "JSONP回调函数名，留空返回纯JSON"
+    },
+    "fid": {
+      "value": "f3",
+      "description": "排序字段，f3=涨跌幅, f6=成交额, f5=成交量"
+    },
+    "po": {
+      "value": "1",
+      "description": "排序方向：1=降序, 0=升序"
+    },
+    "pz": {
+      "type": "integer",
+      "value": "50",
+      "description": "每页条数"
+    },
+    "pn": {
+      "type": "integer",
+      "value": "1",
+      "description": "页码"
+    },
+    "np": {
+      "value": "1"
+    },
+    "fltt": {
+      "value": "2"
+    },
+    "invt": {
+      "value": "2"
+    },
+    "fs": {
+      "type": "string",
+      "required": true,
+      "description": "市场筛选条件",
+      "enum": {
+        "b:MK0021,b:MK0022,b:MK0023,b:MK0024": "全部ETF（沪深两市）",
+        "b:MK0021": "上交所ETF",
+        "b:MK0022": "深交所ETF"
+      }
+    },
+    "fields": {
+      "type": "string",
+      "required": true,
+      "description": "返回字段列表（逗号分隔）",
+      "common_fields": {
+        "f2": "最新价",
+        "f3": "涨跌幅(%)",
+        "f4": "涨跌额",
+        "f5": "成交量(手)",
+        "f6": "成交额(元)",
+        "f12": "基金代码",
+        "f14": "基金简称",
+        "f15": "最高价",
+        "f16": "最低价",
+        "f17": "开盘价",
+        "f18": "昨收价"
+      }
+    }
+  },
+  "returns": {
+    "format": "JSON",
+    "fields": {
+      "data.total": "总记录数",
+      "data.diff": "行情数据数组"
+    }
+  },
+  "examples": {
+    "all_etf_by_change": "https://push2.eastmoney.com/api/qt/clist/get?fid=f3&po=1&pz=50&pn=1&np=1&fltt=2&invt=2&fs=b:MK0021,b:MK0022,b:MK0023,b:MK0024&fields=f12,f14,f2,f3,f4,f5,f6,f17,f18",
+    "all_etf_by_volume": "https://push2.eastmoney.com/api/qt/clist/get?fid=f6&po=1&pz=50&pn=1&np=1&fltt=2&invt=2&fs=b:MK0021,b:MK0022,b:MK0023,b:MK0024&fields=f12,f14,f2,f3,f5,f6"
+  },
+  "caveats": [
+    "必须带正确的 Referer 和 User-Agent header，否则返回空数据",
+    "连接不稳定，可能出现空响应或超时，建议加重试逻辑",
+    "Python 中需设 trust_env=False 绕过系统代理",
+    "push2.eastmoney.com 和 push2ex.eastmoney.com 是同一套接口，ex 后缀更稳定",
+    "实时数据仅在交易时段有效，非交易时段返回上一交易日收盘数据",
+    "total 字段显示全部 ETF 数量（约1423只，含沪深两市），可按基金名称关键词二次筛选"
+  ],
+  "data_coverage": {
+    "as_of": "2026-04-22",
+    "total_etfs": 1423
+  },
+  "confidence": 0.85,
+  "last_verified": "2026-04-22"
+}

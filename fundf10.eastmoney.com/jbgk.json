@@ -43,7 +43,20 @@
   },
   "extraction_recipe": {
     "scout_exec_js": "Array.from(document.querySelectorAll('table.info tr')).map(tr=>{const cells=Array.from(tr.querySelectorAll('th,td')).map(c=>c.textContent.trim());return cells.join(' | ')}).join('\\n')",
-    "description": "在 scout exec_js 中运行此代码可提取全部字段为 pipe-separated 文本"
+    "description": "在 scout exec_js 中运行此代码可提取全部字段为 pipe-separated 文本",
+    "structured_extraction_js": "(()=>{const rows=Array.from(document.querySelectorAll('table.info tr'));const obj={};rows.forEach(tr=>{const cells=Array.from(tr.querySelectorAll('th,td')).map(c=>c.textContent.trim());for(let i=0;i<cells.length-1;i+=2){if(cells[i])obj[cells[i]]=cells[i+1]||''}});return JSON.stringify(obj)})()",
+    "structured_description": "返回 JSON 对象，key 为中文字段名，value 为文本值",
+    "field_mapping": {
+      "管理费率": {"regex": "([\\d.]+)%", "example": "0.50%（每年）→ 0.50"},
+      "托管费率": {"regex": "([\\d.]+)%", "example": "0.10%（每年）→ 0.10"},
+      "净资产规模": {"regex": "([\\d,.]+)亿元", "example": "1,138.16亿元（截止至：2026年03月31日）→ 1138.16"},
+      "成立日期/规模": {"regex": "(\\d{4}年\\d{2}月\\d{2}日)", "example": "2013年07月18日 / 12.085亿份 → 2013年07月18日"},
+      "跟踪标的": {"regex": "(.+)", "example": "黄金9999"},
+      "业绩比较基准": {"regex": "(.+)", "example": "国内黄金现货价格收益率"},
+      "基金类型": {"regex": "(.+)", "example": "指数型-其他"},
+      "基金管理人": {"regex": "(.+)", "example": "华安基金"},
+      "基金经理人": {"regex": "(.+)", "example": "许之彦"}
+    }
   },
   "batch_strategy": {
     "description": "无批量 API，需逐只基金抓取详情页。建议先用交易所 API 获取目标基金代码列表，再逐个请求此页面。",

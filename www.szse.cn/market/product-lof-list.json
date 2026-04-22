@@ -1,0 +1,63 @@
+{
+  "domain": "www.szse.cn",
+  "url": "https://www.szse.cn/market/product/list/lofList/index.html",
+  "title": "深交所 LOF 基金列表",
+  "summary": "深交所全部上市 LOF 基金列表，含基金代码、简称、管理人、当前规模。通过 ShowReport API 分页获取，CATALOGID=fund_lof。",
+  "method": "GET",
+  "endpoint": "https://www.szse.cn/api/report/ShowReport/data",
+  "headers": {
+    "Referer": "https://www.szse.cn/"
+  },
+  "params": {
+    "SHOWTYPE": {
+      "value": "JSON"
+    },
+    "CATALOGID": {
+      "value": "fund_lof",
+      "description": "LOF基金列表目录ID，固定值（注意：ETF用1945，LOF用fund_lof）"
+    },
+    "tab1PAGENO": {
+      "type": "integer",
+      "required": true,
+      "description": "页码，从1开始"
+    },
+    "tab1PAGESIZE": {
+      "value": "10",
+      "description": "每页条数，固定为10"
+    }
+  },
+  "returns": {
+    "format": "JSON array",
+    "data_path": "[0].data",
+    "metadata_path": "[0].metadata",
+    "fields": {
+      "sys_key": "基金代码（纯文本，如 162721）",
+      "kzjcurl": "基金简称（纯文本，如 广发积极FOF-LOF）",
+      "nhzs": "跟踪指数（LOF通常为空）",
+      "dqgm": "当前规模（万元）",
+      "glrmc": "基金管理人",
+      "cxjqhq": "链接：查看行情",
+      "zxjjjz": "链接：查看净值"
+    }
+  },
+  "related_catalogids": {
+    "1945": "ETF列表（636条）",
+    "fund_lof": "LOF基金列表（285条）",
+    "1956": "Fund Information — 全部基金产品（947条），含英文名、上市日期、规模"
+  },
+  "examples": {
+    "first_page": "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=fund_lof&tab1PAGESIZE=10&tab1PAGENO=1"
+  },
+  "caveats": [
+    "每页固定10条，需遍历29页获取全部285只LOF",
+    "与ETF列表不同，LOF的sys_key和kzjcurl是纯文本而非HTML",
+    "不含费率、基金经理、上市日期等元数据",
+    "深交所SSL证书不稳定，建议通过 scout 浏览器端或加 -k 参数绕过证书校验"
+  ],
+  "data_coverage": {
+    "as_of": "2026-04-22",
+    "total_lofs": 285
+  },
+  "confidence": 0.9,
+  "last_verified": "2026-04-22"
+}

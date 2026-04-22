@@ -1,0 +1,73 @@
+{
+  "domain": "fundsuggest.eastmoney.com",
+  "url": "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx",
+  "title": "天天基金 — 基金关键词搜索 API",
+  "summary": "按关键词搜索全部公募基金（ETF、LOF、指数联接、QDII、增强指数等）的免费 API。返回基金代码、名称、基金类型、管理人、基金经理、最新净值等。是跨类型基金产品发现的最高效入口。",
+  "method": "GET",
+  "endpoint": "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx",
+  "headers": {
+    "Referer": "https://fund.eastmoney.com/"
+  },
+  "params": {
+    "m": {
+      "value": "1",
+      "description": "固定值"
+    },
+    "key": {
+      "type": "string",
+      "required": true,
+      "description": "搜索关键词，如 黄金、有色金属、铜",
+      "examples": ["黄金", "有色金属", "稀土", "铜"]
+    },
+    "callback": {
+      "type": "string",
+      "required": false,
+      "description": "JSONP回调函数名，留空则返回纯JSON"
+    }
+  },
+  "returns": {
+    "format": "JSON (callback为空时) 或 JSONP",
+    "fields": {
+      "ErrCode": "0=成功",
+      "Datas": "搜索结果数组"
+    },
+    "item_fields": {
+      "CODE": "基金代码",
+      "NAME": "基金简称",
+      "JP": "简拼",
+      "CATEGORY": "700=基金",
+      "CATEGORYDESC": "分类描述",
+      "FundBaseInfo.FCODE": "基金代码",
+      "FundBaseInfo.SHORTNAME": "基金简称",
+      "FundBaseInfo.JJGS": "基金公司简称",
+      "FundBaseInfo.JJJL": "基金经理（逗号分隔多人）",
+      "FundBaseInfo.FTYPE": "基金类型，如 指数型-股票、QDII-商品、混合型-偏股",
+      "FundBaseInfo.FUNDTYPE": "类型代码：001=股票型, 002=指数型, 003=混合型, 005=债券型, 007=QDII, 010=LOF",
+      "FundBaseInfo.DWJZ": "最新单位净值",
+      "FundBaseInfo.FSRQ": "净值日期 YYYY-MM-DD",
+      "FundBaseInfo.MINSG": "最低申购金额(元)",
+      "FundBaseInfo.ISBUY": "申购状态：1=可买, 空/4=不可买",
+      "FundBaseInfo.OTHERNAME": "别名列表（逗号分隔）"
+    }
+  },
+  "examples": {
+    "search_gold": "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?m=1&key=黄金",
+    "search_metals": "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?m=1&key=有色金属",
+    "search_rare_earth": "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?m=1&key=稀土"
+  },
+  "use_cases": [
+    "跨类型基金发现：一次搜索覆盖 ETF + LOF + 指数联接 + QDII + 增强指数等所有基金类型",
+    "按主题筛选：搜索 黄金/有色/稀土 等关键词快速定位金属相关基金产品",
+    "获取基金经理和管理人信息",
+    "获取最新净值和申购状态"
+  ],
+  "caveats": [
+    "callback 参数留空可直接获得纯 JSON，无需处理 JSONP",
+    "搜索结果按相关度排序，无法指定排序方式",
+    "不含费率数据，需跳转 fundf10.eastmoney.com/jbgk_{CODE}.html 获取",
+    "FUNDTYPE 代码与 FTYPE 文字描述可能不完全对应，以 FTYPE 为准",
+    "搜索结果可能包含已清盘基金"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-04-22"
+}
