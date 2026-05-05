@@ -5,6 +5,11 @@
     "summary": ""
   },
   {
+    "path": "/api.unpaywall.org",
+    "title": "Unpaywall (Open Access Paper Finder)",
+    "summary": ""
+  },
+  {
     "path": "/arxiv.org",
     "title": "arXiv (Cornell University Open-Access Papers)",
     "summary": ""
@@ -138,6 +143,11 @@
     "path": "/push2ex.eastmoney.com/zt-pool",
     "title": "涨停股池",
     "summary": "当日当前涨停的所有A股股票（不含未中断连续一字涨停的新股，不含ST和科创板）。含连板数、首次封板时间、封板资金等打板核心字段。历史数据仅保留近期（约30个交易日），更早的日期返回空。"
+  },
+  {
+    "path": "/sci-hub.st",
+    "title": "Sci-Hub (Academic Paper PDF Access)",
+    "summary": ""
   },
   {
     "path": "/tushare.pro",

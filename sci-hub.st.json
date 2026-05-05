@@ -1,0 +1,66 @@
+{
+  "id": "sci-hub.st",
+  "name": "Sci-Hub (Academic Paper PDF Access)",
+  "type": "signpost",
+  "verdict": "unstable-but-functional",
+  "why_signpost": "单一 URL 模式，无正式 API，但可通过 HTML 解析获取 PDF 直链",
+  "quick_start": "curl -s 'https://sci-hub.st/10.1126/science.aaa1160' | grep -oP 'citation_pdf_url.*?content=\"\\K[^\"]+' → 拼上域名即为 PDF 直链",
+  "workflow": {
+    "step_1": {
+      "action": "GET https://sci-hub.st/{DOI}",
+      "returns": "HTML 页面（含论文元数据和 PDF 路径）"
+    },
+    "step_2": {
+      "action": "从 HTML 提取 <meta name=\"citation_pdf_url\" content=\"{path}\">",
+      "example_value": "/storage/2024/6722/70f157cacfce4cad0a5e4d0fd3cf92c6/bakshy2015.pdf"
+    },
+    "step_3": {
+      "action": "GET https://sci-hub.st{path}",
+      "returns": "application/pdf（直接下载，无需 CAPTCHA）"
+    }
+  },
+  "pdf_url_pattern": "https://sci-hub.st/storage/{year}/{id}/{hash}/{filename}.pdf",
+  "html_extraction": {
+    "method": "meta 标签解析",
+    "selector": "meta[name=citation_pdf_url]",
+    "attribute": "content",
+    "note": "值为相对路径，需拼接域名前缀"
+  },
+  "also_available_in_html": {
+    "object_tag": "<object type=\"application/pdf\" data=\"{path}#navpanes=0&view=FitH\">",
+    "download_link": "<a href=\"{path}\"> (class=download 区域内)",
+    "citation_meta": "citation_title, citation_author, citation_publication_date, citation_journal_title, citation_doi"
+  },
+  "mirrors": {
+    "sci-hub.st": "可用（2026-05-05 验证）",
+    "sci-hub.ru": "可用（2026-05-05 验证）",
+    "sci-hub.se": "已下线",
+    "note": "域名因法律原因频繁更换，官方 Telegram @scaboratorySH 发布最新镜像"
+  },
+  "protection": {
+    "ddos_guard": "所有域名使用 DDoS-Guard CDN，首次请求会设置 cookie",
+    "captcha": "Altcha widget 仅用于 report problem 功能，不拦截 PDF 下载",
+    "rate_limit": "未知，建议间隔 1-2 秒"
+  },
+  "agent_tips": {
+    "cookie_handling": "首次请求会返回 __ddg1_ 等 cookie，后续请求携带即可",
+    "fallback_strategy": "如果 .st 域名失效，尝试 .ru；两个都不行时检查 Telegram 获取新域名",
+    "no_doi_no_result": "必须有 DOI 才能查询，不支持标题搜索",
+    "combined_with_unpaywall": "建议先查 Unpaywall 走合法 OA 路径，无 OA 时再用 Sci-Hub"
+  },
+  "limitations": [
+    "域名不稳定，可能随时被封",
+    "DDoS-Guard 可能对高频请求触发验证",
+    "仅支持 DOI 查询",
+    "法律风险：多国违法，使用需自行评估"
+  ],
+  "homepage_card": {
+    "order": 51,
+    "description": "通过 DOI 获取论文 PDF（非 OA 论文的最后手段）",
+    "branches": [
+      {"prefix": "GET", "text": "/{DOI} → 解析 citation_pdf_url → 下载 PDF"},
+      {"desc": "mirrors: .st / .ru | DDoS-Guard | 无需 CAPTCHA"}
+    ]
+  },
+  "last_verified": "2026-05-05"
+}

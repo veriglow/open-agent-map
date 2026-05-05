@@ -403,6 +403,40 @@ footer a:hover{color:var(--am-green);}
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=api.unpaywall.org&sz=32" alt="" width="20" height="20">
+        Unpaywall (Open Access Paper Finder)
+        <small>api.unpaywall.org — 自文档化</small>
+      </div>
+      <div class="site-card-badge" style="background:var(--am-blue-dim);color:var(--am-blue);">Signpost</div>
+    </div>
+    <div class="site-card-meta">路由指引 &middot; 查询论文是否有免费 OA 版本，返回 PDF 直链</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">GET</span> <span class="branch-dir">/v2/{DOI}?email={EMAIL}</span></div>
+      <div class="branch"><span class="branch-prefix">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">is_oa · oa_status · best_oa_location.url_for_pdf · authors · title</span></div>
+    </div>
+    <a href="/api.unpaywall.org" class="site-card-action">View signpost &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=sci-hub.st&sz=32" alt="" width="20" height="20">
+        Sci-Hub (Academic Paper PDF Access)
+        <small>sci-hub.st — 自文档化</small>
+      </div>
+      <div class="site-card-badge" style="background:var(--am-blue-dim);color:var(--am-blue);">Signpost</div>
+    </div>
+    <div class="site-card-meta">路由指引 &middot; 通过 DOI 获取论文 PDF（非 OA 论文的最后手段）</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">GET</span> <span class="branch-dir">/{DOI} → 解析 citation_pdf_url → 下载 PDF</span></div>
+      <div class="branch"><span class="branch-prefix">&nbsp;&nbsp;&nbsp;</span> <span class="branch-desc">mirrors: .st / .ru | DDoS-Guard | 无需 CAPTCHA</span></div>
+    </div>
+    <a href="/sci-hub.st" class="site-card-action">View signpost &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.producthunt.com&sz=32" alt="" width="20" height="20">
         Product Hunt
         <small>www.producthunt.com — 自文档化</small>

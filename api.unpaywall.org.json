@@ -1,0 +1,53 @@
+{
+  "id": "api.unpaywall.org",
+  "name": "Unpaywall (Open Access Paper Finder)",
+  "type": "signpost",
+  "verdict": "self-documented",
+  "why_no_deep_map": "官方文档完备，单端点 REST API，返回结构化 JSON，无隐藏接口",
+  "quick_start": "curl 'https://api.unpaywall.org/v2/10.1038/nature12373?email=YOUR_EMAIL'",
+  "api_endpoint": {
+    "pattern": "https://api.unpaywall.org/v2/{DOI}?email={YOUR_EMAIL}",
+    "method": "GET",
+    "auth": "email 参数（任意有效邮箱，无需注册）",
+    "rate_limit": "100,000 次/天，建议 ≤10 req/s",
+    "response_format": "JSON"
+  },
+  "response_key_fields": {
+    "is_oa": "boolean — 是否存在开放获取版本",
+    "oa_status": "gold / green / hybrid / bronze / closed",
+    "best_oa_location": "最佳 OA 来源对象（含 PDF 直链）",
+    "best_oa_location.url_for_pdf": "PDF 直接下载链接（如有）",
+    "best_oa_location.url_for_landing_page": "落地页 URL",
+    "best_oa_location.host_type": "publisher 或 repository",
+    "best_oa_location.license": "许可证类型（如 cc-by）",
+    "best_oa_location.version": "publishedVersion / acceptedVersion / submittedVersion",
+    "oa_locations": "所有已知 OA 副本数组",
+    "title": "论文标题",
+    "authors": "作者列表（given, family, ORCID）",
+    "year": "出版年份",
+    "journal_name": "期刊名",
+    "publisher": "出版商"
+  },
+  "coverage": "~1.3 亿 DOI，约 30-40% 有 OA 来源",
+  "agent_tips": {
+    "prefer_repository": "oa_locations 中优先选 host_type=repository 的链接（arXiv、PubMed Central），publisher 链接通常被 Cloudflare/认证拦截",
+    "download_strategy": "遍历 oa_locations，找 host_type=repository 且 url_for_pdf 不为 null 的第一条",
+    "publisher_blocked": "host_type=publisher 的 PDF 链接即使标记为 OA，直接 curl 大概率 403/303（需 cookie/JS challenge）"
+  },
+  "limitations": [
+    "只能按 DOI 查询，不支持标题/作者搜索",
+    "无批量 REST 端点（需逐个查询或用数据快照）",
+    "部分论文无 OA 版本（is_oa=false）",
+    "publisher 来源的 PDF 链接大多被反爬拦截，仅 repository 来源可直接下载"
+  ],
+  "docs": "https://unpaywall.org/products/api",
+  "homepage_card": {
+    "order": 50,
+    "description": "查询论文是否有免费 OA 版本，返回 PDF 直链",
+    "branches": [
+      {"prefix": "GET", "text": "/v2/{DOI}?email={EMAIL}"},
+      {"desc": "is_oa · oa_status · best_oa_location.url_for_pdf · authors · title"}
+    ]
+  },
+  "last_verified": "2026-05-05"
+}
