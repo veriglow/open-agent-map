@@ -1,0 +1,69 @@
+{
+  "id": "bilibili-playurl",
+  "name": "Bilibili 视频播放地址",
+  "description": "获取视频/音频流的直接下载 URL（DASH 格式）",
+  "endpoint": {
+    "url": "https://api.bilibili.com/x/player/wbi/playurl",
+    "method": "GET",
+    "params": {
+      "bvid": "BV号",
+      "cid": "Content ID（从 view API 获取）",
+      "fnval": "4048（DASH + 全部编码格式）",
+      "fourk": "1（允许 4K）",
+      "w_rid": "WBI 签名",
+      "wts": "当前时间戳"
+    },
+    "headers": {
+      "User-Agent": "Mozilla/5.0 ...",
+      "Referer": "https://www.bilibili.com/",
+      "Cookie": "SESSDATA=xxx"
+    },
+    "requires_wbi": true,
+    "requires_login": "未登录最高 480p；登录后 1080p；大会员 4K/HDR/杜比"
+  },
+  "fnval_bitmask": {
+    "16": "DASH 格式",
+    "64": "HDR",
+    "128": "4K",
+    "256": "杜比音效",
+    "512": "杜比视界",
+    "1024": "8K",
+    "2048": "AV1 编码",
+    "4048": "全部开启（推荐）"
+  },
+  "quality_ids": {
+    "127": "超高清 8K",
+    "126": "杜比视界",
+    "125": "HDR 真彩色",
+    "120": "超清 4K",
+    "116": "高清 1080P60",
+    "112": "高清 1080P+",
+    "80": "高清 1080P",
+    "64": "高清 720P",
+    "32": "清晰 480P",
+    "16": "流畅 360P"
+  },
+  "response_key_fields": {
+    "data.quality": "当前返回的画质 ID",
+    "data.accept_quality[]": "可用画质列表",
+    "data.accept_description[]": "可用画质描述",
+    "data.dash.video[]": "视频流数组",
+    "data.dash.video[].baseUrl": "视频流直链",
+    "data.dash.video[].id": "画质 ID",
+    "data.dash.video[].codecs": "编码（avc1/hev1/av01）",
+    "data.dash.video[].bandwidth": "码率 bps",
+    "data.dash.audio[]": "音频流数组",
+    "data.dash.audio[].baseUrl": "音频流直链",
+    "data.dash.audio[].bandwidth": "码率 bps"
+  },
+  "download_note": {
+    "anti_hotlink": "下载流 URL 时必须带 Referer: https://www.bilibili.com/ 否则 403",
+    "expiry": "流 URL 有时效性，通常几小时内有效",
+    "merge": "DASH 视频和音频分离，需用 ffmpeg 合并: ffmpeg -i video.m4s -i audio.m4s -c copy output.mp4"
+  },
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "普通账号获得最高 4K 画质，12条视频流 + 3条音频���"
+  },
+  "last_verified": "2026-05-05"
+}

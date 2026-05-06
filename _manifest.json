@@ -5,6 +5,11 @@
     "summary": ""
   },
   {
+    "path": "/api.bilibili.com/x/player/playurl",
+    "title": "Bilibili 视频播放地址",
+    "summary": "获取视频/音频流的直接下载 URL（DASH 格式）"
+  },
+  {
     "path": "/api.bilibili.com/x/player/v2",
     "title": "Bilibili 播放器信息（含字幕）",
     "summary": "获取播放器配置，包括字幕/CC轨道列表"

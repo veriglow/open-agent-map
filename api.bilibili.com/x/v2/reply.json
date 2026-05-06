@@ -48,5 +48,9 @@
     "first_page": "pagination_str 留空",
     "next_page": "使用上一次返回的 data.cursor.pagination_reply.next_offset 作为 pagination_str 的 offset 值"
   },
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "18万条评论正常返回，无需 WBI 签名即可用旧版接口"
+  },
   "last_verified": "2026-05-05"
 }

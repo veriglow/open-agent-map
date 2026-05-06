@@ -36,5 +36,9 @@
     "data.result[].pic": "封面图 URL"
   },
   "quick_start": "需要 WBI 签名，建议使用 Python 脚本调用（见 _wbi_signature.json）",
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "WBI签名+SESSDATA+buvid3 搜索正常返回结果"
+  },
   "last_verified": "2026-05-05"
 }

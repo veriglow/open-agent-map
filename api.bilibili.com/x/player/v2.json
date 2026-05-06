@@ -39,7 +39,12 @@
   "known_limitations": [
     "字幕列表在未登录时通常返回空数组",
     "AI 自动生成字幕仅部分视频有",
-    "需要 WBI 签名"
+    "需要 WBI 签名（但带 SESSDATA 时可不签名直接用 /x/player/v2）"
   ],
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "带 SESSDATA 成功获取 AI 字幕轨道，subtitle_url 含 auth_key 签名可直接下载",
+    "note": "subtitle_url 为 //协议相对路径，需补 https: 前缀；URL 含 auth_key 有时效性"
+  },
   "last_verified": "2026-05-05"
 }
