@@ -1,0 +1,9 @@
+{
+  "name": "YouTube (InnerTube API)",
+  "domain": "www.youtube.com",
+  "favicon_domain": "www.youtube.com",
+  "badge": "Deep Map",
+  "subtitle": "InnerTube 内部 API",
+  "description": "视频元数据 · 字幕 · 评论 · 搜索",
+  "order": 20
+}

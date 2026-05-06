@@ -1,0 +1,62 @@
+{
+  "id": "youtube-timedtext",
+  "name": "YouTube Timed Text (Subtitles/Captions) API",
+  "description": "下载视频字幕（自动生成或手动上传），支持多种格式",
+  "workflow": {
+    "step_1": {
+      "description": "通过 /player API 获取字幕轨道列表",
+      "path": "captions.playerCaptionsTracklistRenderer.captionTracks[]",
+      "track_fields": {
+        "baseUrl": "字幕下载 URL（含签名参数）",
+        "languageCode": "语言代码（en, zh, ja 等）",
+        "kind": "asr = 自动生成, 缺省 = 手动上传",
+        "name.simpleText": "轨道名称"
+      }
+    },
+    "step_2": {
+      "description": "使用 baseUrl 下载字幕，可追加 fmt 参数切换格式",
+      "formats": {
+        "srv1": "XML 格式（最简单解析）",
+        "srv3": "JSON 带时间戳",
+        "json3": "JSON3 格式（events 数组）",
+        "vtt": "WebVTT 标准格式",
+        "ttml": "TTML XML 格式"
+      }
+    }
+  },
+  "direct_endpoint": {
+    "url": "https://www.youtube.com/api/timedtext",
+    "method": "GET",
+    "params": {
+      "v": "视频 ID",
+      "lang": "语言代码",
+      "kind": "asr（自动生成时需要）",
+      "fmt": "输出格式: srv1/srv3/json3/vtt/ttml",
+      "tlang": "翻译目标语言（自动翻译字幕）",
+      "name": "轨道名称（同语言多轨时区分）"
+    },
+    "note": "直接调用可能需要从 /player 获取完整 baseUrl（含签名参数），简单 v+lang 参数在部分视频可能失效"
+  },
+  "response_examples": {
+    "srv1_xml": "<?xml version=\"1.0\"?><transcript><text start=\"0.48\" dur=\"3.04\">Hello world</text>...</transcript>",
+    "json3": "{\"events\":[{\"tStartMs\":480,\"dDurationMs\":3040,\"segs\":[{\"utf8\":\"Hello world\"}]}]}"
+  },
+  "caption_list_endpoint": {
+    "url": "https://www.youtube.com/api/timedtext?type=list&v={VIDEO_ID}",
+    "description": "获取所有可用字幕轨道的 XML 列表（不需要 /player 调用）"
+  },
+  "auto_translate": {
+    "description": "将已有字幕自动翻译为目标语言",
+    "example": "在 baseUrl 后追加 &tlang=zh-Hans 即可获取中文翻译"
+  },
+  "known_limitations": [
+    "2025+ 部分视频的字幕需要登录 session 才能通过 /player 获取 baseUrl",
+    "直接拼接 v+lang 参数不带签名时可能返回空",
+    "推荐使用 youtube-transcript-api (Python) 库作为可靠封装"
+  ],
+  "recommended_libraries": {
+    "python": "youtube-transcript-api (pip install youtube-transcript-api)",
+    "node": "youtube-transcript"
+  },
+  "last_verified": "2026-05-05"
+}

@@ -1,0 +1,52 @@
+{
+  "id": "bilibili-comments",
+  "name": "Bilibili 评论区",
+  "description": "获取视频评论（含回复、点赞数、用户信息）",
+  "endpoints": {
+    "main": {
+      "url": "https://api.bilibili.com/x/v2/reply/wbi/main",
+      "method": "GET",
+      "params": {
+        "oid": "对象 ID（视频=aid 数字 ID）",
+        "type": "1=视频, 12=专栏, 17=动态",
+        "mode": "2=按时间, 3=按热度（默认）",
+        "pagination_str": "分页游标 JSON（首页留空或 {\"offset\":\"\"}）",
+        "w_rid": "WBI 签名",
+        "wts": "当前时间戳"
+      },
+      "requires_wbi": true,
+      "requires_login": "2025+ 可能需要 SESSDATA cookie"
+    },
+    "legacy": {
+      "url": "https://api.bilibili.com/x/v2/reply",
+      "method": "GET",
+      "params": {
+        "oid": "对象 ID",
+        "type": "1=视频",
+        "pn": "页码",
+        "ps": "每页条数（max 20）",
+        "sort": "0=按时间, 2=按热度"
+      },
+      "requires_wbi": false,
+      "note": "旧版接口，可能返回数据有限或被弃用"
+    }
+  },
+  "response_key_fields": {
+    "data.cursor.all_count": "总评论数",
+    "data.cursor.is_end": "是否最后一页",
+    "data.cursor.pagination_reply.next_offset": "下一页游标",
+    "data.replies[].rpid": "评论 ID",
+    "data.replies[].mid": "评论者 UID",
+    "data.replies[].member.uname": "评论者用户名",
+    "data.replies[].member.avatar": "头像 URL",
+    "data.replies[].content.message": "评论正文",
+    "data.replies[].ctime": "评论时间（Unix 时间戳）",
+    "data.replies[].like": "点赞数",
+    "data.replies[].rcount": "回复数"
+  },
+  "pagination": {
+    "first_page": "pagination_str 留空",
+    "next_page": "使用上一次返回的 data.cursor.pagination_reply.next_offset 作为 pagination_str 的 offset 值"
+  },
+  "last_verified": "2026-05-05"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "bilibili-wbi-signature",
+  "name": "Bilibili WBI 签名算法",
+  "description": "2023+ Bilibili API 防爬签名机制，大部分接口需要 w_rid + wts 参数",
+  "algorithm": {
+    "step_1": {
+      "description": "获取密钥：从 nav API 提取 img_key 和 sub_key",
+      "url": "https://api.bilibili.com/x/web-interface/nav",
+      "extract": "data.wbi_img.img_url 和 data.wbi_img.sub_url 的文件名（去掉扩展名）"
+    },
+    "step_2": {
+      "description": "生成 mixin_key：按固定混淆表重排 img_key+sub_key 并截取前32位",
+      "mixin_key_enc_tab": [46,47,18,2,53,8,23,32,15,50,10,31,58,3,45,35,27,43,5,49,33,9,42,19,29,28,14,39,12,38,41,13,37,48,7,16,24,55,40,61,26,17,0,1,60,51,30,4,22,25,54,21,56,59,6,63,57,62,11,36,20,34,44,52]
+    },
+    "step_3": {
+      "description": "签名请求参数",
+      "steps": [
+        "添加 wts = 当前 Unix 时间戳（秒）",
+        "按 key 字母序排序所有参数",
+        "过滤 value 中的 !'()* 字符",
+        "URL encode 为 query string",
+        "w_rid = MD5(query_string + mixin_key)"
+      ]
+    }
+  },
+  "python_implementation": "from functools import reduce\nfrom hashlib import md5\nimport urllib.parse, time, requests\n\nmixinKeyEncTab = [46,47,18,2,53,8,23,32,15,50,10,31,58,3,45,35,27,43,5,49,33,9,42,19,29,28,14,39,12,38,41,13,37,48,7,16,24,55,40,61,26,17,0,1,60,51,30,4,22,25,54,21,56,59,6,63,57,62,11,36,20,34,44,52]\n\ndef getMixinKey(orig: str) -> str:\n    return reduce(lambda s, i: s + orig[i], mixinKeyEncTab, '')[:32]\n\ndef getWbiKeys() -> tuple[str, str]:\n    resp = requests.get('https://api.bilibili.com/x/web-interface/nav')\n    data = resp.json()['data']['wbi_img']\n    img_key = data['img_url'].rsplit('/', 1)[1].split('.')[0]\n    sub_key = data['sub_url'].rsplit('/', 1)[1].split('.')[0]\n    return img_key, sub_key\n\ndef encWbi(params: dict, img_key: str, sub_key: str) -> dict:\n    mixin_key = getMixinKey(img_key + sub_key)\n    params['wts'] = round(time.time())\n    params = dict(sorted(params.items()))\n    params = {k: ''.join(c for c in str(v) if c not in \"!'()*\") for k, v in params.items()}\n    query = urllib.parse.urlencode(params)\n    params['w_rid'] = md5((query + mixin_key).encode()).hexdigest()\n    return params\n\n# 使用示例:\n# img_key, sub_key = getWbiKeys()\n# signed = encWbi({'bvid': 'BV1xx411c7mD'}, img_key, sub_key)\n# resp = requests.get('https://api.bilibili.com/x/web-interface/wbi/view/detail', params=signed)",
+  "key_rotation": "密钥会定期轮换，建议每次请求前重新获取或缓存几分钟",
+  "reference": "https://github.com/SocialSisterYi/bilibili-API-collect",
+  "last_verified": "2026-05-05"
+}

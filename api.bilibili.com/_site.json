@@ -1,0 +1,9 @@
+{
+  "name": "Bilibili (哔哩哔哩)",
+  "domain": "api.bilibili.com",
+  "favicon_domain": "www.bilibili.com",
+  "badge": "Deep Map",
+  "subtitle": "视频平台内部 API",
+  "description": "视频元数据 · 弹幕 · 评论 · 字幕 · 搜索",
+  "order": 21
+}

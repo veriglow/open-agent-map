@@ -1,0 +1,40 @@
+{
+  "id": "bilibili-search",
+  "name": "Bilibili 搜索",
+  "description": "按关键词搜索视频/UP主/专栏等",
+  "endpoint": {
+    "url": "https://api.bilibili.com/x/web-interface/wbi/search/type",
+    "method": "GET",
+    "params": {
+      "keyword": "搜索关键词",
+      "search_type": "video / media_bangumi / media_ft / bili_user / article / live",
+      "page": "页码（默认 1）",
+      "page_size": "每页条数（默认 20，最大 50）",
+      "order": "排序: 空=综合, click=播放量, pubdate=最新, dm=弹幕数, stow=收藏数",
+      "w_rid": "WBI 签名",
+      "wts": "当前时间戳"
+    },
+    "headers": {
+      "User-Agent": "Mozilla/5.0 ...",
+      "Referer": "https://www.bilibili.com/",
+      "Cookie": "buvid3=xxx（设备指纹，从任意 B站页面获取）"
+    },
+    "requires_wbi": true,
+    "requires_cookie": "buvid3（无需登录，但需设备 cookie 防止限流）"
+  },
+  "response_key_fields": {
+    "data.numResults": "总结果数",
+    "data.numPages": "总页数",
+    "data.result[].aid": "AV号",
+    "data.result[].bvid": "BV号",
+    "data.result[].title": "标题（含 <em> 高亮标签）",
+    "data.result[].author": "UP主名",
+    "data.result[].play": "播放量",
+    "data.result[].danmaku": "弹幕数",
+    "data.result[].duration": "时长 (MM:SS)",
+    "data.result[].pubdate": "发布时间戳",
+    "data.result[].pic": "封面图 URL"
+  },
+  "quick_start": "需要 WBI 签名，建议使用 Python 脚本调用（见 _wbi_signature.json）",
+  "last_verified": "2026-05-05"
+}

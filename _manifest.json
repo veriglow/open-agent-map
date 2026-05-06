@@ -5,6 +5,31 @@
     "summary": ""
   },
   {
+    "path": "/api.bilibili.com/x/player/v2",
+    "title": "Bilibili 播放器信息（含字幕）",
+    "summary": "获取播放器配置，包括字幕/CC轨道列表"
+  },
+  {
+    "path": "/api.bilibili.com/x/v2/dm/web/seg",
+    "title": "Bilibili 弹幕获取",
+    "summary": "获取视频弹幕（实时滚动评论）"
+  },
+  {
+    "path": "/api.bilibili.com/x/v2/reply",
+    "title": "Bilibili 评论区",
+    "summary": "获取视频评论（含回复、点赞数、用户信息）"
+  },
+  {
+    "path": "/api.bilibili.com/x/web-interface/search",
+    "title": "Bilibili 搜索",
+    "summary": "按关键词搜索视频/UP主/专栏等"
+  },
+  {
+    "path": "/api.bilibili.com/x/web-interface/view",
+    "title": "Bilibili 视频详情",
+    "summary": "获取视频元数据：标题、描述、播放量、弹幕数、UP主、分P列表"
+  },
+  {
     "path": "/api.unpaywall.org",
     "title": "Unpaywall (Open Access Paper Finder)",
     "summary": ""
@@ -658,6 +683,31 @@
     "path": "/www.xiaohongshu.com/explore/note",
     "title": "小红书笔记详情页",
     "summary": "访问单篇笔记正文。note_id 和 xsec_token 均来自搜索 API 响应（items[].id 和 items[].xsec_token）。"
+  },
+  {
+    "path": "/www.youtube.com/api/timedtext",
+    "title": "YouTube Timed Text (Subtitles/Captions) API",
+    "summary": "下载视频字幕（自动生成或手动上传），支持多种格式"
+  },
+  {
+    "path": "/www.youtube.com/oembed",
+    "title": "YouTube oEmbed API",
+    "summary": "最简单的元数据获取方式：标题、作者、缩略图。无需认证，无需 POST"
+  },
+  {
+    "path": "/www.youtube.com/youtubei/v1/next",
+    "title": "YouTube InnerTube Next API (Watch Page Data)",
+    "summary": "获取视频完整页面数据：标题、描述、发布日期、点赞数、评论区入口"
+  },
+  {
+    "path": "/www.youtube.com/youtubei/v1/player",
+    "title": "YouTube InnerTube Player API",
+    "summary": "获取视频元数据（标题、播放量、作者、时长、缩略图）"
+  },
+  {
+    "path": "/www.youtube.com/youtubei/v1/search",
+    "title": "YouTube InnerTube Search API",
+    "summary": "搜索视频/频道/播放列表，无需 API Key"
   },
   {
     "path": "/www.zhihu.com/api/v4/members/answers",

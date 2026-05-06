@@ -1,0 +1,45 @@
+{
+  "id": "bilibili-video-view",
+  "name": "Bilibili 视频详情",
+  "description": "获取视频元数据：标题、描述、播放量、弹幕数、UP主、分P列表",
+  "endpoint": {
+    "url": "https://api.bilibili.com/x/web-interface/view",
+    "method": "GET",
+    "params": {
+      "bvid": "BV号（如 BV1xx411c7mD）",
+      "aid": "AV号（与 bvid 二选一）"
+    },
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+      "Referer": "https://www.bilibili.com/"
+    }
+  },
+  "response_key_fields": {
+    "data.bvid": "BV号",
+    "data.aid": "AV号",
+    "data.title": "视频标题",
+    "data.desc": "视频描述",
+    "data.pic": "封面图 URL",
+    "data.pubdate": "发布时间（Unix 时间戳）",
+    "data.duration": "总时长（秒）",
+    "data.owner.mid": "UP主 UID",
+    "data.owner.name": "UP主名",
+    "data.stat.view": "播放量",
+    "data.stat.danmaku": "弹幕数",
+    "data.stat.reply": "评论数",
+    "data.stat.favorite": "收藏数",
+    "data.stat.coin": "投币数",
+    "data.stat.like": "点赞数",
+    "data.stat.share": "转发数",
+    "data.cid": "第一P的 Content ID（用于弹幕/字幕/播放）",
+    "data.pages[]": "分P列表，每项含 cid/page/part(标题)/duration"
+  },
+  "quick_start": "curl -s 'https://api.bilibili.com/x/web-interface/view?bvid=BV1xx411c7mD' -H 'User-Agent: Mozilla/5.0' -H 'Referer: https://www.bilibili.com/'",
+  "auth_requirement": "无需登录，无需 WBI 签名",
+  "note": "返回的 cid 是后续获取弹幕、字幕、播放地址的关键参数",
+  "wbi_variant": {
+    "url": "https://api.bilibili.com/x/web-interface/wbi/view/detail",
+    "note": "WBI 签名版本，返回更详细信息（含 Tags、相关推荐等）"
+  },
+  "last_verified": "2026-05-05"
+}

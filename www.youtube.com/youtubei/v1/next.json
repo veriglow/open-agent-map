@@ -1,0 +1,54 @@
+{
+  "id": "youtube-innertube-next",
+  "name": "YouTube InnerTube Next API (Watch Page Data)",
+  "description": "获取视频完整页面数据：标题、描述、发布日期、点赞数、评论区入口",
+  "endpoint": {
+    "url": "https://www.youtube.com/youtubei/v1/next",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-YouTube-Client-Name": "1",
+      "X-YouTube-Client-Version": "2.20250501.00.00",
+      "Origin": "https://www.youtube.com",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+    },
+    "body": {
+      "videoId": "{VIDEO_ID}",
+      "context": {
+        "client": {
+          "clientName": "WEB",
+          "clientVersion": "2.20250501.00.00",
+          "hl": "en",
+          "gl": "US"
+        }
+      }
+    }
+  },
+  "response_structure": {
+    "contents.twoColumnWatchNextResults.results.results.contents[]": [
+      "videoPrimaryInfoRenderer — 标题、播放量、发布日期、点赞",
+      "videoSecondaryInfoRenderer — 频道信息、描述",
+      "itemSectionRenderer — 评论区（含 continuation token）"
+    ],
+    "contents.twoColumnWatchNextResults.secondaryResults.secondaryResults.results[]": "推荐视频列表"
+  },
+  "use_case_comments": {
+    "description": "评论通过 continuation token 分页加载",
+    "step_1": "发送 /next 请求获取初始数据",
+    "step_2": "从 itemSectionRenderer.contents[0].continuationItemRenderer.continuationEndpoint.continuationCommand.token 提取 token",
+    "step_3": "再次 POST /next，body 中用 continuation 字段替代 videoId",
+    "continuation_body": {
+      "context": {"client": {"clientName": "WEB", "clientVersion": "2.20250501.00.00"}},
+      "continuation": "{CONTINUATION_TOKEN}"
+    },
+    "comment_fields": {
+      "commentRenderer.contentText.runs[].text": "评论正文",
+      "commentRenderer.authorText.simpleText": "评论者名",
+      "commentRenderer.publishedTimeText.runs[0].text": "发布时间（相对）",
+      "commentRenderer.voteCount.simpleText": "点赞数",
+      "commentRenderer.replyCount": "回复数"
+    }
+  },
+  "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/next' -H 'Content-Type: application/json' -H 'X-YouTube-Client-Name: 1' -H 'X-YouTube-Client-Version: 2.20250501.00.00' --data-raw '{\"videoId\":\"dQw4w9WgXcQ\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "last_verified": "2026-05-05"
+}

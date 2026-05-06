@@ -1,0 +1,45 @@
+{
+  "id": "bilibili-player-v2",
+  "name": "Bilibili 播放器信息（含字幕）",
+  "description": "获取播放器配置，包括字幕/CC轨道列表",
+  "endpoint": {
+    "url": "https://api.bilibili.com/x/player/wbi/v2",
+    "method": "GET",
+    "params": {
+      "bvid": "BV号",
+      "cid": "Content ID（从 view API 获取）",
+      "w_rid": "WBI 签名",
+      "wts": "当前时间戳"
+    },
+    "headers": {
+      "User-Agent": "Mozilla/5.0 ...",
+      "Referer": "https://www.bilibili.com/",
+      "Cookie": "SESSDATA=xxx（字幕获取通常需要登录）"
+    },
+    "requires_wbi": true,
+    "requires_login": "字幕列表通常需要 SESSDATA cookie"
+  },
+  "response_key_fields": {
+    "data.subtitle.subtitles[]": "字幕轨道列表",
+    "data.subtitle.subtitles[].lan": "语言代码（ai-zh=AI中文, en=英语）",
+    "data.subtitle.subtitles[].lan_doc": "语言显示名（中文（自动生成）等）",
+    "data.subtitle.subtitles[].subtitle_url": "字幕 JSON 文件 URL（//i0.hdslb.com/bfs/subtitle/...）"
+  },
+  "subtitle_download": {
+    "step_1": "从 subtitle_url 获取字幕 JSON",
+    "url_pattern": "https://i0.hdslb.com/bfs/subtitle/{hash}.json 或 https://aisubtitle.hdslb.com/bfs/ai_subtitle/{hash}.json",
+    "response_format": {
+      "body[]": "字幕条目数组",
+      "body[].from": "开始时间（秒）",
+      "body[].to": "结束时间（秒）",
+      "body[].content": "字幕文本"
+    },
+    "example": "curl -s 'https://i0.hdslb.com/bfs/subtitle/abc123.json'"
+  },
+  "known_limitations": [
+    "字幕列表在未登录时通常返回空数组",
+    "AI 自动生成字幕仅部分视频有",
+    "需要 WBI 签名"
+  ],
+  "last_verified": "2026-05-05"
+}

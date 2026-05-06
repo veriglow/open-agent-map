@@ -1,0 +1,55 @@
+{
+  "id": "bilibili-danmaku",
+  "name": "Bilibili 弹幕获取",
+  "description": "获取视频弹幕（实时滚动评论）",
+  "methods": {
+    "xml_legacy": {
+      "description": "XML 格式（简单易用，推荐）",
+      "url": "https://comment.bilibili.com/{cid}.xml",
+      "method": "GET",
+      "auth": "无需登录",
+      "encoding": "gzip 压缩，需 --compressed 解压",
+      "response_format": "XML <i><d p=\"时间,模式,字号,颜色,时间戳,弹幕池,用户hash,dmid,权重\">弹幕内容</d>...</i>",
+      "p_field_meaning": {
+        "0": "出现时间（秒）",
+        "1": "模式: 1-3=滚动, 4=底部, 5=顶部, 6=逆向, 7=精准, 8=高级",
+        "2": "字号: 18=小, 25=标准, 36=大",
+        "3": "颜色（十进制 RGB）",
+        "4": "发送时间戳（Unix）",
+        "5": "弹幕池: 0=普通, 1=字幕, 2=特殊",
+        "6": "发送者 Hash",
+        "7": "弹幕 ID",
+        "8": "权重/屏蔽等级"
+      },
+      "quick_start": "curl -s --compressed 'https://comment.bilibili.com/62131.xml' | head -5"
+    },
+    "protobuf": {
+      "description": "Protobuf 格式（分段，更完整）",
+      "url": "https://api.bilibili.com/x/v2/dm/web/seg.so",
+      "method": "GET",
+      "params": {
+        "type": "1（视频弹幕）",
+        "oid": "视频 CID（从 view API 获取）",
+        "segment_index": "分段索引（1-based，每段 6 分钟）"
+      },
+      "segment_calculation": "segment_index = floor(视频秒数 / 360) + 1",
+      "response_format": "binary protobuf (DmSegMobileReply)",
+      "proto_definition": {
+        "DmSegMobileReply": {"elems": "repeated DanmakuElem"},
+        "DanmakuElem": {
+          "id": "int64 - 弹幕 ID",
+          "progress": "int32 - 时间偏移（毫秒）",
+          "mode": "int32 - 模式",
+          "fontsize": "int32 - 字号",
+          "color": "uint32 - RGB 颜色",
+          "midHash": "string - 发送者 hash",
+          "content": "string - 弹幕文本",
+          "ctime": "int64 - 发送时间戳"
+        }
+      },
+      "note": "需要 protobuf 解码库（Python: google.protobuf / betterproto）"
+    }
+  },
+  "recommendation": "大多数场景用 XML 格式即可，简单 curl + 解析 XML 标签",
+  "last_verified": "2026-05-05"
+}

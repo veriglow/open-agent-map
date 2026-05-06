@@ -1,0 +1,29 @@
+{
+  "id": "youtube-oembed",
+  "name": "YouTube oEmbed API",
+  "description": "最简单的元数据获取方式：标题、作者、缩略图。无需认证，无需 POST",
+  "endpoint": {
+    "url": "https://www.youtube.com/oembed",
+    "method": "GET",
+    "params": {
+      "url": "https://www.youtube.com/watch?v={VIDEO_ID}",
+      "format": "json"
+    }
+  },
+  "response_fields": {
+    "title": "视频标题",
+    "author_name": "频道名",
+    "author_url": "频道 URL",
+    "thumbnail_url": "缩略图 URL",
+    "thumbnail_width": "缩略图宽度",
+    "thumbnail_height": "缩略图高度",
+    "type": "video",
+    "provider_name": "YouTube"
+  },
+  "quick_start": "curl -s 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&format=json'",
+  "limitations": [
+    "不含播放量、描述、上传日期、时长",
+    "仅返回基础信息，适合快速预览"
+  ],
+  "last_verified": "2026-05-05"
+}

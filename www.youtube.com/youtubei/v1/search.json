@@ -1,0 +1,55 @@
+{
+  "id": "youtube-innertube-search",
+  "name": "YouTube InnerTube Search API",
+  "description": "搜索视频/频道/播放列表，无需 API Key",
+  "endpoint": {
+    "url": "https://www.youtube.com/youtubei/v1/search",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-YouTube-Client-Name": "1",
+      "X-YouTube-Client-Version": "2.20250501.00.00",
+      "Origin": "https://www.youtube.com"
+    },
+    "body": {
+      "query": "{SEARCH_QUERY}",
+      "context": {
+        "client": {
+          "clientName": "WEB",
+          "clientVersion": "2.20250501.00.00",
+          "hl": "en",
+          "gl": "US"
+        }
+      }
+    }
+  },
+  "optional_params": {
+    "params": {
+      "description": "Base64 编码的 protobuf 过滤器",
+      "presets": {
+        "EgIQAQ%3D%3D": "仅视频",
+        "EgIQAg%3D%3D": "仅频道",
+        "EgIQAw%3D%3D": "仅播放列表",
+        "EgIIAQ%3D%3D": "上传时间: 1小时内",
+        "EgIIAg%3D%3D": "上传时间: 今天",
+        "EgIIAw%3D%3D": "上传时间: 本周",
+        "CAISAhAB": "按上传日期排序"
+      }
+    }
+  },
+  "response_structure": {
+    "path": "contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[].itemSectionRenderer.contents[]",
+    "videoRenderer": {
+      "videoId": "视频 ID",
+      "title.runs[0].text": "标题",
+      "ownerText.runs[0].text": "频道名",
+      "viewCountText.simpleText": "播放量",
+      "publishedTimeText.simpleText": "发布时间（相对）",
+      "lengthText.simpleText": "时长 (MM:SS)",
+      "thumbnail.thumbnails[]": "缩略图"
+    },
+    "pagination": "continuationItemRenderer at end of contents[], use token with same endpoint"
+  },
+  "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/search' -H 'Content-Type: application/json' --data-raw '{\"query\":\"python tutorial\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "last_verified": "2026-05-05"
+}

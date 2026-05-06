@@ -1,0 +1,48 @@
+{
+  "id": "youtube-innertube-player",
+  "name": "YouTube InnerTube Player API",
+  "description": "获取视频元数据（标题、播放量、作者、时长、缩略图）",
+  "endpoint": {
+    "url": "https://www.youtube.com/youtubei/v1/player",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-YouTube-Client-Name": "1",
+      "X-YouTube-Client-Version": "2.20250501.00.00",
+      "Origin": "https://www.youtube.com",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+    },
+    "body": {
+      "videoId": "{VIDEO_ID}",
+      "context": {
+        "client": {
+          "clientName": "WEB",
+          "clientVersion": "2.20250501.00.00",
+          "hl": "en",
+          "gl": "US"
+        }
+      }
+    }
+  },
+  "response_key_fields": {
+    "videoDetails.title": "视频标题",
+    "videoDetails.viewCount": "播放量（字符串）",
+    "videoDetails.author": "频道名",
+    "videoDetails.channelId": "频道 ID",
+    "videoDetails.lengthSeconds": "时长（秒）",
+    "videoDetails.shortDescription": "视频描述",
+    "videoDetails.thumbnail.thumbnails[]": "缩略图数组（不同分辨率）",
+    "videoDetails.keywords[]": "关键词标签",
+    "captions.playerCaptionsTracklistRenderer.captionTracks[]": "字幕轨道列表（含 baseUrl）",
+    "streamingData.formats[]": "视频流格式（需 PO token）",
+    "streamingData.adaptiveFormats[]": "自适应流（需 PO token）"
+  },
+  "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/player' -H 'Content-Type: application/json' -H 'X-YouTube-Client-Name: 1' -H 'X-YouTube-Client-Version: 2.20250501.00.00' --data-raw '{\"videoId\":\"dQw4w9WgXcQ\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "verified_fields": ["videoDetails.title", "videoDetails.viewCount", "videoDetails.author", "videoDetails.lengthSeconds"],
+  "known_limitations": [
+    "字幕轨道和流媒体 URL 可能需要 PO Token 或登录 session",
+    "部分受限视频返回 playabilityStatus.status=UNPLAYABLE",
+    "clientVersion 需定期更新，过旧版本可能返回空数据"
+  ],
+  "last_verified": "2026-05-05"
+}
