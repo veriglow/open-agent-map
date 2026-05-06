@@ -40,9 +40,21 @@
   "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/player' -H 'Content-Type: application/json' -H 'X-YouTube-Client-Name: 1' -H 'X-YouTube-Client-Version: 2.20250501.00.00' --data-raw '{\"videoId\":\"dQw4w9WgXcQ\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
   "verified_fields": ["videoDetails.title", "videoDetails.viewCount", "videoDetails.author", "videoDetails.lengthSeconds"],
   "known_limitations": [
-    "字幕轨道和流媒体 URL 可能需要 PO Token 或登录 session",
-    "部分受限视频返回 playabilityStatus.status=UNPLAYABLE",
-    "clientVersion 需定期更新，过旧版本可能返回空数据"
+    "直接 POST /player 返回 UNPLAYABLE，缺少流媒体和字幕数据",
+    "需改用 watch 页面 HTML 提取 ytInitialPlayerResponse（带 cookie 时返回完整数据）",
+    "clientVersion 需定期更新"
   ],
+  "alternative_method": {
+    "description": "通过 watch 页面提取 ytInitialPlayerResponse（推荐）",
+    "url": "https://www.youtube.com/watch?v={VIDEO_ID}",
+    "method": "GET（需登录 cookie）",
+    "extract_regex": "var ytInitialPlayerResponse\\s*=\\s*(\\{.+?\\});",
+    "returns": "与 /player API 相同的 JSON 结构，但包含完整的 streamingData 和 captions"
+  },
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "direct_api": "UNPLAYABLE — 无字幕无流媒体",
+    "watch_page": "OK — 6 条字幕轨道, 1 format + 26 adaptiveFormats"
+  },
   "last_verified": "2026-05-05"
 }

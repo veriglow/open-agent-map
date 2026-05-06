@@ -50,10 +50,17 @@
     "example": "在 baseUrl 后追加 &tlang=zh-Hans 即可获取中文翻译"
   },
   "known_limitations": [
-    "2025+ 部分视频的字幕需要登录 session 才能通过 /player 获取 baseUrl",
-    "直接拼接 v+lang 参数不带签名时可能返回空",
-    "推荐使用 youtube-transcript-api (Python) 库作为可靠封装"
+    "2025+ 通过 InnerTube /player API 获取的 baseUrl 含签名但下载返回空内容",
+    "从 watch 页面 HTML 提取的 ytInitialPlayerResponse 含 captionTracks（需登录 cookie），但 baseUrl 同样可能下载为空",
+    "直接拼接 v+lang 参数不带签名时返回空",
+    "youtube-transcript-api 库能绕过上述问题，是最可靠的方案"
   ],
+  "recommended_approach": {
+    "best": "youtube-transcript-api (Python)，无需 cookie 即可获取字幕",
+    "install": "pip install youtube-transcript-api",
+    "usage": "from youtube_transcript_api import YouTubeTranscriptApi; ytt = YouTubeTranscriptApi(); t = ytt.fetch('VIDEO_ID', languages=['en'])",
+    "verified": "2026-05-05 测试通过，61行字幕正常返回"
+  },
   "recommended_libraries": {
     "python": "youtube-transcript-api (pip install youtube-transcript-api)",
     "node": "youtube-transcript"

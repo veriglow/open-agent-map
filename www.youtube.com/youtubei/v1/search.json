@@ -50,6 +50,10 @@
     },
     "pagination": "continuationItemRenderer at end of contents[], use token with same endpoint"
   },
-  "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/search' -H 'Content-Type: application/json' --data-raw '{\"query\":\"python tutorial\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/search' -H 'Content-Type: application/json' -H 'X-YouTube-Client-Name: 1' -H 'X-YouTube-Client-Version: 2.20250501.00.00' -H 'Origin: https://www.youtube.com' --data-raw '{\"query\":\"python tutorial\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "搜索正常返回视频列表（videoId/title/views/publishedTime）"
+  },
   "last_verified": "2026-05-05"
 }

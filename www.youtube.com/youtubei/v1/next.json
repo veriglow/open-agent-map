@@ -41,14 +41,31 @@
       "context": {"client": {"clientName": "WEB", "clientVersion": "2.20250501.00.00"}},
       "continuation": "{CONTINUATION_TOKEN}"
     },
-    "comment_fields": {
+    "comment_parsing_2025": {
+      "note": "2025+ YouTube 使用 commentViewModel + mutations 模式，旧的 commentRenderer 已弃用",
+      "location": "frameworkUpdates.entityBatchUpdate.mutations[]",
+      "filter": "payload.commentEntityPayload 存在的 mutation",
+      "fields": {
+        "payload.commentEntityPayload.properties.content.content": "评论正文",
+        "payload.commentEntityPayload.author.displayName": "评论者名",
+        "payload.commentEntityPayload.properties.publishedTime": "发布时间（相对，如 '1 year ago'）",
+        "payload.commentEntityPayload.toolbar.likeCountLiked": "点赞数",
+        "payload.commentEntityPayload.toolbar.replyCount": "回复数"
+      }
+    },
+    "comment_fields_legacy": {
+      "note": "旧格式（2024及以前），部分视频可能仍返回此格式",
       "commentRenderer.contentText.runs[].text": "评论正文",
       "commentRenderer.authorText.simpleText": "评论者名",
-      "commentRenderer.publishedTimeText.runs[0].text": "发布时间（相对）",
+      "commentRenderer.publishedTimeText.runs[0].text": "发布时间",
       "commentRenderer.voteCount.simpleText": "点赞数",
       "commentRenderer.replyCount": "回复数"
     }
   },
   "quick_start": "curl -s 'https://www.youtube.com/youtubei/v1/next' -H 'Content-Type: application/json' -H 'X-YouTube-Client-Name: 1' -H 'X-YouTube-Client-Version: 2.20250501.00.00' --data-raw '{\"videoId\":\"dQw4w9WgXcQ\",\"context\":{\"client\":{\"clientName\":\"WEB\",\"clientVersion\":\"2.20250501.00.00\"}}}'",
+  "verified_with_cookie": {
+    "date": "2026-05-05",
+    "result": "成功加载 20 条评论/批次，评论内容在 frameworkUpdates.entityBatchUpdate.mutations[].payload.commentEntityPayload 中"
+  },
   "last_verified": "2026-05-05"
 }
