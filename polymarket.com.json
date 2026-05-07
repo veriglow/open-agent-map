@@ -1,0 +1,75 @@
+{
+  "id": "polymarket.com",
+  "name": "Polymarket (Prediction Markets)",
+  "type": "signpost",
+  "verdict": "self-documented",
+  "why_no_deep_map": "官方 API 文档完备 (docs.polymarket.com)，Gamma API 和 CLOB API 均公开，读取无需认证",
+  "quick_start": "curl 'https://gamma-api.polymarket.com/markets?limit=5&active=true&closed=false&order=volume&ascending=false'",
+  "docs_url": "https://docs.polymarket.com/",
+  "gamma_api": {
+    "base": "https://gamma-api.polymarket.com",
+    "description": "市场/事件元数据、价格、交易量",
+    "auth": "none (read)",
+    "endpoints": {
+      "/markets": {
+        "description": "列出所有市场",
+        "params": {
+          "limit": "返回数量 (默认 100)",
+          "offset": "分页偏移",
+          "active": "true/false 筛选活跃市场",
+          "closed": "true/false 筛选已结算市场",
+          "order": "排序字段 (volume, liquidity, startDate, endDate 等)",
+          "ascending": "true/false",
+          "tag": "分类标签 (Politics, Crypto, Sports, Geopolitics 等)"
+        },
+        "returns": "JSON array: id, question, slug, description, outcomes, outcomePrices, volume, liquidity, startDate, endDate, conditionId"
+      },
+      "/events": {
+        "description": "列出事件 (关联市场的分组)",
+        "params": {
+          "limit": "返回数量",
+          "offset": "分页偏移",
+          "active": "true/false",
+          "closed": "true/false"
+        },
+        "returns": "JSON array: id, title, slug, description, markets[], volume, liquidity, tags[]"
+      }
+    }
+  },
+  "clob_api": {
+    "base": "https://clob.polymarket.com",
+    "description": "中央限价订单簿 — 实时交易数据",
+    "auth": "none (read), HMAC API key (trading)",
+    "endpoints": {
+      "/markets?next_cursor=MA==": "分页列出 CLOB 市场 (含 token IDs、tick sizes)",
+      "/book?token_id={TOKEN_ID}": "指定 outcome token 的完整订单簿 (bids/asks)",
+      "/time": "服务器时间戳"
+    }
+  },
+  "key_concepts": {
+    "outcomePrices": "数组对应 outcomes 的概率/价格 (0-1)，如 [\"0.65\", \"0.35\"] 表示 Yes 65% / No 35%",
+    "token_id": "每个 outcome 有唯一 token_id (大整数)，用于 CLOB 订单簿查询",
+    "slug": "市场 URL 路径: polymarket.com/event/{slug}"
+  },
+  "usage_patterns": {
+    "search_by_topic": "GET /markets?tag={TAG}&order=volume&ascending=false — 按分类浏览热门市场",
+    "search_by_slug": "GET /events?slug={slug-keywords} — 按 slug 精确查找事件 (slug 是 URL 路径中的 kebab-case 关键词)",
+    "get_probability": "outcomePrices[0] 即为 Yes 的当前概率",
+    "paginate": "offset=0,100,200... 逐页遍历 (limit 上限 100)"
+  },
+  "limitations": {
+    "no_full_text_search": "Gamma API 没有全文搜索参数，无法直接按关键词搜索市场问题/描述",
+    "workaround": "1) 如果知道 slug 用 events?slug= 精确查; 2) 否则需分页遍历 + 本地过滤; 3) 也可 GET polymarket.com 前端搜索页抓取结果",
+    "max_limit": "单次请求最多 100 条，超过需用 offset 分页"
+  },
+  "homepage_card": {
+    "order": 50,
+    "description": "预测市场，公开 API，无需逆向",
+    "branches": [
+      {"prefix": "Gamma", "text": "gamma-api.polymarket.com — 市场元数据 + 价格"},
+      {"prefix": "CLOB", "text": "clob.polymarket.com — 实时订单簿"},
+      {"desc": "Politics · Crypto · Sports · Geopolitics · 无需认证"}
+    ]
+  },
+  "last_verified": "2026-05-07"
+}

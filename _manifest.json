@@ -12,7 +12,7 @@
   {
     "path": "/api.bilibili.com/x/player/v2",
     "title": "Bilibili 播放器信息（含字幕）",
-    "summary": "获取播放器配置，包括字幕/CC轨道列表"
+    "summary": "获取播放器配置，包括 AI 字幕轨道列表"
   },
   {
     "path": "/api.bilibili.com/x/v2/dm/web/seg",
@@ -148,6 +148,11 @@
     "path": "/opendata.sz.gov.cn/maintenance/hotData",
     "title": "热门数据集 / 热门 API",
     "summary": "站内最热数据集和最热 API 排行，无需参数。适合探索时找高价值入口。"
+  },
+  {
+    "path": "/polymarket.com",
+    "title": "Polymarket (Prediction Markets)",
+    "summary": ""
   },
   {
     "path": "/push2.eastmoney.com/etf-quotes",
