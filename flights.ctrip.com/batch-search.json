@@ -78,10 +78,21 @@
   "last_verified": "2026-05-07",
   "discovered_by": "agentmap-scout sniff_endpoints + fetch hook",
 
+  "quick_start_scout": "cd ~/agentmap-scout && .venv/bin/python3 -c \"\nimport json, requests\nresp = requests.post('http://localhost:8010/exec_js', json={\n    'url': 'https://flights.ctrip.com/online/list/oneway-bjs-szx?depdate=2026-05-23&cabin=y&adult=1',\n    'code': \\\"(function(){var r=null;var f=window.fetch;window.fetch=function(){var a=arguments;var u=typeof a[0]==='string'?a[0]:(a[0]&&a[0].url)||'';var p=f.apply(this,a);if(u.indexOf('batchSearch')>-1&&!r){p.then(function(resp){resp.clone().json().then(function(d){var fl=(d.data&&d.data.flightItineraryList)||[];var rows=[];fl.forEach(function(it){var s=it.flightSegments&&it.flightSegments[0];var l=s&&s.flightList&&s.flightList[0];if(!l)return;var p2=it.priceList&&it.priceList[0];var tc=(s&&s.transferCount)||0;rows.push([l.flightNo,l.operateFlightNo||'',l.airlineName,(l.departureDateTime||'').substring(11,16),(l.arrivalDateTime||'').substring(11,16),s.duration,tc,l.aircraftName,p2?p2.adultPrice:0].join('|'));});r=fl.length+'\\\\n'+rows.join('\\\\n');});});};return p;};return new Promise(function(res){setTimeout(function(){res(r||'no_capture');},22000);});})()\\\",\n    'wait_until': 'domcontentloaded',\n    'timeout_ms': 60000\n}, timeout=90)\nprint(resp.json().get('result','error')[:3000])\n\"",
+
+  "quick_start_scout_notes": [
+    "需要 agentmap-scout 服务在 localhost:8010 运行",
+    "启动方式: cd ~/agentmap-scout && .venv/bin/uvicorn src.main:app --port 8010",
+    "URL 中 oneway-{dep}-{arr} 按小写城市代码替换，depdate 按 YYYY-MM-DD 格式",
+    "返回格式: 第一行是总航班数，后续每行用 | 分隔: 航班号|运营航班号|航司|出发时间|到达时间|时长(分钟)|中转次数|机型|票面价",
+    "票面价与中航信底价一致，含税总价需另加 ¥170（机建 ¥50 + 燃油 ¥120，国内直飞 >800km）"
+  ],
+
   "caveats": [
     "响应体 10MB+，含大量代码共享航班（同一物理航班以不同航班号出现）",
     "需通过 operateFlightNo 去重获取实际独立航班",
     "需要 agentmap-scout 浏览器环境，不可纯 API 裸调",
-    "页面加载到数据可用约需 20-25 秒"
+    "页面加载到数据可用约需 20-25 秒",
+    "adultPrice 经验证与航旅纵横（中航信）显示的底价一致，不存在 OTA 加价"
   ]
 }
