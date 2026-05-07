@@ -1,0 +1,38 @@
+{
+  "service": "datacenter-web.eastmoney.com",
+  "page": "https://data.eastmoney.com/cjsj/fdi.html",
+  "title": "外商直接投资（FDI）",
+  "summary": "按月发布的中国实际利用外资金额数据，含当月/累计值及同比、环比。",
+  "method": "GET",
+  "endpoint": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "params": {
+    "reportName": { "value": "RPT_ECONOMY_FDI" },
+    "columns": { "value": "ALL" },
+    "pageNumber": { "type": "integer", "default": 1 },
+    "pageSize": { "type": "integer", "default": 20 },
+    "sortColumns": { "value": "REPORT_DATE" },
+    "sortTypes": { "type": "integer", "default": -1 },
+    "source": { "value": "WEB" },
+    "client": { "value": "WEB" }
+  },
+  "response": {
+    "format": "JSON",
+    "fields": {
+      "REPORT_DATE": "报告日期",
+      "TIME": "时间描述",
+      "ACTUAL_FOREIGN": "当月实际使用外资金额（亿美元）",
+      "ACTUAL_FOREIGN_SAME": "当月同比（%）",
+      "ACTUAL_FOREIGN_SEQUENTIAL": "当月环比（%）",
+      "ACTUAL_FOREIGN_ACCUMULATE": "累计实际使用外资金额（亿美元）",
+      "FOREIGN_ACCUMULATE_SAME": "累计同比（%）"
+    }
+  },
+  "example_call": "curl 'https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_ECONOMY_FDI&columns=ALL&pageNumber=1&pageSize=5&sortColumns=REPORT_DATE&sortTypes=-1&source=WEB&client=WEB'",
+  "data_coverage": {
+    "total_records": 185,
+    "frequency": "月度"
+  },
+  "caveats": ["无需认证"],
+  "confidence": 0.95,
+  "last_verified": "2026-05-07"
+}

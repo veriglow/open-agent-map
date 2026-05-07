@@ -1,0 +1,37 @@
+{
+  "service": "datacenter-web.eastmoney.com",
+  "page": "https://data.eastmoney.com/cjsj/pmi.html",
+  "title": "中国PMI（采购经理人指数）",
+  "summary": "按月发布的中国制造业和非制造业采购经理人指数，含指数值及同比。50 以上表示扩张。",
+  "method": "GET",
+  "endpoint": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "params": {
+    "reportName": { "value": "RPT_ECONOMY_PMI" },
+    "columns": { "value": "ALL" },
+    "pageNumber": { "type": "integer", "default": 1 },
+    "pageSize": { "type": "integer", "default": 20 },
+    "sortColumns": { "value": "REPORT_DATE" },
+    "sortTypes": { "type": "integer", "default": -1 },
+    "source": { "value": "WEB" },
+    "client": { "value": "WEB" }
+  },
+  "response": {
+    "format": "JSON",
+    "fields": {
+      "REPORT_DATE": "报告日期",
+      "TIME": "时间描述",
+      "MAKE_INDEX": "制造业 PMI",
+      "MAKE_SAME": "制造业 PMI 同比",
+      "NMAKE_INDEX": "非制造业 PMI",
+      "NMAKE_SAME": "非制造业 PMI 同比"
+    }
+  },
+  "example_call": "curl 'https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_ECONOMY_PMI&columns=ALL&pageNumber=1&pageSize=5&sortColumns=REPORT_DATE&sortTypes=-1&source=WEB&client=WEB'",
+  "data_coverage": {
+    "total_records": 220,
+    "frequency": "月度"
+  },
+  "caveats": ["无需认证", "50 为荣枯线，>50 表示扩张，<50 表示收缩"],
+  "confidence": 0.95,
+  "last_verified": "2026-05-07"
+}

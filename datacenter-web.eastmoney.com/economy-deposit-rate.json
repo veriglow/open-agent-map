@@ -1,0 +1,45 @@
+{
+  "service": "datacenter-web.eastmoney.com",
+  "page": "https://data.eastmoney.com/cjsj/ckll.html",
+  "title": "存贷款基准利率（历次调整）",
+  "summary": "央行历次存贷款基准利率调整记录，含活期/定期存款和短/中/长期贷款利率，以及调整后首个交易日的上证/深证反应。",
+  "method": "GET",
+  "endpoint": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "params": {
+    "reportName": { "value": "RPT_ECONOMY_DEPOSIT_RATE" },
+    "columns": { "value": "ALL" },
+    "pageNumber": { "type": "integer", "default": 1 },
+    "pageSize": { "type": "integer", "default": 50 },
+    "sortColumns": { "value": "REPORT_DATE" },
+    "sortTypes": { "type": "integer", "default": -1 },
+    "source": { "value": "WEB" },
+    "client": { "value": "WEB" }
+  },
+  "response": {
+    "format": "JSON",
+    "fields": {
+      "PUBLISH_DATE": "公布日期",
+      "REPORT_DATE": "生效日期",
+      "DEPOSIT_RATE_BB": "活期存款利率调整前（%）",
+      "DEPOSIT_RATE_BA": "活期存款利率调整后（%）",
+      "DEPOSIT_RATE_B": "活期存款利率调幅（百分点）",
+      "LOAN_RATE_SB": "六个月内贷款利率调整前（%）",
+      "LOAN_RATE_SA": "六个月内贷款利率调整后（%）",
+      "LOAN_RATE_S": "六个月内贷款利率调幅（百分点）",
+      "NEXT_SH_RATE": "调整后首个交易日上证涨跌（%）",
+      "NEXT_SZ_RATE": "调整后首个交易日深证涨跌（%）"
+    }
+  },
+  "example_call": "curl 'https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_ECONOMY_DEPOSIT_RATE&columns=ALL&pageNumber=1&pageSize=50&sortColumns=REPORT_DATE&sortTypes=-1&source=WEB&client=WEB'",
+  "data_coverage": {
+    "total_records": 27,
+    "frequency": "不定期（央行调整时更新）"
+  },
+  "caveats": [
+    "无需认证",
+    "数据为历次调整记录而非时间序列",
+    "自 2019 年 LPR 改革后，央行不再直接调整贷款基准利率"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-05-07"
+}

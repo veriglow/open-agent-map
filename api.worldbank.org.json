@@ -1,0 +1,62 @@
+{
+  "type": "signpost",
+  "domain": "api.worldbank.org",
+  "title": "世界银行开放数据 API",
+  "summary": "世界银行官方 REST API，覆盖 200+ 国家/地区的 1600+ 发展指标（GDP、人口、贸易、健康、教育等）。自文档化，无需认证，直接返回 JSON。官方文档完备，无需逆向。",
+  "official_docs": "https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation",
+  "base_url": "https://api.worldbank.org/v2",
+  "auth": "无需认证",
+  "key_endpoints": {
+    "国家指标查询": {
+      "pattern": "/country/{country_code}/indicator/{indicator_id}?format=json",
+      "example": "https://api.worldbank.org/v2/country/CHN/indicator/NY.GDP.MKTP.KD.ZG?format=json&date=2010:2023",
+      "notes": "country_code 用 ISO 3166 二字码（CHN/USA/JPN），indicator_id 见下方常用指标"
+    },
+    "指标列表": {
+      "pattern": "/indicator?format=json&per_page=1000",
+      "example": "https://api.worldbank.org/v2/indicator?format=json&per_page=50",
+      "notes": "浏览所有可用指标（1600+），支持搜索和分页"
+    },
+    "国家列表": {
+      "pattern": "/country?format=json&per_page=300",
+      "example": "https://api.worldbank.org/v2/country?format=json&per_page=300"
+    },
+    "多国对比": {
+      "pattern": "/country/{codes}/indicator/{id}?format=json",
+      "example": "https://api.worldbank.org/v2/country/CHN;USA;JPN/indicator/NY.GDP.MKTP.CD?format=json&date=2000:2023",
+      "notes": "多国用分号分隔"
+    }
+  },
+  "common_indicators": {
+    "NY.GDP.MKTP.CD": "GDP（现价美元）",
+    "NY.GDP.MKTP.KD.ZG": "GDP 增速（年度 %）",
+    "NY.GDP.PCAP.CD": "人均 GDP（现价美元）",
+    "SP.POP.TOTL": "总人口",
+    "SP.DYN.LE00.IN": "预期寿命（年）",
+    "SL.UEM.TOTL.ZS": "失业率（%）",
+    "FP.CPI.TOTL.ZG": "通胀率 CPI（年度 %）",
+    "NE.TRD.GNFS.ZS": "贸易占 GDP 比重（%）",
+    "BX.KLT.DINV.CD.WD": "外国直接投资净流入（美元）",
+    "SE.XPD.TOTL.GD.ZS": "教育支出占 GDP（%）",
+    "SH.XPD.CHEX.GD.ZS": "卫生支出占 GDP（%）",
+    "EN.ATM.CO2E.PC": "人均 CO2 排放（公吨）",
+    "IT.NET.USER.ZS": "互联网使用率（%）",
+    "EG.USE.ELEC.KH.PC": "人均用电量（kWh）"
+  },
+  "params": {
+    "format": "json（必须显式指定，否则返回 XML）",
+    "date": "年份范围，如 2010:2023 或单年 2023",
+    "per_page": "每页条数（默认 50，最大 32500）",
+    "page": "页码",
+    "MRV": "最近 N 个值（如 MRV=5 取最近5年）"
+  },
+  "response_format": "JSON 数组，[0] 是分页元数据，[1] 是数据数组。每条含 indicator/country/date/value。",
+  "caveats": [
+    "必须加 format=json，否则返回 XML",
+    "数据更新频率因指标而异（GDP 通常年度，人口年度）",
+    "部分国家部分年份数据缺失（value=null）",
+    "API v2 为当前版本，v1 已弃用"
+  ],
+  "confidence": 0.98,
+  "last_verified": "2026-05-07"
+}

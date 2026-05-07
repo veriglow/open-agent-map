@@ -40,6 +40,11 @@
     "summary": ""
   },
   {
+    "path": "/api.worldbank.org",
+    "title": "世界银行开放数据 API",
+    "summary": "世界银行官方 REST API，覆盖 200+ 国家/地区的 1600+ 发展指标（GDP、人口、贸易、健康、教育等）。自文档化，无需认证，直接返回 JSON。官方文档完备，无需逆向。"
+  },
+  {
     "path": "/arxiv.org",
     "title": "arXiv (Cornell University Open-Access Papers)",
     "summary": ""
@@ -73,6 +78,66 @@
     "path": "/cuhk.edu.cn/zh-hans/taxonomy/term/37",
     "title": "工作机会",
     "summary": "香港中文大学（深圳）招聘信息，含行政类、学术类、研究类、附属机构职位，约 40+ 职位，单页无分页。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-cpi",
+    "title": "中国CPI（居民消费价格指数）",
+    "summary": "按月发布的中国居民消费价格指数，含全国/城市/农村分项的同比、环比、定基及累计数据。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-currency-supply",
+    "title": "中国货币供应量（M0/M1/M2）",
+    "summary": "按月发布的中国货币供应量数据。BASIC_CURRENCY=M2（广义货币），CURRENCY=M1（狭义货币），FREE_CASH=M0（流通现金）。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-deposit-rate",
+    "title": "存贷款基准利率（历次调整）",
+    "summary": "央行历次存贷款基准利率调整记录，含活期/定期存款和短/中/长期贷款利率，以及调整后首个交易日的上证/深证反应。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-fdi",
+    "title": "外商直接投资（FDI）",
+    "summary": "按月发布的中国实际利用外资金额数据，含当月/累计值及同比、环比。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-forex-deposit",
+    "title": "外汇和人民币存款",
+    "summary": "按月发布的金融机构外汇和人民币各项存款数据，含余额、同比、环比及累计。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-gdp",
+    "title": "中国GDP（国内生产总值）",
+    "summary": "按季度发布的中国国内生产总值数据，含一二三产业分项及同比增速。数据源自国家统计局，东方财富整理。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-gold-currency",
+    "title": "黄金和外汇储备",
+    "summary": "按月发布的中国黄金储备和外汇储备数据，含储备量、同比和环比。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-house-price",
+    "title": "70城住宅价格指数",
+    "summary": "70个大中城市新建商品住宅和二手住宅销售价格指数，含同比、环比、定基。每月发布，由国家统计局原始编制。12800+ 条历史数据。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-pmi",
+    "title": "中国PMI（采购经理人指数）",
+    "summary": "按月发布的中国制造业和非制造业采购经理人指数，含指数值及同比。50 以上表示扩张。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-ppi",
+    "title": "中国PPI（工业品出厂价格指数）",
+    "summary": "按月发布的工业生产者出厂价格指数，含当月值、同比和累计。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-stock-statistics",
+    "title": "股票交易统计（沪深月度）",
+    "summary": "上海和深圳证券交易所的月度交易统计，含上市公司数、总市值、成交额、成交量及指数高低点。"
+  },
+  {
+    "path": "/datacenter-web.eastmoney.com/economy-tax",
+    "title": "全国财政收入",
+    "summary": "按月/季发布的全国财政收入数据，含收入总额、同比和环比增速。"
   },
   {
     "path": "/edith.xiaohongshu.com/api/sns/web/v1/search/notes",

@@ -1,0 +1,101 @@
+{
+  "service": "datacenter-web.eastmoney.com",
+  "page": "https://data.eastmoney.com/cjsj/gdp.html",
+  "title": "中国GDP（国内生产总值）",
+  "summary": "按季度发布的中国国内生产总值数据，含一二三产业分项及同比增速。数据源自国家统计局，东方财富整理。",
+  "method": "GET",
+  "endpoint": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "params": {
+    "reportName": {
+      "value": "RPT_ECONOMY_GDP",
+      "description": "固定值，指定 GDP 报表"
+    },
+    "columns": {
+      "value": "ALL",
+      "description": "返回所有字段。也可指定逗号分隔的字段名"
+    },
+    "pageNumber": {
+      "type": "integer",
+      "default": 1,
+      "description": "页码，从 1 开始"
+    },
+    "pageSize": {
+      "type": "integer",
+      "default": 20,
+      "description": "每页条数，最大可设 500"
+    },
+    "sortColumns": {
+      "value": "REPORT_DATE",
+      "description": "排序字段"
+    },
+    "sortTypes": {
+      "type": "integer",
+      "enum": { "-1": "降序（最新在前）", "1": "升序" },
+      "default": -1
+    },
+    "source": { "value": "WEB", "description": "固定值" },
+    "client": { "value": "WEB", "description": "固定值" }
+  },
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "success": "布尔，请求是否成功",
+      "result.count": "总记录数",
+      "result.pages": "总页数",
+      "result.data": "数据数组"
+    },
+    "fields": {
+      "REPORT_DATE": "报告日期（YYYY-MM-DD HH:mm:ss）",
+      "TIME": "时间描述（如 '2026年第1季度'）",
+      "DOMESTICL_PRODUCT_BASE": "GDP 绝对值（亿元）",
+      "FIRST_PRODUCT_BASE": "第一产业增加值（亿元）",
+      "SECOND_PRODUCT_BASE": "第二产业增加值（亿元）",
+      "THIRD_PRODUCT_BASE": "第三产业增加值（亿元）",
+      "SUM_SAME": "GDP 同比增速（%）",
+      "FIRST_SAME": "第一产业同比增速（%）",
+      "SECOND_SAME": "第二产业同比增速（%）",
+      "THIRD_SAME": "第三产业同比增速（%）"
+    }
+  },
+  "example_call": "curl 'https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_ECONOMY_GDP&columns=ALL&pageNumber=1&pageSize=20&sortColumns=REPORT_DATE&sortTypes=-1&source=WEB&client=WEB'",
+  "example_response": {
+    "success": true,
+    "result": {
+      "pages": 5,
+      "count": 81,
+      "data": [
+        {
+          "REPORT_DATE": "2026-03-01 00:00:00",
+          "TIME": "2026年第1季度",
+          "DOMESTICL_PRODUCT_BASE": 334193,
+          "FIRST_PRODUCT_BASE": 11941,
+          "SECOND_PRODUCT_BASE": 116135,
+          "THIRD_PRODUCT_BASE": 206117,
+          "SUM_SAME": 5.0,
+          "FIRST_SAME": 3.8,
+          "SECOND_SAME": 4.9,
+          "THIRD_SAME": 5.2
+        }
+      ]
+    }
+  },
+  "data_coverage": {
+    "as_of": "2026-05-07",
+    "total_records": 81,
+    "time_range": "2005Q1 至今",
+    "frequency": "季度"
+  },
+  "caveats": [
+    "无需认证、无需 Cookie，可直接调用",
+    "数据源自国家统计局，经东方财富整理，非一手数据",
+    "DOMESTICL_PRODUCT_BASE 拼写如此（eastmoney 原始字段，非 typo）",
+    "pageSize 最大约 500，超出可能报错"
+  ],
+  "related_reports": [
+    "RPT_ECONOMY_CPI",
+    "RPT_ECONOMY_PPI",
+    "RPT_ECONOMY_PMI"
+  ],
+  "confidence": 0.95,
+  "last_verified": "2026-05-07"
+}
