@@ -225,6 +225,11 @@
     "summary": "获取指定 outcome token 的完整买卖盘（bids/asks）。可用于获取最精确的实时价格和市场深度。"
   },
   {
+    "path": "/polymarket.com/clob-prices-history",
+    "title": "CLOB API — 历史价格曲线",
+    "summary": "获取任意市场的概率随时间变化轨迹。无需认证。"
+  },
+  {
     "path": "/polymarket.com/gamma-api-events",
     "title": "Gamma API — 事件详情",
     "summary": "获取事件完整信息（含所有子市场、概率、交易量）。通常配合搜索使用：先搜到 slug，再用此接口拿完整数据。"

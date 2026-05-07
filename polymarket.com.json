@@ -18,6 +18,7 @@
     {"file": "gamma-api-events.json", "name": "事件详情", "level": "L1", "description": "按 slug 获取事件 + 所有子市场概率"},
     {"file": "gamma-api-markets.json", "name": "市场浏览", "level": "L1", "description": "按分类/排序浏览市场列表"},
     {"file": "clob-orderbook.json", "name": "实时订单簿", "level": "L1", "description": "指定 token 的 bid/ask 盘口"},
+    {"file": "clob-prices-history.json", "name": "历史价格曲线", "level": "L1", "description": "概率随时间变化轨迹 (支持分钟到日线粒度)"},
     {"file": "auth-and-trading.json", "name": "认证与交易", "level": "L3-L4", "description": "登录态操作: 持仓、下单"}
   ],
 
@@ -32,6 +33,10 @@
     "获取精确实时价格": [
       "1. 从 Gamma API 获取 clobTokenIds",
       "2. clob-orderbook.json: GET /book?token_id={id} → bid/ask 盘口"
+    ],
+    "查概率历史趋势": [
+      "1. 从 Gamma API 获取 clobTokenIds[0] (Yes token)",
+      "2. clob-prices-history.json: GET /prices-history?market={token_id}&interval=all&fidelity=1440 → 日线概率曲线"
     ]
   },
 

@@ -1,0 +1,63 @@
+{
+  "id": "polymarket.com/clob/prices-history",
+  "name": "CLOB API — 历史价格曲线",
+  "level": "L1",
+  "description": "获取任意市场的概率随时间变化轨迹。无需认证。",
+
+  "method": "GET",
+  "endpoint": "https://clob.polymarket.com/prices-history",
+  "auth": "none",
+  "response_type": "JSON",
+
+  "params": {
+    "market": {
+      "required": true,
+      "description": "outcome token ID (从 Gamma API 的 clobTokenIds[0] 获取，大整数字符串)"
+    },
+    "interval": {
+      "required": false,
+      "description": "时间范围",
+      "values": {
+        "1d": "过去 24 小时",
+        "all": "全部历史 (同 max)",
+        "max": "全部历史 (同 all)"
+      },
+      "note": "1w / 1m 实测无效 (返回空数组)，只有 1d / all / max 有效",
+      "default": "all"
+    },
+    "fidelity": {
+      "required": false,
+      "description": "数据粒度，单位为分钟。值越大数据点越少",
+      "values": {
+        "1": "每分钟 (最精细，数据量最大)",
+        "5": "每 5 分钟",
+        "60": "每小时",
+        "360": "每 6 小时",
+        "1440": "每天 (最粗，适合长期趋势)"
+      },
+      "default": "1"
+    }
+  },
+
+  "response_fields": {
+    "history[]": {
+      "t": "Unix 时间戳 (秒)",
+      "p": "价格/概率 (0-1)，如 0.155 = 15.5%"
+    }
+  },
+
+  "how_to_use": {
+    "step1": "用 Gamma API 获取目标市场: GET gamma-api.polymarket.com/events?slug={slug}",
+    "step2": "从 markets[] 中找到目标子市场，取 clobTokenIds (JSON string 需 parse)",
+    "step3": "clobTokenIds[0] = Yes token, clobTokenIds[1] = No token",
+    "step4": "GET clob.polymarket.com/prices-history?market={token_id}&interval=all&fidelity=1440"
+  },
+
+  "gotchas": {
+    "token_not_slug": "market 参数是 token_id (大整数)，不是 slug",
+    "invalid_intervals": "1w 和 1m 不工作，返回空数组。用 all 或 1d",
+    "fidelity_tradeoff": "fidelity=1 数据量可能上千条，长期趋势用 1440 (日线) 即可"
+  },
+
+  "verified": "2026-05-07"
+}
