@@ -1,0 +1,46 @@
+{
+  "id": "polymarket.com/search",
+  "name": "Polymarket 全文搜索",
+  "page_url": "https://polymarket.com/search?_q={keyword}",
+  "level": "L2",
+  "description": "按关键词搜索预测市场事件。这是 Polymarket 最核心的入口——Gamma API 没有搜索功能，只有这条路径支持全文搜索。",
+
+  "method": "GET",
+  "endpoint": "https://polymarket.com/search?_q={keyword}",
+  "auth": "none",
+  "response_type": "HTML (内嵌 JSON)",
+
+  "how_to_extract": {
+    "step1": "GET https://polymarket.com/search?_q={keyword}",
+    "step2": "从 HTML 中提取 <script id=\"__NEXT_DATA__\"> 标签内容。如果该标签不存在，用正则: /<script>[{]\"props\":[{]\"pageProps\"(.*?)<\\/script>/ 匹配第一个含 pageProps 的 script",
+    "step3": "JSON.parse 得到对象，取 .props.pageProps.dehydratedState.queries (数组)",
+    "step4": "遍历 queries 数组，找第一个满足 state.data.pages[0].results[] 存在�� query — 这就是搜索结果",
+    "step5": "results[] 中每个元素的 slug 字段可直接传给 Gamma API (无需加 /event/ 前缀)",
+    "result_fields": {
+      "id": "事件 ID (string)",
+      "title": "事件标题",
+      "slug": "URL slug — 直接用于 Gamma API: events?slug={slug}",
+      "image": "封面图 URL",
+      "markets": "子市场数组，每个含 question + outcomePrices (注意: outcomePrices 可能是 JSON string 需二次 parse)"
+    }
+  },
+
+  "example": {
+    "request": "curl -s 'https://polymarket.com/search?_q=trump+china'",
+    "python_extract": "import re, json; html = open('page.html').read(); match = re.search(r'<script id=\"__NEXT_DATA__\"[^>]*>(.*?)</script>', html); data = json.loads(match.group(1)); results = next(q['state']['data']['pages'][0]['results'] for q in data['props']['pageProps']['dehydratedState']['queries'] if 'pages' in (q.get('state',{}).get('data',{}) or {})); print([r['title'] for r in results])"
+  },
+
+  "params": {
+    "_q": {
+      "required": true,
+      "description": "搜索关键词，空格用 + 连接",
+      "examples": ["trump+china", "bitcoin+100k", "fed+rate+cut"]
+    }
+  },
+
+  "returns_up_to": 20,
+  "pagination": "首屏返回约 20 条结果。更多结果需要模拟滚动加载（客户端触发），暂未逆向翻页机制。",
+
+  "verified": "2026-05-07",
+  "discovered_by": "agentmap-scouter sniff_endpoints"
+}

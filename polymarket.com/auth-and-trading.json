@@ -1,0 +1,68 @@
+{
+  "id": "polymarket.com/auth-and-trading",
+  "name": "认证与交易 (L3/L4)",
+  "level": "L3-L4",
+  "description": "登录态操作：查看持仓、下单交易。需要认证凭证。",
+
+  "auth": {
+    "type": "cookie + HMAC API key",
+    "login_method": "Magic Link (email/social login via magic.link SDK)",
+    "cookie_name": "待确认 (需登录后抓包)",
+    "api_key": {
+      "description": "CLOB 交易用 HMAC API key",
+      "how_to_get": "登录 Polymarket 网页端 → Settings → API Keys → Create",
+      "components": ["API Key", "API Secret", "Passphrase"],
+      "signature": "HMAC-SHA256 签名每个请求"
+    }
+  },
+
+  "authenticated_endpoints": {
+    "gamma_api": {
+      "/is-logged-in": {
+        "method": "GET",
+        "description": "检查登录状态",
+        "requires": "cookie",
+        "note": "无 cookie 返回 422: missing auth cookie"
+      }
+    },
+    "clob_api_trading": {
+      "/order": {
+        "method": "POST",
+        "description": "下单",
+        "requires": "HMAC API key signature"
+      },
+      "/cancel": {
+        "method": "DELETE",
+        "description": "取消订单",
+        "requires": "HMAC API key signature"
+      },
+      "/orders": {
+        "method": "GET",
+        "description": "查看当前挂单",
+        "requires": "HMAC API key signature"
+      },
+      "/positions": {
+        "method": "GET",
+        "description": "查看持仓",
+        "requires": "HMAC API key signature"
+      }
+    }
+  },
+
+  "cookie_lifecycle": {
+    "obtain": "人类登录一次 polymarket.com（邮箱/Google/Telegram），从浏览器导出 cookie",
+    "validity": "待测试（推测数天到数周）",
+    "refresh": "待逆向（可能通过 magic.link refresh token 自动续期）"
+  },
+
+  "status": "partially_mapped",
+  "todo": [
+    "登录后抓取完整 cookie 结构",
+    "确认 cookie 有效期和续期机制",
+    "逆向持仓查询和订单管理的完整参数",
+    "测试 HMAC 签名生成流程"
+  ],
+
+  "official_docs": "https://docs.polymarket.com/#authentication",
+  "verified": "2026-05-07"
+}

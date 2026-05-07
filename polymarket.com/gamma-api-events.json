@@ -1,0 +1,75 @@
+{
+  "id": "polymarket.com/gamma-api/events",
+  "name": "Gamma API — 事件详情",
+  "level": "L1",
+  "description": "获取事件完整信息（含所有子市场、概率、交易量）。通常配合搜索使用：先搜到 slug，再用此接口拿完整数据。",
+
+  "method": "GET",
+  "endpoint": "https://gamma-api.polymarket.com/events",
+  "auth": "none",
+  "response_type": "JSON array",
+
+  "params": {
+    "slug": {
+      "description": "事件 slug（精确匹配）。最可靠的查询方式。",
+      "example": "will-trump-visit-china-by"
+    },
+    "limit": {
+      "description": "返回数量，默认 100，上限 100",
+      "example": "50"
+    },
+    "offset": {
+      "description": "分页偏移",
+      "example": "100"
+    },
+    "active": {
+      "description": "true = 仅活跃事件",
+      "example": "true"
+    },
+    "closed": {
+      "description": "false = 排除已结算事件",
+      "example": "false"
+    }
+  },
+
+  "response_fields": {
+    "id": "事件 ID",
+    "title": "事件标题",
+    "slug": "URL slug",
+    "description": "结算规则描述",
+    "volume": "总交易量 (USDC)",
+    "liquidity": "当前流动性",
+    "markets[]": {
+      "description": "子市场数组",
+      "fields": {
+        "id": "市场 ID",
+        "question": "市场问题",
+        "slug": "市场 slug",
+        "outcomePrices": "JSON string 需二次 parse: JSON.parse(outcomePrices) → [Yes价格, No价格]。如 '[\"0.68\", \"0.32\"]' → Yes=68%",
+        "outcomes": "JSON string: '[\"Yes\", \"No\"]'",
+        "volume": "该子市场交易量",
+        "liquidity": "流动性",
+        "endDate": "到期时间 (ISO)",
+        "closed": "是否已结算",
+        "clobTokenIds": "[Yes_token_id, No_token_id] 用于订单簿查询"
+      }
+    }
+  },
+
+  "example": {
+    "request": "curl 'https://gamma-api.polymarket.com/events?slug=will-trump-visit-china-on'",
+    "response_summary": "返回事件详情 + 31 个子市场（每天一个），每个含实时概率"
+  },
+
+  "limitations": {
+    "no_text_search": "不支持全文搜索，只能按 slug/active/closed/offset 筛选",
+    "slug_must_be_known": "需先通过搜索页或浏览获取 slug"
+  },
+
+  "gotchas": {
+    "string_fields": "outcomePrices, outcomes, clobTokenIds 都是 JSON string (带引号的数组)，需 JSON.parse 二次解析",
+    "slug_no_prefix": "slug 直接使用，不要加 /event/ 前缀"
+  },
+
+  "verified": "2026-05-07"
+}

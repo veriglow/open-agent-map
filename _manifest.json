@@ -150,9 +150,34 @@
     "summary": "站内最热数据集和最热 API 排行，无需参数。适合探索时找高价值入口。"
   },
   {
+    "path": "/polymarket.com/auth-and-trading",
+    "title": "认证与交易 (L3/L4)",
+    "summary": "登录态操作：查看持仓、下单交易。需要认证凭证。"
+  },
+  {
+    "path": "/polymarket.com/clob-orderbook",
+    "title": "CLOB API — 实时订单簿",
+    "summary": "获取指定 outcome token 的完整买卖盘（bids/asks）。可用于获取最精确的实时价格和市场深度。"
+  },
+  {
+    "path": "/polymarket.com/gamma-api-events",
+    "title": "Gamma API — 事件详情",
+    "summary": "获取事件完整信息（含所有子市场、概率、交易量）。通常配合搜索使用：先搜到 slug，再用此接口拿完整数据。"
+  },
+  {
+    "path": "/polymarket.com/gamma-api-markets",
+    "title": "Gamma API — 市场列表与浏览",
+    "summary": "按分类、排序浏览市场列表。适合发现热门市场，不适合搜索特定主题。"
+  },
+  {
+    "path": "/polymarket.com/search",
+    "title": "Polymarket 全文搜索",
+    "summary": "按关键词搜索预测市场事件。这是 Polymarket 最核心的入口——Gamma API 没有搜索功能，只有这条路径支持全文搜索。"
+  },
+  {
     "path": "/polymarket.com",
     "title": "Polymarket (Prediction Markets)",
-    "summary": ""
+    "summary": "去中心化预测市场。$30M+ 日交易量。覆盖政治、加密货币��体育、地缘政治等。"
   },
   {
     "path": "/push2.eastmoney.com/etf-quotes",

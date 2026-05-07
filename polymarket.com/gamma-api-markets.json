@@ -1,0 +1,50 @@
+{
+  "id": "polymarket.com/gamma-api/markets",
+  "name": "Gamma API — 市场列表与浏览",
+  "level": "L1",
+  "description": "按分类、排序浏览市场列表。适合发现热门市场，不适合搜索特定主题。",
+
+  "method": "GET",
+  "endpoint": "https://gamma-api.polymarket.com/markets",
+  "auth": "none",
+  "response_type": "JSON array",
+
+  "params": {
+    "limit": {"description": "返回数量 (1-100)", "default": "100"},
+    "offset": {"description": "分页偏移", "default": "0"},
+    "active": {"description": "true/false 筛选活跃市场"},
+    "closed": {"description": "true/false 筛选已结算市场"},
+    "order": {"description": "排序字段: volume, liquidity, startDate, endDate, createdAt"},
+    "ascending": {"description": "true/false 排序方向"},
+    "tag": {
+      "description": "分类标签筛选",
+      "known_values": ["Politics", "Crypto", "Sports", "Geopolitics", "Tech", "Pop Culture", "Economy", "Trump", "Iran"]
+    },
+    "slug": {"description": "精确匹配市场 slug（注意：这是市场级别，非事件级别）"}
+  },
+
+  "response_fields": {
+    "id": "市场 ID",
+    "question": "市场问题",
+    "slug": "URL slug",
+    "description": "结算规则",
+    "outcomes": "[\"Yes\", \"No\"] 或多选项",
+    "outcomePrices": "[价格1, 价格2] 即概率",
+    "volume": "总交易量 (USDC)",
+    "volume24hr": "24小时交易量",
+    "liquidity": "流动性",
+    "startDate": "开始时间",
+    "endDate": "到期时间",
+    "active": "是否活跃",
+    "closed": "是否已结算",
+    "clobTokenIds": "CLOB token IDs (用于订单簿)"
+  },
+
+  "common_patterns": {
+    "热门市场": "GET /markets?active=true&closed=false&order=volume&ascending=false&limit=20",
+    "某分类热门": "GET /markets?tag=Politics&active=true&closed=false&order=volume&ascending=false",
+    "获取标签列表": "GET https://polymarket.com/api/tags/filteredBySlug?tag=all&status=active"
+  },
+
+  "verified": "2026-05-07"
+}

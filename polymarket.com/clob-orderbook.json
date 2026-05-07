@@ -1,0 +1,40 @@
+{
+  "id": "polymarket.com/clob/orderbook",
+  "name": "CLOB API — 实时订单簿",
+  "level": "L1",
+  "description": "获取指定 outcome token 的完整买卖盘（bids/asks）。可用于获取最精确的实时价格和市场深度。",
+
+  "method": "GET",
+  "endpoint": "https://clob.polymarket.com/book",
+  "auth": "none (read)",
+  "response_type": "JSON",
+
+  "params": {
+    "token_id": {
+      "required": true,
+      "description": "outcome token ID (从 Gamma API 的 clobTokenIds 字段获取，是一个大整数字符串)",
+      "example": "72000033542744338126570812112950110776351114939609794203044403499903334743250"
+    }
+  },
+
+  "response_fields": {
+    "market": "市场标识",
+    "asset_id": "token ID",
+    "bids[]": {"price": "买入价 (0-1)", "size": "数量"},
+    "asks[]": {"price": "卖出价 (0-1)", "size": "数量"},
+    "hash": "订单簿快照哈希"
+  },
+
+  "how_to_get_token_id": {
+    "step1": "用 Gamma API 获取市场: GET gamma-api.polymarket.com/events?slug={slug}",
+    "step2": "从 markets[].clobTokenIds 取值: [Yes_token_id, No_token_id]",
+    "step3": "用 token_id 查询: GET clob.polymarket.com/book?token_id={id}"
+  },
+
+  "other_endpoints": {
+    "/time": "服务器时间戳 (unix seconds)",
+    "/markets?next_cursor=MA==": "分页列出所有 CLOB 市场 (含 token 详情、tick sizes、fees)"
+  },
+
+  "verified": "2026-05-07"
+}
