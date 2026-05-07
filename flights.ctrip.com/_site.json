@@ -1,0 +1,9 @@
+{
+  "name": "携程机票 (Ctrip Flights)",
+  "domain": "flights.ctrip.com",
+  "favicon_domain": "ctrip.com",
+  "badge": "Deep Map",
+  "subtitle": "国内航班价格 API",
+  "description": "携程机票搜索隐藏 API 逆向。日历最低价可裸调，航班详情需浏览器会话 token",
+  "order": 25
+}

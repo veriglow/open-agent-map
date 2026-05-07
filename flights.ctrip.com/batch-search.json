@@ -1,0 +1,79 @@
+{
+  "domain": "flights.ctrip.com",
+  "url": "https://flights.ctrip.com/online/list/oneway-szx-bjs",
+  "title": "航班列表搜索（需 token）",
+  "summary": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时刻。需要浏览器会话 token。",
+  "method": "POST",
+  "endpoint": "https://flights.ctrip.com/international/search/api/search/batchSearch",
+
+  "auth": {
+    "method": "session_token",
+    "description": "需要从浏览器页面获取动态 token。每次请求的 token 不同（一次性）。",
+    "required_headers": ["token", "sign", "transactionid", "sessionid"],
+    "how_to_obtain": "加载 flights.ctrip.com 搜索页，从 XHR 请求的 headers 中提取 token 和 sign",
+    "status": "未攻克 — token 生成逻辑未逆向，裸调返回 showAuthCode:true"
+  },
+
+  "headers": {
+    "Content-Type": "application/json",
+    "Referer": "https://flights.ctrip.com/",
+    "token": "{{dynamic_token}}",
+    "sign": "{{request_sign}}",
+    "transactionid": "{{transaction_id}}",
+    "sessionid": "{{session_id}}",
+    "scope": "d",
+    "w-payload-source": "{{payload_source}}"
+  },
+
+  "params": {
+    "adultCount": {"value": 1, "description": "成人数"},
+    "childCount": {"value": 0, "description": "儿童数"},
+    "infantCount": {"value": 0, "description": "婴儿数"},
+    "flightWay": {"value": "S", "description": "S=单程, D=往返"},
+    "cabin": {"value": "Y", "description": "Y=经济舱, C=公务舱, F=头等舱"},
+    "scope": {"value": "d", "description": "d=国内"},
+    "segmentNo": {"value": 1, "description": "航段序号"},
+    "flightSegments": {
+      "required": true,
+      "description": "航段列表",
+      "example": [{
+        "departureCityCode": "SZX",
+        "arrivalCityCode": "BJS",
+        "departureCityName": "深圳",
+        "arrivalCityName": "北京",
+        "departureDate": "2026-05-23"
+      }]
+    }
+  },
+
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "data": {
+        "context": {"searchId": "搜索 ID", "finished": "是否完成"},
+        "flightItineraryList": ["完整航班列表，含航班号、时刻、票价、舱位详情"]
+      }
+    },
+    "notes": "裸调时 data.context.showAuthCode=true，不返回航班数据"
+  },
+
+  "confidence": 0.6,
+  "last_verified": "2026-05-07",
+  "discovered_by": "agentmap-scout sniff_endpoints",
+
+  "caveats": [
+    "需要动态 token，无法裸调",
+    "token 每次请求不同，可能有时效性",
+    "sign 字段是请求签名，生成算法未逆向",
+    "可通过 agentmap-scout exec_js 在浏览器中触发搜索后从 DOM 提取结果作为替代"
+  ],
+
+  "workaround": {
+    "method": "DOM 提取",
+    "description": "通过 agentmap-scout 加载 ctrip.com 搜索页，等待渲染后从 DOM 提取航班数据",
+    "endpoint": "http://scout:8010/exec_js",
+    "page_url_pattern": "https://flights.ctrip.com/online/list/oneway-{dep}-{arr}?depdate={date}&cabin=y&adult=1",
+    "settle_time_ms": 18000,
+    "dom_selector": ".flight-item, [class*='flight-box'], [class*='list-item']"
+  }
+}

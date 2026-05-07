@@ -1,0 +1,90 @@
+{
+  "domain": "flights.ctrip.com",
+  "url": "https://www.trip.com/flights/",
+  "title": "Trip.com 日历低价（国际版）",
+  "summary": "Trip.com 国际版日历最低价 API。支持舱位筛选、直飞/中转筛选、往返。可裸调。",
+  "method": "POST",
+  "endpoint": "https://www.trip.com/restapi/soa2/14427/GetLowPriceInCalender",
+
+  "headers": {
+    "Content-Type": "application/json",
+    "Referer": "https://www.trip.com/flights/",
+    "locale": "en-XX",
+    "currency": "CNY"
+  },
+
+  "params": {
+    "dCity": {
+      "required": true,
+      "description": "出发城市 IATA 代码",
+      "example": "SZX"
+    },
+    "aCity": {
+      "required": true,
+      "description": "到达城市 IATA 代码",
+      "example": "BJS"
+    },
+    "dDate": {
+      "required": true,
+      "description": "出发日期 YYYY-MM-DD",
+      "example": "2026-05-23"
+    },
+    "flightWayType": {
+      "description": "OW=单程, RT=往返",
+      "example": "OW"
+    },
+    "aDate": {
+      "description": "返程日期（往返时必填）",
+      "example": "2026-05-27"
+    },
+    "cabinClass": {
+      "description": "Economy / Business / First / PremiumEconomy",
+      "example": "Economy"
+    },
+    "transferType": {
+      "description": "ANY=不限, DIRECT=仅直飞",
+      "example": "ANY"
+    },
+    "searchInfo": {
+      "description": "乘客信息",
+      "example": {"travelerNum": {"adult": 1, "child": 0, "infant": 0}}
+    },
+    "offSet": {
+      "description": "返回天数范围（前后各 N 天）",
+      "example": 30
+    },
+    "Head": {
+      "description": "请求头对象",
+      "example": {"Group": "Trip", "Source": "ONLINE", "Version": "3", "Currency": "CNY", "Locale": "en-XX"}
+    }
+  },
+
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "lowestCurrencyPrice": "最低价",
+      "currency": "币种",
+      "hasDirectFlight": "是否有直飞",
+      "lowPriceInCalenderDtoInfoList": [
+        {
+          "dDate": "Unix 时间戳（秒）",
+          "dDateDisplayValue": "日期显示文本",
+          "currencyPrice": "价格",
+          "currencyPriceDisplayValue": "价格显示文本（含币种）"
+        }
+      ]
+    }
+  },
+
+  "quick_start": "curl -s -X POST 'https://www.trip.com/restapi/soa2/14427/GetLowPriceInCalender' -H 'Content-Type: application/json' -H 'currency: CNY' -d '{\"dCity\":\"SZX\",\"aCity\":\"BJS\",\"dDate\":\"2026-05-23\",\"flightWayType\":\"OW\",\"cabinClass\":\"Economy\",\"searchInfo\":{\"travelerNum\":{\"adult\":1}},\"offSet\":30,\"Head\":{\"Group\":\"Trip\",\"Source\":\"ONLINE\",\"Version\":\"3\",\"Currency\":\"CNY\",\"Locale\":\"en-XX\"}}'",
+
+  "confidence": 0.95,
+  "last_verified": "2026-05-07",
+  "discovered_by": "agentmap-scout sniff_endpoints",
+
+  "caveats": [
+    "currency header 和 Head.Currency 需一致",
+    "部分国际航线可能返回 null 价格",
+    "价格为 Trip.com 渠道价"
+  ]
+}

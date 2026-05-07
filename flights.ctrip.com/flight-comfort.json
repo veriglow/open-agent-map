@@ -1,0 +1,96 @@
+{
+  "domain": "flights.ctrip.com",
+  "url": "https://flights.ctrip.com/online/list/oneway-szx-bjs",
+  "title": "航班舒适度查询",
+  "summary": "按航班号查询机型、机龄、座椅参数、准点率、餐食、娱乐设施等舒适度信息。可裸调。",
+  "method": "POST",
+  "endpoint": "https://flights.ctrip.com/international/search/api/flight/comfort/getFlightComfort",
+
+  "headers": {
+    "Content-Type": "application/json",
+    "Referer": "https://flights.ctrip.com/"
+  },
+
+  "params": {
+    "airlineCode": {
+      "required": true,
+      "description": "航司二字码",
+      "example": "CZ"
+    },
+    "flightNoList": {
+      "required": true,
+      "description": "航班号列表",
+      "example": ["CZ3157"]
+    },
+    "departureCityCode": {
+      "required": true,
+      "description": "出发城市 IATA 代码",
+      "example": "SZX"
+    },
+    "arrivalCityCode": {
+      "required": true,
+      "description": "到达城市 IATA 代码",
+      "example": "BJS"
+    },
+    "departureDate": {
+      "required": true,
+      "description": "出发日期 YYYY-MM-DD",
+      "example": "2026-05-23"
+    },
+    "arrivalDate": {
+      "required": true,
+      "description": "到达日期（通常与出发日期相同）",
+      "example": "2026-05-23"
+    },
+    "cabinList": {
+      "description": "舱位代码列表",
+      "example": ["Y"]
+    },
+    "aircraftCode": {
+      "description": "机型代码（可选但建议提供）",
+      "example": "32H"
+    }
+  },
+
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "status": "0 表示成功",
+      "data": {
+        "punctualityInfo": {
+          "departureDelaytime": "出发平均延误分钟数",
+          "departureBridge": "靠桥率百分比",
+          "arrivalDelaytime": "到达平均延误（负数表示提前）"
+        },
+        "planeInfo": {
+          "planeTypeName": "机型全称，如 '空中客车 A320'",
+          "planeWidthCategory": "'窄体' 或 '宽体'",
+          "planeAge": "机龄（年）"
+        },
+        "cabinInfoList": [
+          {
+            "cabin": "舱位代码 Y/C/F",
+            "hasMeal": "是否有餐食",
+            "entertainEquipment": "娱乐设备描述",
+            "seatTilt": {"value": "座椅倾斜角度(mm)"},
+            "seatWidth": {"value": "座椅宽度(cm)"},
+            "seatPitch": {"value": "座椅间距(cm)"},
+            "mealMsg": "餐食类型"
+          }
+        ]
+      }
+    }
+  },
+
+  "quick_start": "curl -s -X POST 'https://flights.ctrip.com/international/search/api/flight/comfort/getFlightComfort' -H 'Content-Type: application/json' -d '{\"airlineCode\":\"CZ\",\"flightNoList\":[\"CZ3157\"],\"departureCityCode\":\"SZX\",\"arrivalCityCode\":\"BJS\",\"departureDate\":\"2026-05-23\",\"arrivalDate\":\"2026-05-23\",\"cabinList\":[\"Y\"],\"aircraftCode\":\"32H\"}'",
+
+  "confidence": 0.95,
+  "last_verified": "2026-05-07",
+  "discovered_by": "agentmap-scout sniff_endpoints",
+
+  "caveats": [
+    "aircraftCode 不是必需但建议提供，否则可能返回错误机型数据",
+    "准点率数据基于历史统计，非实时",
+    "座椅参数可能因航司改装而变化"
+  ]
+}

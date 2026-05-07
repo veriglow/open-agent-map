@@ -332,6 +332,26 @@ footer a:hover{color:var(--am-green);}
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=ctrip.com&sz=32" alt="" width="20" height="20">
+        携程机票 (Ctrip Flights)
+        <small>国内航班价格 API</small>
+      </div>
+      <div class="site-card-badge" >Deep Map</div>
+    </div>
+    <div class="site-card-meta"><span class="site-count">5</span> maps &middot; 携程机票搜索隐藏 API 逆向。日历最低价可裸调，航班详情需浏览器会话 token</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">batch-search</span> <span class="branch-desc">— 核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">flight-comfort</span> <span class="branch-desc">— 按航班号查询机型、机龄、座椅参数、准点率、餐食、娱乐设施等舒适度信息。可裸调。</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">holiday-calendar</span> <span class="branch-desc">— 查询中国节假日和调休日历，标记工作日/休息日/调休日。可裸调。辅助航班价格分析。</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">lowest-price-calendar</span> <span class="branch-desc">— 按日期查询指定航线的最低票价，返回约 390 天的日历价格数据。含票面价、...</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">trip-low-price-calendar</span> <span class="branch-desc">— Trip.com 国际版日历最低价 API。支持舱位筛选、直飞/中转筛选、...</span></div>
+    </div>
+    <a href="/flights.ctrip.com" class="site-card-action">Browse all maps &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=mp.weixin.qq.com&sz=32" alt="" width="20" height="20">
         WeChat Official Accounts (微信公众号)
         <small>后台管理 API</small>

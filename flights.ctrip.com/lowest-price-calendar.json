@@ -1,0 +1,91 @@
+{
+  "domain": "flights.ctrip.com",
+  "url": "https://flights.ctrip.com/online/list/oneway-szx-bjs",
+  "title": "日历最低价搜索",
+  "summary": "按日期查询指定航线的最低票价，返回约 390 天的日历价格数据。含票面价、含税总价。可裸调，无需 token。",
+  "method": "POST",
+  "endpoint": "https://m.ctrip.com/restapi/soa2/15380/bjjson/FlightIntlAndInlandLowestPriceSearch",
+
+  "headers": {
+    "Content-Type": "application/json",
+    "Referer": "https://flights.ctrip.com/"
+  },
+
+  "params": {
+    "departNewCityCode": {
+      "required": true,
+      "description": "出发城市代码（IATA）",
+      "example": "SZX"
+    },
+    "arriveNewCityCode": {
+      "required": true,
+      "description": "到达城市代码（IATA）",
+      "example": "BJS"
+    },
+    "startDate": {
+      "required": true,
+      "description": "搜索起始日期，格式 YYYY-MM-DD",
+      "example": "2026-05-23"
+    },
+    "grade": {
+      "value": 1,
+      "description": "舱位等级。1=经济舱"
+    },
+    "flag": {
+      "value": 0,
+      "description": "搜索标志。0=单程，4=往返（需配合 returnDate）"
+    },
+    "channelName": {
+      "value": "FlightOnline",
+      "description": "固定值"
+    },
+    "searchType": {
+      "value": 1,
+      "description": "固定值"
+    },
+    "passengerList": {
+      "description": "乘客列表",
+      "example": [{"passengercount": 1, "passengertype": "Adult"}]
+    },
+    "calendarSelections": {
+      "description": "日历选项",
+      "example": [{"selectionType": 8, "selectionContent": ["1"]}]
+    }
+  },
+
+  "response": {
+    "format": "JSON",
+    "date_format": ".NET JSON Date: /Date(timestamp+0800)/",
+    "structure": {
+      "priceList": [
+        {
+          "departDate": "/Date(1778083200000+0800)/  — 毫秒时间戳",
+          "price": "票面价（不含税费）",
+          "totalPrice": "含税总价（票面 + 机建 + 燃油）",
+          "transportPrice": "运输价（通常等于 price）",
+          "flightNo": "空字符串（此接口不返回航班号）",
+          "airLine": "空字符串（此接口不返回航司）"
+        }
+      ],
+      "toast": "提示信息"
+    },
+    "notes": [
+      "返回约 390 天的日历价格，每天一条最低价",
+      "totalPrice - transportPrice = 税费（机建费 + 燃油附加费）",
+      "国内航班税费通常为 ¥170（机建 ¥50 + 燃油 ¥120），转机航班可能更高",
+      "价格为携程渠道价，可能比航司直销价高 ¥50-100"
+    ]
+  },
+
+  "quick_start": "curl -s -X POST 'https://m.ctrip.com/restapi/soa2/15380/bjjson/FlightIntlAndInlandLowestPriceSearch' -H 'Content-Type: application/json' -d '{\"departNewCityCode\":\"SZX\",\"arriveNewCityCode\":\"BJS\",\"startDate\":\"2026-05-23\",\"grade\":1,\"flag\":0,\"channelName\":\"FlightOnline\",\"searchType\":1,\"passengerList\":[{\"passengercount\":1,\"passengertype\":\"Adult\"}],\"calendarSelections\":[{\"selectionType\":8,\"selectionContent\":[\"1\"]}]}'",
+
+  "confidence": 0.95,
+  "last_verified": "2026-05-07",
+  "discovered_by": "agentmap-scout sniff_endpoints",
+
+  "caveats": [
+    "价格为携程渠道价，非航司直销底价",
+    "日期格式为 .NET JSON Date，需解析毫秒时间戳",
+    "不返回具体航班号和航司，仅每日最低价"
+  ]
+}

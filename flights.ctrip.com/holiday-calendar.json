@@ -1,0 +1,34 @@
+{
+  "domain": "flights.ctrip.com",
+  "url": "https://flights.ctrip.com/",
+  "title": "节假日日历",
+  "summary": "查询中国节假日和调休日历，标记工作日/休息日/调休日。可裸调。辅助航班价格分析。",
+  "method": "GET",
+  "endpoint": "https://flights.ctrip.com/international/search/api/base/getHoliday",
+
+  "headers": {
+    "Referer": "https://flights.ctrip.com/"
+  },
+
+  "params": {},
+
+  "response": {
+    "format": "JSON",
+    "structure": {
+      "data": {
+        "2026-05-01": {
+          "dat": "日期",
+          "stat": "1=工作日, 2=休息日(周末), 3=法定节假日, 4=调休工作日",
+          "holidayName": "节假日名称",
+          "desc": "描述"
+        }
+      }
+    }
+  },
+
+  "quick_start": "curl -s 'https://flights.ctrip.com/international/search/api/base/getHoliday' -H 'Referer: https://flights.ctrip.com/'",
+
+  "confidence": 0.95,
+  "last_verified": "2026-05-07",
+  "discovered_by": "agentmap-scout sniff_endpoints"
+}
