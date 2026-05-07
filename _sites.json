@@ -1,0 +1,616 @@
+[
+  {
+    "type": "directory",
+    "name": "Shanghai Stock Exchange (上海证券交易所)",
+    "domain": "www.sse.com.cn",
+    "favicon_domain": "www.sse.com.cn",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "commonQuery.do 隐藏 API 逆向",
+    "order": 10,
+    "total": 89,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "market/",
+        "count": "61 maps"
+      },
+      {
+        "prefix": "├──",
+        "dir": "disclosure/",
+        "count": "11 maps"
+      },
+      {
+        "prefix": "├──",
+        "dir": "assortment/",
+        "count": "8 maps"
+      },
+      {
+        "prefix": "├──",
+        "dir": "regulation/",
+        "count": "5 maps"
+      },
+      {
+        "prefix": "├──",
+        "dir": "listing/",
+        "count": "3 maps"
+      },
+      {
+        "prefix": "└──",
+        "dir": "lawandrules/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/www.sse.com.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "Shenzhen Open Data Platform (深圳市政府数据开放平台)",
+    "domain": "opendata.sz.gov.cn",
+    "favicon_domain": "opendata.sz.gov.cn",
+    "badge": "Deep Map",
+    "subtitle": "全市政府开放数据 + 可调 API",
+    "description": "深圳市全市政府部门开放数据的统一平台，提供数据集下载（csv/json/xlsx/xml/rdf）和可调 HTTP API。按部门编码（deptCode）组织，含人社局、气象局、市监局、交通局等。",
+    "order": 20,
+    "total": 5,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "data/",
+        "count": "4 maps"
+      },
+      {
+        "prefix": "└──",
+        "dir": "maintenance/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/opendata.sz.gov.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "YouTube (InnerTube API)",
+    "domain": "www.youtube.com",
+    "favicon_domain": "www.youtube.com",
+    "badge": "Deep Map",
+    "subtitle": "InnerTube 内部 API",
+    "description": "视频元数据 · 字幕 · 评论 · 搜索",
+    "order": 20,
+    "total": 5,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "youtubei/",
+        "count": "3 maps"
+      },
+      {
+        "prefix": "└──",
+        "dir": "api/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/www.youtube.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "SSE Cloud Quotes (上交所云行情)",
+    "domain": "yunhq.sse.com.cn",
+    "favicon_domain": "www.sse.com.cn",
+    "badge": "API Service",
+    "subtitle": "独立 API 微服务",
+    "description": "RESTful 行情接口，无需认证",
+    "order": 20,
+    "total": 4,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "dayk",
+        "desc": "获取任意上交所股票从IPO至今的完整日K线（OHLCV）历史数据。无需认证。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "line",
+        "desc": "获取单只股票当日的分时走势数据（1分钟粒度）。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "list-equity",
+        "desc": "获取上交所全部股票的实时行情快照（代码、名称、开高低收、涨跌幅、成交量额）..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "snap",
+        "desc": "获取单只股票的实时行情快照，包括最新价、涨跌、五档盘口等。"
+      }
+    ],
+    "link": "/yunhq.sse.com.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "Bilibili (哔哩哔哩)",
+    "domain": "api.bilibili.com",
+    "favicon_domain": "www.bilibili.com",
+    "badge": "Deep Map",
+    "subtitle": "视频平台内部 API",
+    "description": "视频元数据 · 弹幕 · 评论 · 字幕 · 搜索",
+    "order": 21,
+    "total": 6,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "x/",
+        "count": "6 maps"
+      }
+    ],
+    "link": "/api.bilibili.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "Shenzhen Human Resources & Social Security Bureau (深圳市人力资源和社会保障局)",
+    "domain": "hrss.sz.gov.cn",
+    "favicon_domain": "hrss.sz.gov.cn",
+    "badge": "Deep Map",
+    "subtitle": "结构化 CMS，JSON 内容 API",
+    "description": "深圳市人社局官网，使用政务 CMS 自带的 /postmeta/ JSON API 暴露所有政策文件、常见问题、通知公告。按 category_id 组织，每篇文章带 title / source / publish_time / visit 元数据。",
+    "order": 21,
+    "total": 1,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "postmeta",
+        "desc": "深圳人社局官网的内容 JSON API。按 category_id 获取分..."
+      }
+    ],
+    "link": "/hrss.sz.gov.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "携程机票 (Ctrip Flights)",
+    "domain": "flights.ctrip.com",
+    "favicon_domain": "ctrip.com",
+    "badge": "Deep Map",
+    "subtitle": "国内航班价格 API",
+    "description": "携程机票搜索隐藏 API 逆向。日历最低价可裸调，航班详情需浏览器会话 token",
+    "order": 25,
+    "total": 5,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "batch-search",
+        "desc": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "flight-comfort",
+        "desc": "按航班号查询机型、机龄、座椅参数、准点率、餐食、娱乐设施等舒适度信息。可裸调。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "holiday-calendar",
+        "desc": "查询中国节假日和调休日历，标记工作日/休息日/调休日。可裸调。辅助航班价格分析。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "lowest-price-calendar",
+        "desc": "按日期查询指定航线的最低票价，返回约 390 天的日历价格数据。含票面价、..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "trip-low-price-calendar",
+        "desc": "Trip.com 国际版日历最低价 API。支持舱位筛选、直飞/中转筛选、..."
+      }
+    ],
+    "link": "/flights.ctrip.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "WeChat Official Accounts (微信公众号)",
+    "domain": "mp.weixin.qq.com",
+    "favicon_domain": "mp.weixin.qq.com",
+    "badge": "Deep Map",
+    "subtitle": "后台管理 API",
+    "description": "微信公众号文章列表与内容接口，需公众号后台登录认证",
+    "order": 30,
+    "total": 3,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "cgi-bin/",
+        "count": "2 maps"
+      },
+      {
+        "prefix": "└──",
+        "dir": "mp/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/mp.weixin.qq.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "Shenzhen Stock Exchange (深圳证券交易所)",
+    "domain": "www.szse.cn",
+    "favicon_domain": "www.szse.cn",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "ShowReport + ssjjhq 隐藏 API 逆向",
+    "order": 30,
+    "total": 10,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "market/",
+        "count": "10 maps"
+      }
+    ],
+    "link": "/www.szse.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "Zhihu (知乎)",
+    "domain": "www.zhihu.com",
+    "favicon_domain": "www.zhihu.com",
+    "badge": "Deep Map",
+    "subtitle": "API v4 内容接口",
+    "description": "知乎用户文章、回答、个人信息等 RESTful API，需登录 cookie 认证",
+    "order": 35,
+    "total": 3,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "api/",
+        "count": "3 maps"
+      }
+    ],
+    "link": "/www.zhihu.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "signpost",
+    "name": "FRED (Federal Reserve Economic Data)",
+    "domain": "fred.stlouisfed.org",
+    "favicon_domain": "fred.stlouisfed.org",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "fred.stlouisfed.org — 自文档化",
+    "description": "官方 API 完备，无需逆向",
+    "order": 40,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "CSV",
+        "text": "fredgraph.csv?id={SERIES}&cosd={START}&coed={END}"
+      },
+      {
+        "desc": "GDP · CPIAUCSL · DGS10 · FEDFUNDS · UNRATE · VIXCLS · M2SL · T10Y2Y"
+      }
+    ],
+    "link": "/fred.stlouisfed.org",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "signpost",
+    "name": "arXiv (Cornell University Open-Access Papers)",
+    "domain": "arxiv.org",
+    "favicon_domain": "arxiv.org",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "arxiv.org — 自文档化",
+    "description": "官方 Atom API 搜索 + ar5iv HTML 全文",
+    "order": 45,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "Search",
+        "text": "export.arxiv.org/api/query?search_query={QUERY}"
+      },
+      {
+        "prefix": "HTML",
+        "text": "ar5iv.labs.arxiv.org/html/{ID}"
+      },
+      {
+        "prefix": "PDF",
+        "text": "arxiv.org/pdf/{ID}"
+      }
+    ],
+    "link": "/arxiv.org",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "directory",
+    "name": "East Money (东方财富涨跌停板)",
+    "domain": "push2ex.eastmoney.com",
+    "favicon_domain": "eastmoney.com",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "涨停/跌停/炸板/强势板池 API 逆向",
+    "order": 50,
+    "total": 5,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "dt-pool",
+        "desc": "当日当前跌停的所有A股股票（不含ST和科创板）。含封单资金、板上成交额、连..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "qs-pool",
+        "desc": "创下60日新高或近期多次涨停的A股股票。入选理由：1=60日新高，2=近期..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "zb-pool",
+        "desc": "当日触及过涨停板但当前未封板的A股股票（炸板 = 封板后被砸开）。是涨停失..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "zt-pool-yesterday",
+        "desc": ""
+      },
+      {
+        "prefix": "└──",
+        "dir": "zt-pool",
+        "desc": "当日当前涨停的所有A股股票（不含未中断连续一字涨停的新股，不含ST和科创板..."
+      }
+    ],
+    "link": "/push2ex.eastmoney.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "signpost",
+    "name": "Unpaywall (Open Access Paper Finder)",
+    "domain": "api.unpaywall.org",
+    "favicon_domain": "api.unpaywall.org",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "api.unpaywall.org — 自文档化",
+    "description": "查询论文是否有免费 OA 版本，返回 PDF 直链",
+    "order": 50,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "GET",
+        "text": "/v2/{DOI}?email={EMAIL}"
+      },
+      {
+        "desc": "is_oa · oa_status · best_oa_location.url_for_pdf · authors · title"
+      }
+    ],
+    "link": "/api.unpaywall.org",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "directory_index",
+    "name": "Polymarket (Prediction Markets)",
+    "domain": "polymarket.com",
+    "favicon_domain": "polymarket.com",
+    "badge": "Deep Map",
+    "badge_color": "green",
+    "subtitle": "polymarket.com",
+    "description": "预测市场 — 搜索 + 概率 + 订单簿 + 交易",
+    "order": 50,
+    "total": 6,
+    "branches": [
+      {
+        "prefix": "搜索",
+        "text": "polymarket.com/search?_q= → SSR 全文搜索"
+      },
+      {
+        "prefix": "Gamma",
+        "text": "gamma-api.polymarket.com → 元数据 + 概率 (JSON)"
+      },
+      {
+        "prefix": "CLOB",
+        "text": "clob.polymarket.com → 实时订单簿"
+      },
+      {
+        "prefix": "Auth",
+        "text": "cookie + HMAC API key → 持仓/交易"
+      },
+      {
+        "desc": "Politics · Crypto · Sports · Geopolitics | L1-L4 多层覆盖"
+      }
+    ],
+    "link": "/polymarket.com",
+    "action_text": "Browse 6 maps"
+  },
+  {
+    "type": "signpost",
+    "name": "Sci-Hub (Academic Paper PDF Access)",
+    "domain": "sci-hub.st",
+    "favicon_domain": "sci-hub.st",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "sci-hub.st — 自文档化",
+    "description": "通过 DOI 获取论文 PDF（非 OA 论文的最后手段）",
+    "order": 51,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "GET",
+        "text": "/{DOI} → 解析 citation_pdf_url → 下载 PDF"
+      },
+      {
+        "desc": "mirrors: .st / .ru | DDoS-Guard | 无需 CAPTCHA"
+      }
+    ],
+    "link": "/sci-hub.st",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "signpost",
+    "name": "Product Hunt",
+    "domain": "www.producthunt.com",
+    "favicon_domain": "www.producthunt.com",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "www.producthunt.com — 自文档化",
+    "description": "GraphQL API 完备，需 OAuth2 token",
+    "order": 60,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "GQL",
+        "text": "posts · post(slug) · comments · topics · collections · user"
+      },
+      {
+        "desc": "产品列表 · 评论/回复 · 话题分类 · 合集 · 用户投票历史"
+      }
+    ],
+    "link": "/www.producthunt.com",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "directory",
+    "name": "小红书（Xiaohongshu）",
+    "domain": "www.xiaohongshu.com",
+    "favicon_domain": "www.xiaohongshu.com",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "API 在 edith.xiaohongshu.com，需登录 Cookie + XHS 签名",
+    "order": 70,
+    "total": 1,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "explore/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/www.xiaohongshu.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "signpost",
+    "name": "Tushare Pro (挖地兔)",
+    "domain": "tushare.pro",
+    "favicon_domain": "tushare.pro",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "tushare.pro — 自文档化",
+    "description": "A股全量历史数据（10年+），注册获取 token",
+    "order": 70,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "SDK",
+        "text": "daily · limit_list · top_list · concept · margin_detail"
+      },
+      {
+        "desc": "日线行情 · 涨跌停统计 · 龙虎榜 · 概念板块 · 融资融券"
+      }
+    ],
+    "link": "/tushare.pro",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "directory",
+    "name": "小红书 API 服务",
+    "domain": "edith.xiaohongshu.com",
+    "favicon_domain": "www.xiaohongshu.com",
+    "badge": "API Service",
+    "subtitle": "页面隐藏 API 微服务",
+    "description": "小红书 Web 端核心 API 域，需登录 Cookie + XHS 签名头",
+    "order": 71,
+    "total": 1,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "api/",
+        "count": "1 map"
+      }
+    ],
+    "link": "/edith.xiaohongshu.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "signpost",
+    "name": "xhs (小红书 Python 客户端)",
+    "domain": "xhs-cli",
+    "favicon_domain": "xhs-cli",
+    "badge": "Open Source",
+    "badge_color": "green",
+    "subtitle": "xhs-cli — 自文档化",
+    "description": "Python SDK，封装 XHS 签名 + REST API；需中国 IP + 登录 Cookie",
+    "order": 72,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "SDK",
+        "text": "get_note_by_keyword · get_note_by_id · get_user_notes · get_note_comments"
+      },
+      {
+        "desc": "搜索笔记 · 帖子详情 · 用户主页 · 评论列表"
+      }
+    ],
+    "link": "/xhs-cli",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "signpost",
+    "name": "AKShare (开源财经数据)",
+    "domain": "akshare",
+    "favicon_domain": "akshare",
+    "badge": "Open Source",
+    "badge_color": "green",
+    "subtitle": "akshare — 自文档化",
+    "description": "完全免费，无需 token，底层爬取东方财富/新浪",
+    "order": 75,
+    "total": 0,
+    "branches": [
+      {
+        "prefix": "SDK",
+        "text": "stock_zh_a_hist · zt_pool · board_concept · lhb_detail"
+      },
+      {
+        "desc": "历史行情 · 涨停板池/炸板池 · 概念板块 · 龙虎榜"
+      }
+    ],
+    "link": "/akshare",
+    "action_text": "View signpost"
+  },
+  {
+    "type": "directory",
+    "name": "CUHK Shenzhen (香港中文大学（深圳）)",
+    "domain": "cuhk.edu.cn",
+    "favicon_domain": "cuhk.edu.cn",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "Drupal 静态HTML解析",
+    "order": 90,
+    "total": 6,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "zh-hans/",
+        "count": "6 maps"
+      }
+    ],
+    "link": "/cuhk.edu.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "signpost",
+    "name": "api.worldbank.org",
+    "domain": "api.worldbank.org",
+    "favicon_domain": "api.worldbank.org",
+    "badge": "Signpost",
+    "badge_color": "blue",
+    "subtitle": "api.worldbank.org — 自文档化",
+    "description": "",
+    "order": 99,
+    "total": 0,
+    "branches": [],
+    "link": "/api.worldbank.org",
+    "action_text": "View signpost"
+  }
+]
