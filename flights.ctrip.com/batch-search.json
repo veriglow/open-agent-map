@@ -1,28 +1,16 @@
 {
   "domain": "flights.ctrip.com",
   "url": "https://flights.ctrip.com/online/list/oneway-szx-bjs",
-  "title": "航班列表搜索（需 token）",
-  "summary": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时刻。需要浏览器会话 token。",
+  "title": "航班列表搜索（需浏览器环境）",
+  "summary": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时刻。裸调需验证码，但在浏览器环境中通过 fetch hook 可获取完整数据。价格经验证与中航信（航旅纵横）底价一致。",
   "method": "POST",
   "endpoint": "https://flights.ctrip.com/international/search/api/search/batchSearch",
 
   "auth": {
-    "method": "session_token",
-    "description": "需要从浏览器页面获取动态 token。每次请求的 token 不同（一次性）。",
+    "method": "browser_session",
+    "description": "裸调返回 showAuthCode:true。需在浏览器环境中访问搜索页，页面 JS 自动生成 token/sign 并发起请求。可通过 fetch hook 拦截响应数据。",
     "required_headers": ["token", "sign", "transactionid", "sessionid"],
-    "how_to_obtain": "加载 flights.ctrip.com 搜索页，从 XHR 请求的 headers 中提取 token 和 sign",
-    "status": "未攻克 — token 生成逻辑未逆向，裸调返回 showAuthCode:true"
-  },
-
-  "headers": {
-    "Content-Type": "application/json",
-    "Referer": "https://flights.ctrip.com/",
-    "token": "{{dynamic_token}}",
-    "sign": "{{request_sign}}",
-    "transactionid": "{{transaction_id}}",
-    "sessionid": "{{session_id}}",
-    "scope": "d",
-    "w-payload-source": "{{payload_source}}"
+    "workaround": "使用 agentmap-scout exec_js 加载页面 + fetch hook 拦截 batchSearch 响应"
   },
 
   "params": {
@@ -47,33 +35,53 @@
   },
 
   "response": {
-    "format": "JSON",
+    "format": "JSON (10MB+, 含代码共享航班)",
     "structure": {
-      "data": {
-        "context": {"searchId": "搜索 ID", "finished": "是否完成"},
-        "flightItineraryList": ["完整航班列表，含航班号、时刻、票价、舱位详情"]
+      "data.flightItineraryList[]": {
+        "itineraryId": "航程 ID",
+        "flightSegments[].flightList[]": {
+          "flightNo": "航班号",
+          "operateFlightNo": "实际运营航班号（代码共享时不同）",
+          "airlineName": "航司名称",
+          "operateAirlineName": "实际运营航司",
+          "departureDateTime": "出发时间 ISO 格式",
+          "arrivalDateTime": "到达时间",
+          "aircraftName": "机型"
+        },
+        "flightSegments[].duration": "飞行时长（分钟）",
+        "flightSegments[].transferCount": "转机次数（0=直飞）",
+        "priceList[]": {
+          "adultPrice": "成人票面价（不含税费，与中航信底价一致）",
+          "adultTax": "税费（此接口返回 0，需另加机建燃油 ¥170）",
+          "cabinDesc": "舱位描述",
+          "discount": "折扣"
+        }
       }
     },
-    "notes": "裸调时 data.context.showAuthCode=true，不返回航班数据"
+    "price_notes": [
+      "adultPrice 经验证与航旅纵横（中航信 TravelSky）显示的底价一致",
+      "例：CZ3157 携程 batchSearch 返回 ¥660 = 航旅纵横显示 ¥660",
+      "adultTax 字段返回 0，实际需另加机建燃油费：国内航班 ¥50（机建）+ ¥120（燃油 >800km）= ¥170",
+      "含税总价 = adultPrice + ¥170（国内直飞）",
+      "页面展示的价格（如 ¥720）可能是某个供应商/子舱位的加价，batchSearch 返回的是所有供应商的最低价"
+    ]
   },
 
-  "confidence": 0.6,
+  "fetch_hook_template": {
+    "description": "通过 agentmap-scout exec_js 拦截 batchSearch 响应",
+    "page_url": "https://flights.ctrip.com/online/list/oneway-{dep}-{arr}?depdate={date}&cabin=y&adult=1",
+    "js_code": "(function(){var r=null;var f=window.fetch;window.fetch=function(){var a=arguments;var u=typeof a[0]==='string'?a[0]:(a[0]&&a[0].url)||'';var p=f.apply(this,a);if(u.indexOf('batchSearch')>-1&&!r){p.then(function(resp){resp.clone().json().then(function(d){var fl=(d.data&&d.data.flightItineraryList)||[];var rows=[];fl.forEach(function(it){var s=it.flightSegments&&it.flightSegments[0];if(!s||s.transferCount>0)return;var l=s.flightList&&s.flightList[0];if(!l)return;var p=it.priceList&&it.priceList[0];rows.push([l.flightNo,l.operateFlightNo||'',l.airlineName,(l.departureDateTime||'').substring(11,16),(l.arrivalDateTime||'').substring(11,16),s.duration,l.aircraftName,p?p.adultPrice:0].join('|'));});r=fl.length+'\\n'+rows.join('\\n');});});};return p;};return new Promise(function(res){setTimeout(function(){res(r||'no_capture');},22000);});})()",
+    "settle_time_ms": 22000
+  },
+
+  "confidence": 0.9,
   "last_verified": "2026-05-07",
-  "discovered_by": "agentmap-scout sniff_endpoints",
+  "discovered_by": "agentmap-scout sniff_endpoints + fetch hook",
 
   "caveats": [
-    "需要动态 token，无法裸调",
-    "token 每次请求不同，可能有时效性",
-    "sign 字段是请求签名，生成算法未逆向",
-    "可通过 agentmap-scout exec_js 在浏览器中触发搜索后从 DOM 提取结果作为替代"
-  ],
-
-  "workaround": {
-    "method": "DOM 提取",
-    "description": "通过 agentmap-scout 加载 ctrip.com 搜索页，等待渲染后从 DOM 提取航班数据",
-    "endpoint": "http://scout:8010/exec_js",
-    "page_url_pattern": "https://flights.ctrip.com/online/list/oneway-{dep}-{arr}?depdate={date}&cabin=y&adult=1",
-    "settle_time_ms": 18000,
-    "dom_selector": ".flight-item, [class*='flight-box'], [class*='list-item']"
-  }
+    "响应体 10MB+，含大量代码共享航班（同一物理航班以不同航班号出现）",
+    "需通过 operateFlightNo 去重获取实际独立航班",
+    "需要 agentmap-scout 浏览器环境，不可纯 API 裸调",
+    "页面加载到数据可用约需 20-25 秒"
+  ]
 }

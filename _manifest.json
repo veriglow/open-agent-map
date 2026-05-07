@@ -146,8 +146,8 @@
   },
   {
     "path": "/flights.ctrip.com/batch-search",
-    "title": "航班列表搜索（需 token）",
-    "summary": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时刻。需要浏览器会话 token。"
+    "title": "航班列表搜索（需浏览器环境）",
+    "summary": "核心航班搜索接口。返回指定日期航线的完整航班列表，含票价、舱位、航班号、时刻。裸调需验证码，但在浏览器环境中通过 fetch hook 可获取完整数据。价格经验证与中航信（航旅纵横）底价一致。"
   },
   {
     "path": "/flights.ctrip.com/flight-comfort",
