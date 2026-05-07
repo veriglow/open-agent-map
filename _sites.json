@@ -256,6 +256,81 @@
   },
   {
     "type": "directory",
+    "name": "East Money Macro Data (东方财富宏观经济)",
+    "domain": "datacenter-web.eastmoney.com",
+    "favicon_domain": "eastmoney.com",
+    "badge": "Deep Map",
+    "subtitle": "宏观经济指标 API",
+    "description": "CPI/PPI/GDP/PMI 等 12 项中国宏观经济数据接口",
+    "order": 35,
+    "total": 12,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "economy-cpi",
+        "desc": "按月发布的中国居民消费价格指数，含全国/城市/农村分项的同比、环比、定基及..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-currency-supply",
+        "desc": "按月发布的中国货币供应量数据。BASIC_CURRENCY=M2（广义货币..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-deposit-rate",
+        "desc": "央行历次存贷款基准利率调整记录，含活期/定期存款和短/中/长期贷款利率，以..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-fdi",
+        "desc": "按月发布的中国实际利用外资金额数据，含当月/累计值及同比、环比。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-forex-deposit",
+        "desc": "按月发布的金融机构外汇和人民币各项存款数据，含余额、同比、环比及累计。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-gdp",
+        "desc": "按季度发布的中国国内生产总值数据，含一二三产业分项及同比增速。数据源自国家..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-gold-currency",
+        "desc": "按月发布的中国黄金储备和外汇储备数据，含储备量、同比和环比。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-house-price",
+        "desc": "70个大中城市新建商品住宅和二手住宅销售价格指数，含同比、环比、定基。每月..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-pmi",
+        "desc": "按月发布的中国制造业和非制造业采购经理人指数，含指数值及同比。50 以上表..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-ppi",
+        "desc": "按月发布的工业生产者出厂价格指数，含当月值、同比和累计。"
+      },
+      {
+        "prefix": "├──",
+        "dir": "economy-stock-statistics",
+        "desc": "上海和深圳证券交易所的月度交易统计，含上市公司数、总市值、成交额、成交量及..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "economy-tax",
+        "desc": "按月/季发布的全国财政收入数据，含收入总额、同比和环比增速。"
+      }
+    ],
+    "link": "/datacenter-web.eastmoney.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
     "name": "Zhihu (知乎)",
     "domain": "www.zhihu.com",
     "favicon_domain": "www.zhihu.com",
@@ -272,6 +347,51 @@
       }
     ],
     "link": "/www.zhihu.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "East Money Funds (天天基金)",
+    "domain": "fundf10.eastmoney.com",
+    "favicon_domain": "eastmoney.com",
+    "badge": "Deep Map",
+    "subtitle": "基金搜索与基本概况",
+    "description": "基金关键词搜索 + 基金基本概况数据",
+    "order": 36,
+    "total": 2,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "fund-search",
+        "desc": "按关键词搜索全部公募基金（ETF、LOF、指数联接、QDII、增强指数等）..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "jbgk",
+        "desc": "东方财富旗下天天基金网的基金档案页，是国内唯一提供结构化费率数据的公开来源..."
+      }
+    ],
+    "link": "/fundf10.eastmoney.com",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "East Money Quotes (东方财富行情)",
+    "domain": "push2.eastmoney.com",
+    "favicon_domain": "eastmoney.com",
+    "badge": "Deep Map",
+    "subtitle": "实时行情推送 API",
+    "description": "ETF/股票实时行情列表接口",
+    "order": 37,
+    "total": 1,
+    "branches": [
+      {
+        "prefix": "└──",
+        "dir": "etf-quotes",
+        "desc": "东方财富行情推送接口，可获取全部 ETF 的实时行情数据（价格、涨跌幅、成..."
+      }
+    ],
+    "link": "/push2.eastmoney.com",
     "action_text": "Browse all maps"
   },
   {

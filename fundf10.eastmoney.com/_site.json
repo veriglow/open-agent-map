@@ -1,0 +1,9 @@
+{
+  "name": "East Money Funds (天天基金)",
+  "domain": "fundf10.eastmoney.com",
+  "favicon_domain": "eastmoney.com",
+  "badge": "Deep Map",
+  "subtitle": "基金搜索与基本概况",
+  "description": "基金关键词搜索 + 基金基本概况数据",
+  "order": 36
+}

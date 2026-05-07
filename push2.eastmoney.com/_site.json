@@ -1,0 +1,9 @@
+{
+  "name": "East Money Quotes (东方财富行情)",
+  "domain": "push2.eastmoney.com",
+  "favicon_domain": "eastmoney.com",
+  "badge": "Deep Map",
+  "subtitle": "实时行情推送 API",
+  "description": "ETF/股票实时行情列表接口",
+  "order": 37
+}

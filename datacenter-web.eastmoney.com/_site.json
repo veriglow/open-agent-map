@@ -1,0 +1,9 @@
+{
+  "name": "East Money Macro Data (东方财富宏观经济)",
+  "domain": "datacenter-web.eastmoney.com",
+  "favicon_domain": "eastmoney.com",
+  "badge": "Deep Map",
+  "subtitle": "宏观经济指标 API",
+  "description": "CPI/PPI/GDP/PMI 等 12 项中国宏观经济数据接口",
+  "order": 35
+}
