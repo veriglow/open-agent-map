@@ -1,0 +1,150 @@
+{
+  "domain": "www.wantedly.com",
+  "url": "https://www.wantedly.com/projects",
+  "title": "Wantedly 募集一覧（職位搜索）",
+  "summary": "Wantedly 職位搜索 GraphQL API。無需認證，支持關鍵詞、地區、職業類型、雇傭類型等多維篩選。返回職位標題、公司信息、職位描述等結構化數據。",
+  "method": "POST",
+  "endpoint": "https://graphql-gateway.wantedly.com/graphql",
+  "headers": {
+    "Content-Type": "application/json",
+    "Referer": "https://www.wantedly.com/"
+  },
+  "auth": {
+    "required": false,
+    "note": "無需 Bearer token，匿名即可調用"
+  },
+  "graphql": {
+    "operation_name": "JobSearch",
+    "query": "query JobSearch($page: Int!, $pageSize: Int!, $searchParameters: ProjectIndexPageJobPostSearchParametersInput) { projectIndexPageJobPostIndex { searchedJobPostsUsingOffset(input: {pageSize: $pageSize, pageNumber: $page, searchParameters: $searchParameters}) { totalCount jobPosts { jobPost { id title occupationName publishedAt rawCoverImageUrl totalEntriesCount company { id name slug avatarUrl } hiringTypes { type label } featureTags { type label } detailDescription { plainBody } } } } } }",
+    "variables": {
+      "page": {
+        "type": "Int!",
+        "description": "頁碼，從 1 開始",
+        "example": 1
+      },
+      "pageSize": {
+        "type": "Int!",
+        "description": "每頁數量",
+        "example": 10
+      },
+      "searchParameters": {
+        "type": "ProjectIndexPageJobPostSearchParametersInput",
+        "fields": {
+          "keywords": {
+            "type": "[ProjectIndexPageKeywordInput]",
+            "format": [{"key": "關鍵詞"}],
+            "description": "搜索關鍵詞，每個是 {key: string} 對象",
+            "example": [{"key": "Python"}, {"key": "React"}]
+          },
+          "occupationTypeTrees": {
+            "type": "[ProjectIndexPageOccupationTypeTreeInput]",
+            "format": [{"root": {"key": "根類型"}, "subtypes": [{"key": "子類型"}]}],
+            "description": "職業類型樹形篩選，root 是大類，subtypes 是小類",
+            "known_values": {
+              "jp__engineering": ["jp__web_engineer", "jp__mobile_engineer", "jp__infra_engineer", "jp__data_scientist", "jp__qa_engineer", "jp__systems_engineer"],
+              "jp__design_and_art": ["jp__ui_ux_designer", "jp__graphic_designer", "jp__art_director", "jp__creative_director", "jp__illustrator", "jp__photographer", "jp__video_creator", "jp__web_director"],
+              "jp__sales": ["jp__corporate_sales", "jp__private_sales"],
+              "jp__consulting": ["jp__business_consultant", "jp__marketing_consultant", "jp__hr_consultant", "jp__it_consultant"],
+              "jp__corporate": ["jp__corporate_planning", "jp__finance", "jp__legal_affairs", "jp__human_resources", "jp__public_relations", "jp__admin_staff", "jp__secretary"],
+              "jp__marketing": ["jp__web_marketing"],
+              "jp__editing_and_writing": ["jp__editor", "jp__writer", "jp__copywriter"],
+              "jp__pm_and_web_direction": ["jp__product_manager", "jp__project_manager"],
+              "jp__customer_success_and_support": ["jp__customer_success", "jp__customer_support"],
+              "jp__medical": ["jp__physician", "jp__nurse", "jp__dentist", "jp__pharmacist"],
+              "jp__career_consultant": [],
+              "jp__translator": [],
+              "jp__business_development": [],
+              "jp__others": []
+            }
+          },
+          "hiringTypes": {
+            "type": "[ProjectIndexPageJobPostHiringTypeInput]",
+            "format": [{"key": "類型"}],
+            "description": "雇傭類型篩選",
+            "known_values": ["MID_CAREER", "NEWGRAD", "INTERNSHIP", "FREELANCE", "SIDE_JOB"]
+          },
+          "featureTags": {
+            "type": "[ProjectIndexPageFeatureTagInput]",
+            "format": [{"key": "標籤"}],
+            "description": "特色標籤篩選",
+            "known_values": ["STUDENT", "INTERNATIONAL_STUDENT", "WEEKEND", "OVERSEAS_WORKPLACE", "OVERSEAS_BUSINESS_TRIP", "OVERSEAS_LANGUAGE", "VISIT_WITH_FRIEND", "LUNCH", "REMOTE_VISIT", "HAS_ATTENDABLE_MEMBERS"]
+          },
+          "areas": {
+            "type": "[ProjectIndexPageAreaInput]",
+            "format": [{"key": "地區"}],
+            "description": "工作地區篩選",
+            "known_values": ["tokyo", "osaka", "kyoto", "nagoya", "sapporo", "fukuoka", "kanto", "kinki", "tokai", "tohoku", "hokuriku", "chugoku", "kyushu", "overseas"]
+          },
+          "workingConnectedUsersFilter": {
+            "type": "Boolean",
+            "description": "是否只顯示有人脈關聯的公司",
+            "default": false
+          },
+          "order": {
+            "type": "OrderInput",
+            "format": {"key": "排序方式"},
+            "description": "排序方式",
+            "known_values": ["mixed", "popular", "recent", "new"],
+            "default": "mixed"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "path": "data.projectIndexPageJobPostIndex.searchedJobPostsUsingOffset",
+    "fields": {
+      "totalCount": "總職位數",
+      "jobPosts[].jobPost.id": "職位 ID",
+      "jobPosts[].jobPost.title": "職位標題",
+      "jobPosts[].jobPost.occupationName": "職業名稱（自由文本）",
+      "jobPosts[].jobPost.publishedAt": "發布時間（ISO 8601）",
+      "jobPosts[].jobPost.rawCoverImageUrl": "封面圖片 URL",
+      "jobPosts[].jobPost.totalEntriesCount": "申請人數",
+      "jobPosts[].jobPost.company.id": "公司 ID",
+      "jobPosts[].jobPost.company.name": "公司名稱",
+      "jobPosts[].jobPost.company.slug": "公司 URL slug",
+      "jobPosts[].jobPost.company.avatarUrl": "公司頭像 URL",
+      "jobPosts[].jobPost.hiringTypes[].type": "雇傭類型代碼",
+      "jobPosts[].jobPost.hiringTypes[].label": "雇傭類型標籤（日文）",
+      "jobPosts[].jobPost.featureTags[].type": "特色標籤代碼",
+      "jobPosts[].jobPost.featureTags[].label": "特色標籤文字（日文）",
+      "jobPosts[].jobPost.detailDescription.plainBody": "職位描述純文本"
+    }
+  },
+  "pagination": {
+    "type": "offset",
+    "page_param": "variables.page",
+    "page_start": 1,
+    "page_size_param": "variables.pageSize",
+    "total_field": "data.projectIndexPageJobPostIndex.searchedJobPostsUsingOffset.totalCount"
+  },
+  "example": {
+    "description": "搜索東京的 Python 工程師職位",
+    "request": {
+      "operationName": "JobSearch",
+      "variables": {
+        "page": 1,
+        "pageSize": 5,
+        "searchParameters": {
+          "keywords": [{"key": "Python"}],
+          "occupationTypeTrees": [],
+          "hiringTypes": [],
+          "featureTags": [],
+          "areas": [{"key": "tokyo"}],
+          "workingConnectedUsersFilter": false,
+          "order": {"key": "new"}
+        }
+      },
+      "query": "query JobSearch($page: Int!, $pageSize: Int!, $searchParameters: ProjectIndexPageJobPostSearchParametersInput) { projectIndexPageJobPostIndex { searchedJobPostsUsingOffset(input: {pageSize: $pageSize, pageNumber: $page, searchParameters: $searchParameters}) { totalCount jobPosts { jobPost { id title occupationName publishedAt company { name slug } hiringTypes { type label } detailDescription { plainBody } } } } } }"
+    }
+  },
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-05-19",
+  "caveats": [
+    "GraphQL introspection 被禁用，schema 通過錯誤消息逆向推導",
+    "occupationTypeTrees 篩選的實際效果待進一步驗證（可能是寬松匹配）",
+    "職位描述 (detailDescription.plainBody) 會增加響應體積，不需要時可從 query 中移除"
+  ]
+}

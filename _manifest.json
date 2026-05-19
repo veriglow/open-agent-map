@@ -215,6 +215,11 @@
     "summary": ""
   },
   {
+    "path": "/openai.com/api-pricing",
+    "title": "OpenAI API Pricing",
+    "summary": "OpenAI 全部 API 模型的实时定价页面。包含旗舰模型（GPT-5.5/5.4/5.4 mini）、多模态模型（realtime/image）、工具（web search/containers）的按量计费价格。"
+  },
+  {
     "path": "/opendata.sz.gov.cn/data/api/getApiDocument",
     "title": "数据集 API 接口文档",
     "summary": "对于提供可调 API 的数据集，返回其接口路径、请求参数、返回字段。实际 API 调用路径形如 api/{resId 下划线格式}/1/service.xhtml。"
@@ -808,6 +813,11 @@
     "path": "/www.szse.cn/market/trading-calendar",
     "title": "深交所交易日历",
     "summary": "获取当月交易日历，标识哪些日期是交易日（jybz=0）、哪些是非交易日（jybz=1）。"
+  },
+  {
+    "path": "/www.wantedly.com/projects",
+    "title": "Wantedly 募集一覧（職位搜索）",
+    "summary": "Wantedly 職位搜索 GraphQL API。無需認證，支持關鍵詞、地區、職業類型、雇傭類型等多維篩選。返回職位標題、公司信息、職位描述等結構化數據。"
   },
   {
     "path": "/www.xiaohongshu.com/explore/note",

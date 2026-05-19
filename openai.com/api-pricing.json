@@ -1,0 +1,80 @@
+{
+  "id": "openai-api-pricing",
+  "domain": "openai.com",
+  "path": "/api/pricing/",
+  "url": "https://openai.com/api/pricing/",
+  "title": "OpenAI API Pricing",
+  "title_en": "OpenAI API Pricing",
+  "summary": "OpenAI 全部 API 模型的实时定价页面。包含旗舰模型（GPT-5.5/5.4/5.4 mini）、多模态模型（realtime/image）、工具（web search/containers）的按量计费价格。",
+  "data_freshness": "实时（随 OpenAI 官方更新）",
+
+  "type": "scrape",
+  "method": "exec_js",
+  "endpoint": "https://openai.com/api/pricing/",
+  "extraction": {
+    "description": "页面无隐藏 API，定价数据直接渲染在 HTML 中。通过 exec_js 提取 main 元素的 innerText 获取全部定价文本，再由 LLM 解析为结构化数据。",
+    "code": "document.querySelector('main').innerText",
+    "output_format": "纯文本，包含所有模型名称和价格",
+    "parse_hint": "输出中每个模型名后跟 'Price' 或 'Input:' / 'Output:' 行，价格格式为 $X.XX / 1M tokens"
+  },
+
+  "page_internals": {
+    "pricing_mode_tabs": {
+      "selector": "button",
+      "options": ["Standard", "Batch -50%", "Data residency +10%"],
+      "default": "Standard",
+      "description": "页面顶部有三个定价模式切换按钮。默认显示 Standard 价格。点击 Batch 显示 50% 折扣价，点击 Data residency 显示加 10% 价格。"
+    }
+  },
+
+  "action_steps_template": {
+    "description": "在浏览器中导航到 OpenAI 定价页并切换到指定定价模式。{{mode}} 替换为 Standard / Batch -50% / Data residency +10%。如果是 Standard 模式可省略 click 步骤。",
+    "params": {
+      "mode": {
+        "type": "string",
+        "enum": ["Standard", "Batch -50%", "Data residency +10%"],
+        "default": "Standard",
+        "description": "定价模式"
+      }
+    },
+    "steps": [
+      {"type": "navigate", "url": "https://openai.com/api/pricing/"},
+      {"type": "exec_js", "code": "Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === '{{mode}}')?.click()", "wait": 1000}
+    ],
+    "example_standard": [
+      {"type": "navigate", "url": "https://openai.com/api/pricing/"}
+    ],
+    "example_batch": [
+      {"type": "navigate", "url": "https://openai.com/api/pricing/"},
+      {"type": "exec_js", "code": "Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Batch -50%')?.click()", "wait": 1000}
+    ]
+  },
+
+  "known_models": {
+    "description": "截至 2026-05-07 的已知模型和价格（Standard 模式）。实际数据以页面提取为准。",
+    "snapshot_date": "2026-05-07",
+    "currency": "USD",
+    "unit": "per 1M tokens",
+    "models": [
+      {"name": "GPT-5.5", "category": "flagship", "input": 5.00, "cached_input": 0.50, "output": 30.00},
+      {"name": "GPT-5.4", "category": "flagship", "input": 2.50, "cached_input": 0.25, "output": 15.00},
+      {"name": "GPT-5.4 mini", "category": "flagship", "input": 0.75, "cached_input": 0.075, "output": 4.50}
+    ]
+  },
+
+  "cite_anchors": {
+    "description": "CiteAnything 引用时的 anchor 文本模板。将 {{model}} 替换为模型名，{{price}} 替换为价格数字。",
+    "input_price": "Input:\n${{price}} / 1M tokens",
+    "output_price": "Output:\n${{price}} / 1M tokens",
+    "cached_input_price": "Cached input:\n${{price}} / 1M tokens"
+  },
+
+  "failure_modes": [
+    {"condition": "Cloudflare 挑战", "behavior": "返回 403 或空白页", "mitigation": "使用 headless browser（scout exec_js）"},
+    {"condition": "页面结构变更", "behavior": "innerText 格式变化，解析失败", "detection": "检查是否包含 '1M tokens' 关键词"}
+  ],
+
+  "confidence": 0.90,
+  "verified_date": "2026-05-07",
+  "last_verified": "2026-05-07"
+}
