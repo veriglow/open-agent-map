@@ -40,7 +40,8 @@
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
-    "secu_code 必须是 cls 开头的板块代码，不是个股代码"
+    "secu_code 必须是 cls 开头的板块代码，不是个股代码",
+    "盘中实时。盘后实测(15:38)：返回当日收盘快照，code=200，成分股 change 为收盘值；本接口无时段标志位，需结合交易时段判断实时/冻结"
   ],
   "confidence": 0.9,
   "auto_discovered": true,

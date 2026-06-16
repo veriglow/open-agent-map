@@ -58,7 +58,8 @@
     "必须签名，否则返回 errno 非 0",
     "需带 Referer: https://www.cls.cn/",
     "并非每条快讯都有 stock_list，仅财联社判定有明确个股指向时才标注",
-    "翻页用 last_time=上一页最后一条 ctime"
+    "翻页用 last_time=上一页最后一条 ctime",
+    "7×24 实时滚动，不受交易时段限制（盘后实测 15:38 仍持续推送新快讯，含夜间海外消息）。这是唯一可向前翻历史的接口（用 last_time 游标）"
   ],
   "confidence": 0.9,
   "auto_discovered": true,

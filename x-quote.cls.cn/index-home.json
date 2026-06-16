@@ -29,7 +29,7 @@
   "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/quote/index/home, params={}",
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
-    "交易时段为实时，盘后为收盘快照"
+    "盘中实时。盘后实测(15:38)：返回当日收盘快照，code=200，up_down_dis.status 仍为 true，涨跌家数为收盘终值（无专门的实时/收盘标志位，需结合交易时段判断）"
   ],
   "confidence": 0.85,
   "auto_discovered": true,

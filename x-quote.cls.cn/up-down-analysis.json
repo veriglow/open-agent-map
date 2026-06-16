@@ -51,8 +51,8 @@
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
-    "仅交易时段（9:30-15:00）有数据；非交易时段返回空或前收盘快照",
-    "type 仅 up_pool/down_pool 经实测有数据；js_z/zhaban/lianban 等猜测值均返回空数组（服务器对未知 type 静默回空，勿误判为已打通）",
+    "盘后实测(15:38收盘+38min)：返回当日完整异动池（up_pool 137条/down_pool 11条），code=200 非空；每条 time 字段停在盘中最后异动时刻（如 14:14），即收盘冻结快照。盘中则秒级实时增长。隔日开盘前/周末是否清空未实测",
+    "type 仅 up_pool/down_pool 经实测有数据；js_z/zhaban/lianban 等猜测值均返回 code:200+空数组（服务器对未知 type 静默回空）——勿把『空』误判为盘后或已打通",
     "plate[].secu_code 以 cls 开头，可直接喂给 plate-stocks 取成分股"
   ],
   "confidence": 0.9,

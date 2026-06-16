@@ -35,7 +35,7 @@
   "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/quote/stock/emotion_options, params={'fields':'market_degree'}",
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
-    "交易时段实时刷新"
+    "盘中实时刷新（前端约 30s 轮询）。盘后实测(15:38)：返回当日收盘快照，code=200，market_degree 为收盘值，up_performance 分钟曲线止于收盘点（time:1459=14:59）"
   ],
   "confidence": 0.85,
   "auto_discovered": true,

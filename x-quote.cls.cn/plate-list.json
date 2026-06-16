@@ -46,7 +46,7 @@
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
     "板块明细在 data.main_fund_diff.top_main_fund_diff，不在 plate_data（plate_data 常为空数组）",
-    "仅交易时段有实时数据"
+    "盘中实时刷新（前端约 30s 轮询）。盘后实测(15:38)：返回当日收盘快照，code=200，trade_status 由盘中 'TRADE' 变为 'ENDTR'（收盘标志），可据此判断数据是实时还是收盘冻结"
   ],
   "confidence": 0.85,
   "auto_discovered": true,
