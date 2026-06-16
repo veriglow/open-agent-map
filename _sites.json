@@ -71,6 +71,36 @@
   },
   {
     "type": "directory",
+    "name": "财联社 Cailianpress (cls.cn)",
+    "domain": "www.cls.cn",
+    "favicon_domain": "www.cls.cn",
+    "badge": "Deep Map",
+    "subtitle": "页面隐藏 API",
+    "description": "财联社电报快讯 + 题材库隐藏 API（新闻↔题材↔个股↔板块关联流）。所有接口需 sha1→md5 签名。",
+    "order": 20,
+    "total": 3,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "roll-list",
+        "desc": "财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "subject-detail",
+        "desc": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plat..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "subject-hot-newest",
+        "desc": "财联社题材库列表。返回热门题材，每个题材带 newest_article_..."
+      }
+    ],
+    "link": "/www.cls.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
     "name": "YouTube (InnerTube API)",
     "domain": "www.youtube.com",
     "favicon_domain": "www.youtube.com",
@@ -167,6 +197,46 @@
       }
     ],
     "link": "/hrss.sz.gov.cn",
+    "action_text": "Browse all maps"
+  },
+  {
+    "type": "directory",
+    "name": "财联社行情 Cailianpress Quote (x-quote.cls.cn)",
+    "domain": "x-quote.cls.cn",
+    "favicon_domain": "www.cls.cn",
+    "badge": "Deep Map",
+    "subtitle": "独立行情微服务",
+    "description": "财联社行情微服务：盘面异动（异动原因+关联板块）、概念板块榜、板块成分股、涨跌家数分布、市场情绪温度。与 www.cls.cn 共用 sha1→md5 签名。",
+    "order": 21,
+    "total": 5,
+    "branches": [
+      {
+        "prefix": "├──",
+        "dir": "emotion-options",
+        "desc": "财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "index-home",
+        "desc": "全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "plate-list",
+        "desc": "板块行情排行榜。返回值的 main_fund_diff.top_main_..."
+      },
+      {
+        "prefix": "├──",
+        "dir": "plate-stocks",
+        "desc": "给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社..."
+      },
+      {
+        "prefix": "└──",
+        "dir": "up-down-analysis",
+        "desc": "财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason..."
+      }
+    ],
+    "link": "/x-quote.cls.cn",
     "action_text": "Browse all maps"
   },
   {

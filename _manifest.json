@@ -315,6 +315,21 @@
     "summary": ""
   },
   {
+    "path": "/www.cls.cn/roll-list",
+    "title": "电报快讯流 (Telegraph Roll)",
+    "summary": "财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个股，含代码/涨跌幅/深链），是『新闻→个股』关联的最底层数据。可按 category 过滤板块（如 watch 看盘、jjyw 基金要闻），用 last_time 做向前翻页。"
+  },
+  {
+    "path": "/www.cls.cn/subject-detail",
+    "title": "题材库 - 题材详情 (Subject Detail)",
+    "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联板块行情）、fund（关联基金/ETF）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 基金』串成闭环的核心接口——行业/概念型题材的 plate 与 fund 字段有值，新闻频道型题材这两字段为 null。"
+  },
+  {
+    "path": "/www.cls.cn/subject-hot-newest",
+    "title": "题材库 - 热门/最新题材 (Subjects)",
+    "summary": "财联社题材库列表。返回热门题材，每个题材带 newest_article_id / newest_article_title（实时最新关联新闻），是『新闻→题材』入口。拿到 subject id 后用 subject-detail 取该题材下的文章流 + 关联板块 + 关联个股/基金。"
+  },
+  {
     "path": "/www.producthunt.com",
     "title": "Product Hunt",
     "summary": ""
@@ -863,6 +878,31 @@
     "path": "/www.zhihu.com/api/v4/members/info",
     "title": "用户个人信息",
     "summary": "获取知乎用户的基本信息，包括粉丝数、回答数、文章数等。"
+  },
+  {
+    "path": "/x-quote.cls.cn/emotion-options",
+    "title": "市场情绪温度计 (Emotion / Market Degree)",
+    "summary": "财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越高越热），并附上涨比、高开比、赚钱效应（profit_ratio）及分钟级 up_performance 日内情绪曲线。一个数值概括当日多空情绪。"
+  },
+  {
+    "path": "/x-quote.cls.cn/index-home",
+    "title": "全市场涨跌家数分布 (Market Breadth)",
+    "summary": "全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨跌幅分桶（up_2/up_4/.../up_10 与 down_2.../down_10）的家数分布。一次拿到整个大盘的宽度。"
+  },
+  {
+    "path": "/x-quote.cls.cn/plate-list",
+    "title": "概念/行业板块榜 (Plate List)",
+    "summary": "板块行情排行榜。返回值的 main_fund_diff.top_main_fund_diff 给出按主力净流入排序的板块，每个板块含涨跌幅、涨停家数、主力资金净额、first_stock（领涨股）。是『板块层』全景：哪个板块在涨、资金往哪流、谁领涨。"
+  },
+  {
+    "path": "/x-quote.cls.cn/plate-stocks",
+    "title": "板块成分股 + 关联逻辑 (Plate Stocks)",
+    "summary": "给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社撰写的『这只票为什么属于这个板块』关联说明（公司业务与题材的具体关系）。这是把『概念』落到『个股』的语义链，普通爬虫拿不到这层解释。"
+  },
+  {
+    "path": "/x-quote.cls.cn/up-down-analysis",
+    "title": "盘面异动 / 市场风向标 (Up-Down Analysis) ★",
+    "summary": "财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason（异动原因文本，含板块名+逻辑）与 plate（关联板块数组，含板块代码与涨幅）。这是『异动事件 → 原因 → 板块』直连的核心接口，回答『为什么这只票在动、它带火了哪个板块』。盘中每条实时刷新。"
   },
   {
     "path": "/xhs-cli",

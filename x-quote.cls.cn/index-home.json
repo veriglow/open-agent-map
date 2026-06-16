@@ -1,0 +1,37 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "全市场涨跌家数分布 (Market Breadth)",
+  "summary": "全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨跌幅分桶（up_2/up_4/.../up_10 与 down_2.../down_10）的家数分布。一次拿到整个大盘的宽度。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/index/home",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np={'app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'https://x-quote.cls.cn/quote/index/home?{qs}&sign={sign}'"
+  },
+  "params": {},
+  "response": {
+    "envelope": "{ code:200, data:{ up_down_dis:{...} } }",
+    "up_down_dis_fields": {
+      "up_num": "涨停家数",
+      "down_num": "跌停家数",
+      "rise_num": "上涨家数",
+      "fall_num": "下跌家数",
+      "flat_num": "平盘家数",
+      "suspend_num": "停牌家数",
+      "average_rise": "平均涨幅（小数）",
+      "up_2/up_4/up_6/up_8/up_10": "涨幅 0-2%/2-4%/4-6%/6-8%/8%+ 家数",
+      "down_2/down_4/down_6/down_8/down_10": "对应跌幅分桶家数"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/quote/index/home, params={}",
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "交易时段为实时，盘后为收盘快照"
+  ],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

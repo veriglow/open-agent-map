@@ -264,6 +264,24 @@ footer a:hover{color:var(--am-green);}
   <div class="site-card">
     <div class="site-card-head">
       <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.cls.cn&sz=32" alt="" width="20" height="20">
+        财联社 Cailianpress (cls.cn)
+        <small>页面隐藏 API</small>
+      </div>
+      <div class="site-card-badge" >Deep Map</div>
+    </div>
+    <div class="site-card-meta"><span class="site-count">3</span> maps &middot; 财联社电报快讯 + 题材库隐藏 API（新闻↔题材↔个股↔板块关联流）。所有接口需 sha1→md5 签名。</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">roll-list</span> <span class="branch-desc">— 财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">subject-detail</span> <span class="branch-desc">— 单个题材详情。一次返回该题材下的 articles（新闻文章流）、plat...</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">subject-hot-newest</span> <span class="branch-desc">— 财联社题材库列表。返回热门题材，每个题材带 newest_article_...</span></div>
+    </div>
+    <a href="/www.cls.cn" class="site-card-action">Browse all maps &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
         <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.youtube.com&sz=32" alt="" width="20" height="20">
         YouTube (InnerTube API)
         <small>InnerTube 内部 API</small>
@@ -327,6 +345,26 @@ footer a:hover{color:var(--am-green);}
       <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">postmeta</span> <span class="branch-desc">— 深圳人社局官网的内容 JSON API。按 category_id 获取分...</span></div>
     </div>
     <a href="/hrss.sz.gov.cn" class="site-card-action">Browse all maps &rarr;</a>
+  </div>
+
+  <div class="site-card">
+    <div class="site-card-head">
+      <div class="site-card-title">
+        <img class="site-favicon" src="https://www.google.com/s2/favicons?domain=www.cls.cn&sz=32" alt="" width="20" height="20">
+        财联社行情 Cailianpress Quote (x-quote.cls.cn)
+        <small>独立行情微服务</small>
+      </div>
+      <div class="site-card-badge" >Deep Map</div>
+    </div>
+    <div class="site-card-meta"><span class="site-count">5</span> maps &middot; 财联社行情微服务：盘面异动（异动原因+关联板块）、概念板块榜、板块成分股、涨跌家数分布、市场情绪温度。与 www.cls.cn 共用 sha1→md5 签名。</div>
+    <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">emotion-options</span> <span class="branch-desc">— 财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">index-home</span> <span class="branch-desc">— 全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">plate-list</span> <span class="branch-desc">— 板块行情排行榜。返回值的 main_fund_diff.top_main_...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">plate-stocks</span> <span class="branch-desc">— 给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社...</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">up-down-analysis</span> <span class="branch-desc">— 财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason...</span></div>
+    </div>
+    <a href="/x-quote.cls.cn" class="site-card-action">Browse all maps &rarr;</a>
   </div>
 
   <div class="site-card">

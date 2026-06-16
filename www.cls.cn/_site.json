@@ -1,0 +1,9 @@
+{
+  "name": "财联社 Cailianpress (cls.cn)",
+  "domain": "www.cls.cn",
+  "favicon_domain": "www.cls.cn",
+  "badge": "Deep Map",
+  "subtitle": "页面隐藏 API",
+  "description": "财联社电报快讯 + 题材库隐藏 API（新闻↔题材↔个股↔板块关联流）。所有接口需 sha1→md5 签名。",
+  "order": 20
+}

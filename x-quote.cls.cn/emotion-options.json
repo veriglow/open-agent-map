@@ -1,0 +1,43 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "市场情绪温度计 (Emotion / Market Degree)",
+  "summary": "财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越高越热），并附上涨比、高开比、赚钱效应（profit_ratio）及分钟级 up_performance 日内情绪曲线。一个数值概括当日多空情绪。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/stock/emotion_options",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "fields": {
+      "type": "string",
+      "default": "market_degree",
+      "description": "请求字段集，market_degree 触发情绪温度计全套返回"
+    }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{...} }",
+    "data_fields": {
+      "market_degree": "★市场情绪温度（0-1，越高越热）",
+      "up_ratio": "上涨家数占比",
+      "up_open_ratio": "高开占比",
+      "profit_ratio": "赚钱效应（盈利股占比）",
+      "up_num": "涨停家数",
+      "down_num": "跌停家数",
+      "shsz_balance": "沪深两市成交额（元）",
+      "performance": "全市场平均表现（小数）",
+      "up_performance": "分钟级情绪曲线数组 [{time:HHMM, value}]"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/quote/stock/emotion_options, params={'fields':'market_degree'}",
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "交易时段实时刷新"
+  ],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

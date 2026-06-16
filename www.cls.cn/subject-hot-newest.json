@@ -1,0 +1,39 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/subject",
+  "title": "题材库 - 热门/最新题材 (Subjects)",
+  "summary": "财联社题材库列表。返回热门题材，每个题材带 newest_article_id / newest_article_title（实时最新关联新闻），是『新闻→题材』入口。拿到 subject id 后用 subject-detail 取该题材下的文章流 + 关联板块 + 关联个股/基金。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/api/subject/hotAndNewestSubject",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {},
+  "response": {
+    "envelope": "{ errno:0, data:{ hot_subjects:[...] } }",
+    "subject_item_fields": {
+      "id": "题材 ID（传给 subject-detail）",
+      "name": "题材名称",
+      "description": "题材简介",
+      "attention_num": "关注人数",
+      "newest_article_id": "最新关联文章 ID",
+      "newest_article_title": "最新关联文章标题（含全文摘要）",
+      "is_reporter_subject": "是否记者主理题材",
+      "img": "题材封面图"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://www.cls.cn/api/subject/hotAndNewestSubject, params={}",
+  "related_maps": [
+    "www.cls.cn/subject-detail.json"
+  ],
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "返回的多为新闻频道型题材（如『盘面直播』『环球市场情报』），行业/概念型题材的板块与基金关联在 subject-detail 中"
+  ],
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

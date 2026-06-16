@@ -1,0 +1,66 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/telegraph",
+  "title": "电报快讯流 (Telegraph Roll)",
+  "summary": "财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个股，含代码/涨跌幅/深链），是『新闻→个股』关联的最底层数据。可按 category 过滤板块（如 watch 看盘、jjyw 基金要闻），用 last_time 做向前翻页。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/v1/roll/get_roll_list",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )；params 必须先并入固定三件套再排序",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "category": {
+      "type": "string",
+      "default": "",
+      "description": "频道过滤。空=全部；常见值 watch(看盘)、announcement(公告)、jjyw(基金要闻)、hk(港股)、red(精选)"
+    },
+    "last_time": {
+      "type": "integer",
+      "default": "",
+      "description": "翻页游标，传上一页最后一条的 ctime（Unix 秒）取更早的快讯"
+    },
+    "rn": {
+      "type": "integer",
+      "default": "20",
+      "description": "每页条数"
+    }
+  },
+  "response": {
+    "envelope": "{ errno:0, data:{ roll_data:[...] } }",
+    "roll_item_fields": {
+      "id": "快讯 ID",
+      "title": "标题（多为空，正文在 brief/content）",
+      "brief": "快讯正文摘要",
+      "content": "快讯正文全文",
+      "ctime": "发布时间（Unix 秒，用作 last_time 翻页游标）",
+      "level": "重要程度 A/B/C（A 最重要，红色头条）",
+      "reading_num": "阅读数",
+      "comment_num": "评论数",
+      "stock_list": "关联个股数组（财联社自动识别）",
+      "subject": "关联题材数组（部分快讯有）",
+      "shareurl": "分享链接"
+    },
+    "stock_list_item_fields": {
+      "name": "股票简称",
+      "StockID": "代码（如 sz300037）",
+      "last": "最新价",
+      "RiseRange": "涨跌幅（%）",
+      "status": "状态 L=上市",
+      "is_stib": "是否科创板",
+      "schema": "App 深链 cailianshe://stock_detail?stock_id=..."
+    }
+  },
+  "example_call": "python: 见 signing.python，endpoint=https://www.cls.cn/v1/roll/get_roll_list, params={'category':'','last_time':'','rn':'20'}",
+  "caveats": [
+    "必须签名，否则返回 errno 非 0",
+    "需带 Referer: https://www.cls.cn/",
+    "并非每条快讯都有 stock_list，仅财联社判定有明确个股指向时才标注",
+    "翻页用 last_time=上一页最后一条 ctime"
+  ],
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

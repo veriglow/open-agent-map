@@ -1,0 +1,9 @@
+{
+  "name": "财联社行情 Cailianpress Quote (x-quote.cls.cn)",
+  "domain": "x-quote.cls.cn",
+  "favicon_domain": "www.cls.cn",
+  "badge": "Deep Map",
+  "subtitle": "独立行情微服务",
+  "description": "财联社行情微服务：盘面异动（异动原因+关联板块）、概念板块榜、板块成分股、涨跌家数分布、市场情绪温度。与 www.cls.cn 共用 sha1→md5 签名。",
+  "order": 21
+}

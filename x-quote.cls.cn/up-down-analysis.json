@@ -1,0 +1,61 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/finance",
+  "title": "盘面异动 / 市场风向标 (Up-Down Analysis) ★",
+  "summary": "财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason（异动原因文本，含板块名+逻辑）与 plate（关联板块数组，含板块代码与涨幅）。这是『异动事件 → 原因 → 板块』直连的核心接口，回答『为什么这只票在动、它带火了哪个板块』。盘中每条实时刷新。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/index/up_down_analysis",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "type": {
+      "type": "string",
+      "required": true,
+      "default": "up_pool",
+      "description": "异动池类型。up_pool=上涨异动池（盘中通常 100+ 只）；down_pool=下跌异动池。前端默认 up_pool。未识别的 type 返回 code:200 + 空数组（不报错）",
+      "enum": ["up_pool", "down_pool"]
+    },
+    "way": {
+      "type": "string",
+      "default": "last_px",
+      "description": "排序字段，如 last_px（最新价）、change（涨跌幅）"
+    },
+    "rever": {
+      "type": "string",
+      "default": "1",
+      "description": "排序方向，1=降序 0=升序"
+    }
+  },
+  "response": {
+    "envelope": "{ code:200, msg:'', data:[...] }",
+    "item_fields": {
+      "secu_code": "股票代码（如 sh603256）",
+      "secu_name": "股票简称",
+      "change": "涨跌幅（小数，0.1 = +10%）",
+      "last_px": "最新价",
+      "time": "异动时间 (YYYY-MM-DD HH:MM:SS)",
+      "up_reason": "★异动原因文本，格式『板块名|公司业务逻辑』",
+      "num_stocks": "当前池内股票总数",
+      "is_st": "是否 ST",
+      "plate": "★关联板块数组 [{secu_code:cls...板块代码, secu_name:板块名, change:板块涨幅}]"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/quote/index/up_down_analysis, params={'type':'up_pool','way':'last_px','rever':'1'}",
+  "related_maps": [
+    "x-quote.cls.cn/plate-stocks.json",
+    "x-quote.cls.cn/plate-list.json"
+  ],
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "仅交易时段（9:30-15:00）有数据；非交易时段返回空或前收盘快照",
+    "type 仅 up_pool/down_pool 经实测有数据；js_z/zhaban/lianban 等猜测值均返回空数组（服务器对未知 type 静默回空，勿误判为已打通）",
+    "plate[].secu_code 以 cls 开头，可直接喂给 plate-stocks 取成分股"
+  ],
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

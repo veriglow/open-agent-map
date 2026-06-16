@@ -1,0 +1,48 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/plate",
+  "title": "板块成分股 + 关联逻辑 (Plate Stocks)",
+  "summary": "给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社撰写的『这只票为什么属于这个板块』关联说明（公司业务与题材的具体关系）。这是把『概念』落到『个股』的语义链，普通爬虫拿不到这层解释。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/web_quote/plate/stocks",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": {
+      "type": "string",
+      "required": true,
+      "description": "板块代码（cls 开头），来自 plate-list 或 up-down-analysis 的 plate[]",
+      "example": "cls80130"
+    },
+    "way": { "type": "string", "default": "change_px", "description": "排序字段" },
+    "rever": { "type": "string", "default": "1", "description": "1=降序 0=升序" },
+    "page": { "type": "integer", "default": "0" },
+    "rn": { "type": "integer", "default": "20", "description": "每页条数" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{ has_core:1, stocks:[...] } }",
+    "stock_item_fields": {
+      "secu_code": "股票代码",
+      "secu_name": "股票简称",
+      "change": "涨跌幅（小数）",
+      "last_px": "最新价",
+      "assoc_desc": "★关联逻辑——公司业务与该板块/题材的具体关系说明（财联社撰写）"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/web_quote/plate/stocks, params={'secu_code':'cls80130','way':'change_px','rever':'1','page':'0','rn':'20'}",
+  "related_maps": [
+    "x-quote.cls.cn/plate-list.json",
+    "x-quote.cls.cn/up-down-analysis.json"
+  ],
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "secu_code 必须是 cls 开头的板块代码，不是个股代码"
+  ],
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

@@ -1,0 +1,50 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/subject/{id}",
+  "title": "题材库 - 题材详情 (Subject Detail)",
+  "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联板块行情）、fund（关联基金/ETF）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 基金』串成闭环的核心接口——行业/概念型题材的 plate 与 fund 字段有值，新闻频道型题材这两字段为 null。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/api/subject/detail/{id}",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套。注意 {id} 是路径段不是 query 参数，不参与签名",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\nsubject_id=1103\np={'app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'https://www.cls.cn/api/subject/detail/{subject_id}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "id": {
+      "type": "integer",
+      "required": true,
+      "in": "path",
+      "description": "题材 ID（来自 subject-hot-newest），如 1103",
+      "example": "1103"
+    }
+  },
+  "response": {
+    "envelope": "{ errno:0, data:{ ... } }",
+    "data_fields": {
+      "id": "题材 ID",
+      "name": "题材名称",
+      "description": "题材简介",
+      "attention_num": "关注人数",
+      "articles": "关联文章/新闻数组（article_id, article_title, ...）—— 新闻流",
+      "top_articles": "置顶解读文章",
+      "plate": "关联板块行情（行业/概念题材有值，新闻频道型为 null）",
+      "fund": "关联基金/ETF（行业题材有值，新闻频道型为 null）",
+      "reporter_card": "记者主理人信息"
+    }
+  },
+  "example_call": "见 signing.python（subject_id=1103）",
+  "related_maps": [
+    "www.cls.cn/subject-hot-newest.json",
+    "x-quote.cls.cn/plate-stocks.json"
+  ],
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "plate 与 fund 字段仅在行业/概念型题材下有值；纯新闻频道型题材为 null",
+    "这是目前财联社 web 端唯一能拿到『题材→基金/ETF』映射的入口（fund 字段）"
+  ],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}

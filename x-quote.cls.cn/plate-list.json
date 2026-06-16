@@ -1,0 +1,54 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/hotplate",
+  "title": "概念/行业板块榜 (Plate List)",
+  "summary": "板块行情排行榜。返回值的 main_fund_diff.top_main_fund_diff 给出按主力净流入排序的板块，每个板块含涨跌幅、涨停家数、主力资金净额、first_stock（领涨股）。是『板块层』全景：哪个板块在涨、资金往哪流、谁领涨。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/web_quote/plate/plate_list",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "type": {
+      "type": "string",
+      "default": "concept",
+      "description": "板块分类，concept=概念板块。实测板块明细统一返回在 main_fund_diff 内，plate_data 常为空"
+    },
+    "way": {
+      "type": "string",
+      "default": "change_px",
+      "description": "排序字段，change_px=涨跌幅"
+    },
+    "rever": { "type": "string", "default": "1", "description": "1=降序 0=升序" },
+    "page": { "type": "integer", "default": "0", "description": "页码，从 0 开始" },
+    "rn": { "type": "integer", "default": "20", "description": "每页条数" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{ plate_data:[], main_fund_diff:{ top_main_fund_diff:[...] } } }",
+    "plate_item_fields": {
+      "secu_name": "板块名称",
+      "secu_code": "板块代码（cls 开头，喂给 plate-stocks）",
+      "change": "板块涨跌幅（小数）",
+      "limit_up_num": "涨停家数",
+      "limit_down_num": "跌停家数",
+      "main_fund_diff": "主力资金净流入（元）",
+      "trade_status": "交易状态 TRADE",
+      "first_stock": "领涨股 {secu_name, secu_code, change, last_px, tr换手率}"
+    }
+  },
+  "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/web_quote/plate/plate_list, params={'type':'concept','way':'change_px','rever':'1','page':'0','rn':'20'}",
+  "related_maps": [
+    "x-quote.cls.cn/plate-stocks.json"
+  ],
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "板块明细在 data.main_fund_diff.top_main_fund_diff，不在 plate_data（plate_data 常为空数组）",
+    "仅交易时段有实时数据"
+  ],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-16"
+}
