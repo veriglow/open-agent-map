@@ -322,7 +322,7 @@
   {
     "path": "/www.cls.cn/subject-detail",
     "title": "题材库 - 题材详情 (Subject Detail)",
-    "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联板块行情）、fund（关联基金/ETF）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 基金』串成闭环的核心接口——行业/概念型题材的 plate 与 fund 字段有值，新闻频道型题材这两字段为 null。"
+    "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联股票板块行情）、fund（关联主题基金指数）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 主题基金』串成闭环的核心接口——投资题材型（人工智能、半导体芯片…）的 plate 与 fund 字段有值，新闻频道型题材（环球市场情报、盘面直播…）这两字段为 null。注意 fund 给的是『主题基金指数』聚合层（CLS 内部代码+涨跌幅），不是可交易 ETF 的代码，详见 caveats。"
   },
   {
     "path": "/www.cls.cn/subject-hot-newest",

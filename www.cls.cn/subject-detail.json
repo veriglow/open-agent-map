@@ -2,7 +2,7 @@
   "service": "www.cls.cn",
   "page": "https://www.cls.cn/subject/{id}",
   "title": "题材库 - 题材详情 (Subject Detail)",
-  "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联板块行情）、fund（关联基金/ETF）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 基金』串成闭环的核心接口——行业/概念型题材的 plate 与 fund 字段有值，新闻频道型题材这两字段为 null。",
+  "summary": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plate（关联股票板块行情）、fund（关联主题基金指数）、top_articles（置顶解读）。这是财联社把『新闻 ↔ 板块 ↔ 主题基金』串成闭环的核心接口——投资题材型（人工智能、半导体芯片…）的 plate 与 fund 字段有值，新闻频道型题材（环球市场情报、盘面直播…）这两字段为 null。注意 fund 给的是『主题基金指数』聚合层（CLS 内部代码+涨跌幅），不是可交易 ETF 的代码，详见 caveats。",
   "method": "GET",
   "endpoint": "https://www.cls.cn/api/subject/detail/{id}",
   "signing": {
@@ -29,9 +29,15 @@
       "attention_num": "关注人数",
       "articles": "关联文章/新闻数组（article_id, article_title, ...）—— 新闻流",
       "top_articles": "置顶解读文章",
-      "plate": "关联板块行情（行业/概念题材有值，新闻频道型为 null）",
-      "fund": "关联基金/ETF（行业题材有值，新闻频道型为 null）",
+      "plate": "关联股票板块（投资题材有值，新闻频道型为 null）。结构 {plate_id, plate_symbol:cls80xxx, plate_name, plate_change, stocks:[...]}",
+      "fund": "关联主题基金指数（投资题材有值，新闻频道型为 null）。结构 {fund_id:cls80xxx, fund_name, change, tag:'主题基金'}。change 是真实独立涨跌（与同题材 plate_change 不同），代表该主题基金篮子的聚合表现",
       "reporter_card": "记者主理人信息"
+    },
+    "fund_object_fields": {
+      "fund_id": "CLS 内部主题基金指数代码（cls80xxx，与同题材股票板块共用题材号，但是另一条指数序列）",
+      "fund_name": "主题基金名称（如『人工智能』『芯片产业链』）",
+      "change": "★真实涨跌幅（小数）。实测 cls80207：股票板块 +0.64% vs 主题基金 -1.12%，证明是独立标的而非股票篮子",
+      "tag": "固定 '主题基金'"
     }
   },
   "example_call": "见 signing.python（subject_id=1103）",
@@ -41,8 +47,10 @@
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",
-    "plate 与 fund 字段仅在行业/概念型题材下有值；纯新闻频道型题材为 null",
-    "这是目前财联社 web 端唯一能拿到『题材→基金/ETF』映射的入口（fund 字段）"
+    "plate 与 fund 字段仅在投资题材型 subject 下有值；纯新闻频道型题材为 null。如何区分：先调 subject-hot-newest 拿 id，再调本接口看 plate/fund 是否非空",
+    "fund 给的是『主题基金指数』聚合层：有 CLS 内部代码（cls80xxx）+ 名称 + 真实涨跌幅，但【不是】可交易 ETF 的产品代码（如 159819）",
+    "无法展开为 ETF 清单：用 fund_id（cls80xxx）调 plate-stocks 返回的是个股篮子，不是 ETF；专用基金端点（plate/funds、plate/etf、fund_list 等）实测全部 9004 not found；前端也无 fund 类 XHR",
+    "要落到具体 ETF（代码/净值），需用 fund_name 去外部基金库（如东财/天天基金）做一次『主题名 → ETF』匹配，CLS 不提供这层"
   ],
   "confidence": 0.85,
   "auto_discovered": true,
