@@ -42,8 +42,8 @@
   },
   "example_call": "见 signing.python（subject_id=1103）",
   "related_maps": [
-    "www.cls.cn/subject-hot-newest.json",
-    "x-quote.cls.cn/plate-stocks.json"
+    "www.cls.cn/api/subject/hotAndNewestSubject.json",
+    "x-quote.cls.cn/web_quote/plate/stocks.json"
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",

@@ -27,7 +27,7 @@
   },
   "example_call": "见 signing.python，endpoint=https://www.cls.cn/api/subject/hotAndNewestSubject, params={}",
   "related_maps": [
-    "www.cls.cn/subject-detail.json"
+    "www.cls.cn/api/subject/detail.json"
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",

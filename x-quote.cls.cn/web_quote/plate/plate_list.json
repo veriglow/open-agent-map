@@ -41,7 +41,7 @@
   },
   "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/web_quote/plate/plate_list, params={'type':'concept','way':'change_px','rever':'1','page':'0','rn':'20'}",
   "related_maps": [
-    "x-quote.cls.cn/plate-stocks.json"
+    "x-quote.cls.cn/web_quote/plate/stocks.json"
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",

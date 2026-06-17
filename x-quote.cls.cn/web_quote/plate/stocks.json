@@ -35,8 +35,8 @@
   },
   "example_call": "见 signing.python，endpoint=https://x-quote.cls.cn/web_quote/plate/stocks, params={'secu_code':'cls80130','way':'change_px','rever':'1','page':'0','rn':'20'}",
   "related_maps": [
-    "x-quote.cls.cn/plate-list.json",
-    "x-quote.cls.cn/up-down-analysis.json"
+    "x-quote.cls.cn/web_quote/plate/plate_list.json",
+    "x-quote.cls.cn/quote/index/up_down_analysis.json"
   ],
   "caveats": [
     "必须签名，需带 Referer: https://www.cls.cn/",

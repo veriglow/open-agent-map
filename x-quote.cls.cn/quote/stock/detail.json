@@ -28,7 +28,7 @@
     }
   },
   "example_call": "见 signing.python，params={'secu_code':'sh600519'}",
-  "related_maps": ["x-quote.cls.cn/stock-fundflow.json", "x-quote.cls.cn/stock-assoc-plate.json"],
+  "related_maps": ["x-quote.cls.cn/quote/stock/fundflow.json", "x-quote.cls.cn/web_quote/stock/assoc_plate.json"],
   "caveats": ["必须签名"],
   "confidence": 0.85,
   "auto_discovered": true,

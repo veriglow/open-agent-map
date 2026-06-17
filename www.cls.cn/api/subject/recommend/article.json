@@ -28,7 +28,7 @@
     }
   },
   "example_call": "见 signing.python，params={}",
-  "related_maps": ["www.cls.cn/subject-detail.json"],
+  "related_maps": ["www.cls.cn/api/subject/detail.json"],
   "caveats": ["必须签名，需带 Referer", "编辑精选，更新频率低（非逐秒）"],
   "confidence": 0.85,
   "auto_discovered": true,

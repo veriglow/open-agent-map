@@ -82,33 +82,18 @@
     "branches": [
       {
         "prefix": "├──",
-        "dir": "article-hot",
-        "desc": "财联社热门文章榜（含每日早报、深度解读等）。每条带标题、摘要、文章 id。..."
+        "dir": "api/",
+        "count": "4 maps"
       },
       {
         "prefix": "├──",
-        "dir": "calendar",
-        "desc": "财经日历：按日返回经济数据发布、事件、会议等，每条带时间、重要度（星级）、..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "roll-list",
-        "desc": "财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "subject-detail",
-        "desc": "单个题材详情。一次返回该题材下的 articles（新闻文章流）、plat..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "subject-hot-newest",
-        "desc": "财联社题材库列表。返回热门题材，每个题材带 newest_article_..."
+        "dir": "v1/",
+        "count": "1 map"
       },
       {
         "prefix": "└──",
-        "dir": "subject-recommend",
-        "desc": "财联社编辑精选的题材投资机会四象限：今日机会、今日风口、短线潜伏、长线机会..."
+        "dir": "v2/",
+        "count": "1 map"
       }
     ],
     "link": "/www.cls.cn",
@@ -227,58 +212,13 @@
     "branches": [
       {
         "prefix": "├──",
-        "dir": "emotion-options",
-        "desc": "财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "hot-plate",
-        "desc": "财联社精选的热门/异动板块榜（按涨跌幅，实测约 6 个）。比 plate-..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "index-basic",
-        "desc": "单个指数的实时快照（点位/涨跌/开高低收）。常用代码：sh000001 上..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "index-home",
-        "desc": "全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "index-tline",
-        "desc": "指数当日分时序列（逐分钟点位）。secu_code 用指数代码如 sh00..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "plate-list",
-        "desc": "板块行情排行榜。返回值的 main_fund_diff.top_main_..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "plate-stocks",
-        "desc": "给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "stock-assoc-plate",
-        "desc": "给定个股，返回它所属的全部板块/题材（实测约 12 个），每个板块还带该板..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "stock-detail",
-        "desc": "单只个股的异动详情：异动原因、所属板块（plate）、关联板块（plate..."
-      },
-      {
-        "prefix": "├──",
-        "dir": "stock-fundflow",
-        "desc": "单只个股的资金流向：主力净流入/出，以及超大单/大单/中单/小单分级资金。..."
+        "dir": "quote/",
+        "count": "7 maps"
       },
       {
         "prefix": "└──",
-        "dir": "up-down-analysis",
-        "desc": "财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason..."
+        "dir": "web_quote/",
+        "count": "4 maps"
       }
     ],
     "link": "/x-quote.cls.cn",
