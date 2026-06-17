@@ -270,11 +270,14 @@ footer a:hover{color:var(--am-green);}
       </div>
       <div class="site-card-badge" >Deep Map</div>
     </div>
-    <div class="site-card-meta"><span class="site-count">3</span> maps &middot; 财联社电报快讯 + 题材库隐藏 API（新闻↔题材↔个股↔板块关联流）。所有接口需 sha1→md5 签名。</div>
+    <div class="site-card-meta"><span class="site-count">6</span> maps &middot; 财联社电报快讯 + 题材库隐藏 API（新闻↔题材↔个股↔板块关联流）。所有接口需 sha1→md5 签名。</div>
     <div class="site-tree">
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">article-hot</span> <span class="branch-desc">— 财联社热门文章榜（含每日早报、深度解读等）。每条带标题、摘要、文章 id。...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">calendar</span> <span class="branch-desc">— 财经日历：按日返回经济数据发布、事件、会议等，每条带时间、重要度（星级）、...</span></div>
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">roll-list</span> <span class="branch-desc">— 财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个...</span></div>
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">subject-detail</span> <span class="branch-desc">— 单个题材详情。一次返回该题材下的 articles（新闻文章流）、plat...</span></div>
-      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">subject-hot-newest</span> <span class="branch-desc">— 财联社题材库列表。返回热门题材，每个题材带 newest_article_...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">subject-hot-newest</span> <span class="branch-desc">— 财联社题材库列表。返回热门题材，每个题材带 newest_article_...</span></div>
+      <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">subject-recommend</span> <span class="branch-desc">— 财联社编辑精选的题材投资机会四象限：今日机会、今日风口、短线潜伏、长线机会...</span></div>
     </div>
     <a href="/www.cls.cn" class="site-card-action">Browse all maps &rarr;</a>
   </div>
@@ -356,12 +359,18 @@ footer a:hover{color:var(--am-green);}
       </div>
       <div class="site-card-badge" >Deep Map</div>
     </div>
-    <div class="site-card-meta"><span class="site-count">5</span> maps &middot; 财联社行情微服务：盘面异动（异动原因+关联板块）、概念板块榜、板块成分股、涨跌家数分布、市场情绪温度。与 www.cls.cn 共用 sha1→md5 签名。</div>
+    <div class="site-card-meta"><span class="site-count">11</span> maps &middot; 财联社行情微服务：盘面异动（异动原因+关联板块）、概念板块榜、板块成分股、涨跌家数分布、市场情绪温度。与 www.cls.cn 共用 sha1→md5 签名。</div>
     <div class="site-tree">
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">emotion-options</span> <span class="branch-desc">— 财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">hot-plate</span> <span class="branch-desc">— 财联社精选的热门/异动板块榜（按涨跌幅，实测约 6 个）。比 plate-...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">index-basic</span> <span class="branch-desc">— 单个指数的实时快照（点位/涨跌/开高低收）。常用代码：sh000001 上...</span></div>
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">index-home</span> <span class="branch-desc">— 全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">index-tline</span> <span class="branch-desc">— 指数当日分时序列（逐分钟点位）。secu_code 用指数代码如 sh00...</span></div>
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">plate-list</span> <span class="branch-desc">— 板块行情排行榜。返回值的 main_fund_diff.top_main_...</span></div>
       <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">plate-stocks</span> <span class="branch-desc">— 给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">stock-assoc-plate</span> <span class="branch-desc">— 给定个股，返回它所属的全部板块/题材（实测约 12 个），每个板块还带该板...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">stock-detail</span> <span class="branch-desc">— 单只个股的异动详情：异动原因、所属板块（plate）、关联板块（plate...</span></div>
+      <div class="branch"><span class="branch-prefix">├──</span> <span class="branch-dir">stock-fundflow</span> <span class="branch-desc">— 单只个股的资金流向：主力净流入/出，以及超大单/大单/中单/小单分级资金。...</span></div>
       <div class="branch"><span class="branch-prefix">└──</span> <span class="branch-dir">up-down-analysis</span> <span class="branch-desc">— 财联社『市场风向标』——盘中实时异动股池。每只异动股带 up_reason...</span></div>
     </div>
     <a href="/x-quote.cls.cn" class="site-card-action">Browse all maps &rarr;</a>

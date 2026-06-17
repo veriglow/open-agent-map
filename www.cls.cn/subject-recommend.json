@@ -1,0 +1,36 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/subject",
+  "title": "题材机会雷达 - 今日机会/风口/潜伏/长线 (Subject Recommend)",
+  "summary": "财联社编辑精选的题材投资机会四象限：今日机会、今日风口、短线潜伏、长线机会。每项返回若干题材（带 subject_id/subject_name/图），可再调 subject-detail 取该题材的文章+板块+主题基金。是『编辑视角的题材推荐』。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/api/subject/recommend/article",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np={'app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'https://www.cls.cn/api/subject/recommend/article?{qs}&sign={sign}'"
+  },
+  "params": {},
+  "response": {
+    "envelope": "{ errno:0, data:{...} }",
+    "data_fields": {
+      "today_chances": "今日机会（题材数组）",
+      "today_tuyeres": "今日风口（题材数组）",
+      "short_latents": "短线潜伏（题材数组）",
+      "long_chances": "长线机会（题材数组）",
+      "prospect_article": "前瞻文章"
+    },
+    "subject_item_fields": {
+      "subject_id": "题材 ID（喂给 subject-detail）",
+      "subject_name": "题材名（如 PCB、光模块、人形机器人）",
+      "subject_image": "题材封面图"
+    }
+  },
+  "example_call": "见 signing.python，params={}",
+  "related_maps": ["www.cls.cn/subject-detail.json"],
+  "caveats": ["必须签名，需带 Referer", "编辑精选，更新频率低（非逐秒）"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

@@ -1,0 +1,33 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/hotplate",
+  "title": "热门异动板块 (Hot Plate)",
+  "summary": "财联社精选的热门/异动板块榜（按涨跌幅，实测约 6 个）。比 plate-list 的 main_fund_diff Top3 更全，含主力资金、领涨股。是『当前最活跃板块』的快照。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/web_quote/plate/hot_plate",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "way": { "type": "string", "default": "change", "description": "排序字段" },
+    "rever": { "type": "string", "default": "1", "description": "1=降序" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:[...] }",
+    "item_fields": {
+      "secu_code": "板块代码 cls8xxxx（可喂给 plate-stocks 取成分）",
+      "secu_name": "板块名",
+      "change": "涨跌幅（小数）",
+      "main_fund_diff": "主力净流入（元）",
+      "up_stock": "领涨股信息"
+    }
+  },
+  "example_call": "见 signing.python，params={'way':'change','rever':'1'}",
+  "caveats": ["必须签名", "实测返回约 6 个（rn 不扩展，是精选榜）", "盘后为收盘快照"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

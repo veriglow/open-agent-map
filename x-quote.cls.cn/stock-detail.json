@@ -1,0 +1,36 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/stock/sh600519",
+  "title": "个股异动详情 (Stock Detail)",
+  "summary": "单只个股的异动详情：异动原因、所属板块（plate）、关联板块（plate_rel）、所属行业、相关事件、成长性标签。回答『这只票为什么动、属于哪些题材』。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/stock/detail",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": { "type": "string", "required": true, "description": "个股代码，如 sh600519", "example": "sh600519" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{...} }",
+    "data_fields": {
+      "up_reason": "异动原因文本",
+      "up_time": "异动时间",
+      "label": "标签",
+      "plate": "所属板块数组",
+      "plate_rel": "关联板块数组",
+      "primary_industry": "所属行业",
+      "event": "相关事件",
+      "growth_ms": "成长性指标"
+    }
+  },
+  "example_call": "见 signing.python，params={'secu_code':'sh600519'}",
+  "related_maps": ["x-quote.cls.cn/stock-fundflow.json", "x-quote.cls.cn/stock-assoc-plate.json"],
+  "caveats": ["必须签名"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

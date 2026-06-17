@@ -1,0 +1,38 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "大盘指数实时行情 (Index Basic)",
+  "summary": "单个指数的实时快照（点位/涨跌/开高低收）。常用代码：sh000001 上证指数、sz399001 深证成指、sz399006 创业板指、sh000688 科创50、sh000300 沪深300。每个指数单独一次请求。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/index/basic",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": {
+      "type": "string",
+      "required": true,
+      "description": "单个指数代码（注意是单数 secu_code，不支持逗号批量）",
+      "example": "sh000001"
+    }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{...} }",
+    "data_fields": {
+      "secu_name": "指数名称（如 上证指数）",
+      "last_px": "最新点位",
+      "change_px": "涨跌点数",
+      "change": "涨跌幅（小数，-0.0021 = -0.21%）",
+      "open_px": "开盘", "preclose_px": "昨收", "high_px": "最高", "low_px": "最低",
+      "secu_type": "IND（指数）"
+    }
+  },
+  "example_call": "见 signing.python，params={'secu_code':'sh000001'}",
+  "caveats": ["必须签名，需带 Referer", "secu_code 是单数；多指数需多次请求", "盘后为收盘快照"],
+  "confidence": 0.9,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

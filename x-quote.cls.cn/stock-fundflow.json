@@ -1,0 +1,31 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/stock/sh600519",
+  "title": "个股资金流 (Stock Fund Flow)",
+  "summary": "单只个股的资金流向：主力净流入/出，以及超大单/大单/中单/小单分级资金。判断主力动向。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/stock/fundflow",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": { "type": "string", "required": true, "description": "个股代码", "example": "sh600519" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{...} }",
+    "data_fields": {
+      "main_fund_in": "主力流入", "main_fund_out": "主力流出", "main_fund_diff": "主力净额",
+      "super_fund_diff": "超大单净额", "large_fund_diff": "大单净额",
+      "medium_fund_diff": "中单净额", "little_fund_diff": "小单净额",
+      "main_fund_3": "主力近3日"
+    }
+  },
+  "example_call": "见 signing.python，params={'secu_code':'sh600519'}",
+  "caveats": ["必须签名"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

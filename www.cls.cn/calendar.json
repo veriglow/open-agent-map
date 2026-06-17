@@ -1,0 +1,34 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/investKalendar",
+  "title": "财经日历 (Economic Calendar)",
+  "summary": "财经日历：按日返回经济数据发布、事件、会议等，每条带时间、重要度（星级）、国家。覆盖未来多日（实测约 13 天）。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/api/calendar/web/list",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np={'app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'https://www.cls.cn/api/calendar/web/list?{qs}&sign={sign}'"
+  },
+  "params": {},
+  "response": {
+    "envelope": "{ code:200, data:[ {按日} ] }",
+    "day_fields": {
+      "calendar_day": "日期 YYYY-MM-DD",
+      "week": "星期",
+      "items": "当日事件数组"
+    },
+    "item_fields": {
+      "calendar_time": "事件时间 YYYY-MM-DD HH:MM:SS",
+      "type": "类型（经济数据/事件）",
+      "event": "{ title 标题, country 国家, star 重要度(1-5) }",
+      "economic": "经济数据指标（数据类事件时有值：前值/预期/公布值）"
+    }
+  },
+  "example_call": "见 signing.python，params={}",
+  "caveats": ["必须签名，需带 Referer", "data[0] 通常是今天；含未来多日", "经济数据类看 economic 字段，事件类看 event 字段"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

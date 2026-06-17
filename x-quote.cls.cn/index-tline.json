@@ -1,0 +1,29 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "指数分时 (Index Time-line)",
+  "summary": "指数当日分时序列（逐分钟点位）。secu_code 用指数代码如 sh000001。每点含分钟、点位、均价、涨跌。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/quote/index/tline",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": { "type": "string", "required": true, "description": "指数代码", "example": "sh000001" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:[...] }",
+    "item_fields": {
+      "date": "日期 YYYYMMDD", "minute": "分钟 HHMM（930=9:30）",
+      "last_px": "该分钟点位", "av_px": "均价", "change": "涨跌幅（小数）", "change_color": "涨跌色标"
+    }
+  },
+  "example_call": "见 signing.python，params={'secu_code':'sh000001'}",
+  "caveats": ["必须签名", "盘中实时增长，盘后为当日完整分时", "个股分时另有 /v2/quote/a/tline（code+长度参数）"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

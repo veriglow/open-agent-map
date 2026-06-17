@@ -315,6 +315,16 @@
     "summary": ""
   },
   {
+    "path": "/www.cls.cn/article-hot",
+    "title": "热门文章 / 早报 (Hot Articles)",
+    "summary": "财联社热门文章榜（含每日早报、深度解读等）。每条带标题、摘要、文章 id。区别于电报快讯（roll）：这里是成文文章。"
+  },
+  {
+    "path": "/www.cls.cn/calendar",
+    "title": "财经日历 (Economic Calendar)",
+    "summary": "财经日历：按日返回经济数据发布、事件、会议等，每条带时间、重要度（星级）、国家。覆盖未来多日（实测约 13 天）。"
+  },
+  {
     "path": "/www.cls.cn/roll-list",
     "title": "电报快讯流 (Telegraph Roll)",
     "summary": "财联社实时电报快讯。每条快讯可携带 stock_list（自动识别的关联个股，含代码/涨跌幅/深链），是『新闻→个股』关联的最底层数据。可按 category 过滤板块（如 watch 看盘、jjyw 基金要闻），用 last_time 做向前翻页。"
@@ -328,6 +338,11 @@
     "path": "/www.cls.cn/subject-hot-newest",
     "title": "题材库 - 热门/最新题材 (Subjects)",
     "summary": "财联社题材库列表。返回热门题材，每个题材带 newest_article_id / newest_article_title（实时最新关联新闻），是『新闻→题材』入口。拿到 subject id 后用 subject-detail 取该题材下的文章流 + 关联板块 + 关联个股/基金。"
+  },
+  {
+    "path": "/www.cls.cn/subject-recommend",
+    "title": "题材机会雷达 - 今日机会/风口/潜伏/长线 (Subject Recommend)",
+    "summary": "财联社编辑精选的题材投资机会四象限：今日机会、今日风口、短线潜伏、长线机会。每项返回若干题材（带 subject_id/subject_name/图），可再调 subject-detail 取该题材的文章+板块+主题基金。是『编辑视角的题材推荐』。"
   },
   {
     "path": "/www.producthunt.com",
@@ -885,9 +900,24 @@
     "summary": "财联社市场情绪指标。market_degree 为 0-1 的情绪温度（越高越热），并附上涨比、高开比、赚钱效应（profit_ratio）及分钟级 up_performance 日内情绪曲线。一个数值概括当日多空情绪。"
   },
   {
+    "path": "/x-quote.cls.cn/hot-plate",
+    "title": "热门异动板块 (Hot Plate)",
+    "summary": "财联社精选的热门/异动板块榜（按涨跌幅，实测约 6 个）。比 plate-list 的 main_fund_diff Top3 更全，含主力资金、领涨股。是『当前最活跃板块』的快照。"
+  },
+  {
+    "path": "/x-quote.cls.cn/index-basic",
+    "title": "大盘指数实时行情 (Index Basic)",
+    "summary": "单个指数的实时快照（点位/涨跌/开高低收）。常用代码：sh000001 上证指数、sz399001 深证成指、sz399006 创业板指、sh000688 科创50、sh000300 沪深300。每个指数单独一次请求。"
+  },
+  {
     "path": "/x-quote.cls.cn/index-home",
     "title": "全市场涨跌家数分布 (Market Breadth)",
     "summary": "全 A 股涨跌家数分布快照。返回上涨/下跌/平盘家数、涨停跌停数、以及按涨跌幅分桶（up_2/up_4/.../up_10 与 down_2.../down_10）的家数分布。一次拿到整个大盘的宽度。"
+  },
+  {
+    "path": "/x-quote.cls.cn/index-tline",
+    "title": "指数分时 (Index Time-line)",
+    "summary": "指数当日分时序列（逐分钟点位）。secu_code 用指数代码如 sh000001。每点含分钟、点位、均价、涨跌。"
   },
   {
     "path": "/x-quote.cls.cn/plate-list",
@@ -898,6 +928,21 @@
     "path": "/x-quote.cls.cn/plate-stocks",
     "title": "板块成分股 + 关联逻辑 (Plate Stocks)",
     "summary": "给定板块代码，返回成分股列表。每只成分股带 assoc_desc——财联社撰写的『这只票为什么属于这个板块』关联说明（公司业务与题材的具体关系）。这是把『概念』落到『个股』的语义链，普通爬虫拿不到这层解释。"
+  },
+  {
+    "path": "/x-quote.cls.cn/stock-assoc-plate",
+    "title": "个股关联板块 (Stock Assoc Plate)",
+    "summary": "给定个股，返回它所属的全部板块/题材（实测约 12 个），每个板块还带该板块的领涨股。是『个股 → 题材』的反查。"
+  },
+  {
+    "path": "/x-quote.cls.cn/stock-detail",
+    "title": "个股异动详情 (Stock Detail)",
+    "summary": "单只个股的异动详情：异动原因、所属板块（plate）、关联板块（plate_rel）、所属行业、相关事件、成长性标签。回答『这只票为什么动、属于哪些题材』。"
+  },
+  {
+    "path": "/x-quote.cls.cn/stock-fundflow",
+    "title": "个股资金流 (Stock Fund Flow)",
+    "summary": "单只个股的资金流向：主力净流入/出，以及超大单/大单/中单/小单分级资金。判断主力动向。"
   },
   {
     "path": "/x-quote.cls.cn/up-down-analysis",

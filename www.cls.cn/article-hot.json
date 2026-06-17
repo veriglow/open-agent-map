@@ -1,0 +1,31 @@
+{
+  "service": "www.cls.cn",
+  "page": "https://www.cls.cn/",
+  "title": "热门文章 / 早报 (Hot Articles)",
+  "summary": "财联社热门文章榜（含每日早报、深度解读等）。每条带标题、摘要、文章 id。区别于电报快讯（roll）：这里是成文文章。",
+  "method": "GET",
+  "endpoint": "https://www.cls.cn/v2/article/hot/list",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "rn": { "type": "integer", "default": "10", "description": "返回条数" }
+  },
+  "response": {
+    "envelope": "{ errno:0, data:[...] }",
+    "item_fields": {
+      "id": "文章 ID（可拼 /detail/{id} 看正文）",
+      "title": "标题",
+      "brief": "摘要",
+      "ctime": "时间"
+    }
+  },
+  "example_call": "见 signing.python，params={'rn':'10'}",
+  "caveats": ["必须签名，需带 Referer", "另有 /v3/depth/list 深度文章（实测 50101，可能需登录态）、/v3/transaction/articles 盘面解读文章"],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}
