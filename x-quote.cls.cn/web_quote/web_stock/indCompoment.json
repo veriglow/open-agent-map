@@ -1,0 +1,37 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "指数成分股 (Index Components) ★指数投资",
+  "summary": "给定指数代码，返回其成分股列表（含最新价/涨跌/流通市值）。是『指数里有什么』的核心接口——指数基金/ETF 跟踪的就是这些成分。常用指数：sh000300 沪深300、sh000016 上证50、sh000905 中证500、sz399006 创业板指、sh000688 科创50。",
+  "method": "GET",
+  "endpoint": "https://x-quote.cls.cn/web_quote/web_stock/indCompoment",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse\np=dict(params); p.update({'app':'CailianpressWeb','os':'web','sv':'8.4.6'})\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'{endpoint}?{qs}&sign={sign}'"
+  },
+  "params": {
+    "secu_code": { "type": "string", "required": true, "description": "指数代码", "example": "sh000300" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{ is_all, data:[...] } }",
+    "data_fields": {
+      "is_all": "是否已返回全部成分（0=还有更多）",
+      "data": "成分股数组（默认前 30 只）"
+    },
+    "stock_item_fields": {
+      "secu_code": "成分股代码", "secu_name": "简称", "last_px": "最新价",
+      "change": "涨跌幅（小数）", "change_px": "涨跌额", "cmc": "流通市值（元）"
+    }
+  },
+  "example_call": "见 signing.python，params={'secu_code':'sh000300'}",
+  "caveats": [
+    "必须签名，需带 Referer: https://www.cls.cn/",
+    "默认前 30 只，is_all=0 表示还有更多（分页参数未定，可能需 page/rn）",
+    "ETF/指数基金本身在 CLS 无行情：可用本接口看『指数成分』，ETF 报价/清单见 push2.eastmoney.com/etf-quotes 与 www.szse.cn/market/product-etf-list"
+  ],
+  "confidence": 0.85,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

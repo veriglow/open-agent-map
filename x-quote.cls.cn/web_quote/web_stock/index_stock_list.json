@@ -1,0 +1,34 @@
+{
+  "service": "x-quote.cls.cn",
+  "page": "https://www.cls.cn/quotation",
+  "title": "全市场 Top 榜 (Index Stock List)",
+  "summary": "全市场按涨幅 / 主力净流入 / 换手率的 Top10 个股榜（quotation 页『市场』组件）。每个维度各返回 10 只，含最新价/涨跌/交易状态。注意：是全市场龙虎榜，非某指数成分（指数成分用 indCompoment）。",
+  "method": "POST",
+  "endpoint": "https://x-quote.cls.cn/web_quote/web_stock/index_stock_list",
+  "signing": {
+    "required": true,
+    "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套；本接口为 POST，参数仍走 query+sign",
+    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "python": "import hashlib,urllib.parse,urllib.request\np={'change':'1','main_fund_diff':'1','tr':'1','app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nreq=urllib.request.Request(f'{endpoint}?{qs}&sign={sign}', method='POST', headers={'Referer':'https://www.cls.cn/'})"
+  },
+  "params": {
+    "change": { "type": "string", "default": "1", "description": "请求涨幅榜（Top10）" },
+    "main_fund_diff": { "type": "string", "default": "1", "description": "请求主力净流入榜（Top10）" },
+    "tr": { "type": "string", "default": "1", "description": "请求换手率榜（Top10）" }
+  },
+  "response": {
+    "envelope": "{ code:200, data:{ change:[...], main_fund_diff:[...], tr:[...] } }",
+    "data_fields": {
+      "change": "涨幅 Top10", "main_fund_diff": "主力净流入 Top10", "tr": "换手率 Top10"
+    },
+    "stock_item_fields": {
+      "secu_code": "代码", "secu_name": "简称", "last_px": "最新价",
+      "change_px": "涨跌额", "change": "涨跌幅（小数）", "trade_status": "交易状态"
+    }
+  },
+  "example_call": "见 signing.python（POST，body 可空）",
+  "caveats": ["必须签名，需带 Referer", "方法为 POST（GET 返回 9005 method error）", "全市场榜，非指数成分"],
+  "confidence": 0.8,
+  "auto_discovered": true,
+  "last_verified": "2026-06-17"
+}

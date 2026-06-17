@@ -950,6 +950,16 @@
     "summary": "给定个股，返回它所属的全部板块/题材（实测约 12 个），每个板块还带该板块的领涨股。是『个股 → 题材』的反查。"
   },
   {
+    "path": "/x-quote.cls.cn/web_quote/web_stock/indCompoment",
+    "title": "指数成分股 (Index Components) ★指数投资",
+    "summary": "给定指数代码，返回其成分股列表（含最新价/涨跌/流通市值）。是『指数里有什么』的核心接口——指数基金/ETF 跟踪的就是这些成分。常用指数：sh000300 沪深300、sh000016 上证50、sh000905 中证500、sz399006 创业板指、sh000688 科创50。"
+  },
+  {
+    "path": "/x-quote.cls.cn/web_quote/web_stock/index_stock_list",
+    "title": "全市场 Top 榜 (Index Stock List)",
+    "summary": "全市场按涨幅 / 主力净流入 / 换手率的 Top10 个股榜（quotation 页『市场』组件）。每个维度各返回 10 只，含最新价/涨跌/交易状态。注意：是全市场龙虎榜，非某指数成分（指数成分用 indCompoment）。"
+  },
+  {
     "path": "/xhs-cli",
     "title": "xhs (小红书 Python 客户端)",
     "summary": ""
