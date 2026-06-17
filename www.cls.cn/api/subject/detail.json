@@ -8,7 +8,11 @@
   "signing": {
     "required": true,
     "algorithm": "sign = md5( sha1( urlencode(sorted(params)) ) )，params 先并入固定三件套。注意 {id} 是路径段不是 query 参数，不参与签名",
-    "fixed_params": { "app": "CailianpressWeb", "os": "web", "sv": "8.4.6" },
+    "fixed_params": {
+      "app": "CailianpressWeb",
+      "os": "web",
+      "sv": "8.4.6"
+    },
     "python": "import hashlib,urllib.parse\nsubject_id=1103\np={'app':'CailianpressWeb','os':'web','sv':'8.4.6'}\nqs=urllib.parse.urlencode(sorted(p.items()))\nsign=hashlib.md5(hashlib.sha1(qs.encode()).hexdigest().encode()).hexdigest()\nurl=f'https://www.cls.cn/api/subject/detail/{subject_id}?{qs}&sign={sign}'"
   },
   "params": {
@@ -51,7 +55,7 @@
     "fund 给的是『主题基金指数』聚合层：有 CLS 内部代码（cls80xxx）+ 名称 + 真实涨跌幅，但【不是】可交易 ETF 的产品代码（如 159819）",
     "无法展开为 ETF 清单：用 fund_id（cls80xxx）调 plate-stocks 返回的是个股篮子，不是 ETF；专用基金端点（plate/funds、plate/etf、fund_list 等）实测全部 9004 not found；前端也无 fund 类 XHR",
     "要落到具体 ETF（代码/净值），需用 fund_name 去外部基金库（如东财/天天基金）做一次『主题名 → ETF』匹配，CLS 不提供这层",
-    "★『新闻↔指数基金/ETF』信息流：用基金频道 id 调本接口取 articles[] —— 公募基金动态(1349)、易方达指数通(10011)、易方达基金(8478)（基金类目 1110 下还有更多品牌频道）。这些文章把市场事件直接关联到具体 ETF：ETF 名称+代码写在 article_title 文本里（如『科创芯片ETF易方达（589130）』），用正则 [（(](\\d{6})[）)] 提取、按 5x/15x/16x 开头过滤即得 ETF 代码；每篇同时带结构化 stock_list / plate_list / subjects。实测前15篇约11篇含 ETF 代码。这是 CLS 唯一的新闻→ETF 关联（ETF 不在行情系统，只能编辑写进正文）",
+    "★『新闻↔指数基金/ETF』信息流：用基金频道 id 调本接口取 articles[] —— 公募基金动态(1349)、易方达指数通(10011)、易方达基金(8478)（基金类目 1110 下还有更多品牌频道）。这些文章把市场事件直接关联到具体 ETF：ETF 名称+代码写在 article_title 文本里（如『科创芯片ETF易方达（589130）』），用正则 [（(](\\d{6})[）)] 提取、按 5x/15x/16x 开头过滤即得 ETF 代码；每篇同时带结构化 stock_list / plate_list / subjects。实测前15篇约11篇含 ETF 代码。这是 CLS 唯一的新闻→ETF 关联（ETF 不在行情系统，只能编辑写进正文）。每篇 articles[] 带 article_time（Unix 秒）= 该 ETF 新闻的发布时间（电报时间）",
     "时段行为：articles（新闻流）7×24 实时更新；plate_change / fund.change 受交易时段约束，盘后实测(15:38)为当日收盘值（冻结，与盘中末值一致）"
   ],
   "confidence": 0.85,
